@@ -327,7 +327,7 @@ def project_page(p):
           <div class="panel" role="tabpanel" id="pp-books" aria-labelledby="pt-books" hidden>
             <div class="library__grid" data-p-books="{",".join(books)}"></div>
           </div>''' if books else ""
-    body = f'''{head(f'{full_name(p)} | Mahmoud Elhemaly', f'{full_name(p)}: {p["heroTitle"]} {p["intro"]}', (p.get("heroImage") or "assets/img/krypton/kr-dusk") + ".jpg", t, (p.get("video") or {}).get("poster"))}
+    body = f'''{head(f'{full_name(p)} | G Developments', f'{full_name(p)}: {p["heroTitle"]} {p["intro"]}', (p.get("heroImage") or "assets/img/krypton/kr-dusk") + ".jpg", t, (p.get("video") or {}).get("poster"))}
 <body data-page="project" data-project="{p["id"]}">
 {masthead()}
 
@@ -379,7 +379,7 @@ def project_page(p):
 def krypton_page(p):
     t = p["theme"]
     src = (ROOT / "scripts/krypton_section.html").read_text()
-    return f'''{head("Krypton, NEWKAIRO | Mahmoud Elhemaly", "Krypton at NEWKAIRO: fully finished serviced residences above The Boulevard, from 7.88M EGP with 5% down and 8 years to pay. Floor plans, released units and payment plans.", "assets/img/krypton/kr-dusk.jpg", t, p["video"]["poster"])}
+    return f'''{head("Krypton, NEWKAIRO | G Developments", "Krypton at NEWKAIRO: fully finished serviced residences above The Boulevard, from 7.88M EGP with 5% down and 8 years to pay. Floor plans, released units and payment plans.", "assets/img/krypton/kr-dusk.jpg", t, p["video"]["poster"])}
 <body data-page="krypton" data-project="krypton">
 {masthead("Krypton")}
 
@@ -401,7 +401,7 @@ def home_page():
     nk_video = {"loop": "assets/video/newkairo-loop.mp4", "film": "assets/video/newkairo-film.mp4", "poster": "assets/video/newkairo-poster.jpg"}
     nk_cards = "\n".join(parcel_card(x) for x in PROJECTS if x.get("parent") == "NEWKAIRO")
     src = src.replace("{{PARCELS}}", nk_cards)
-    return f'''{head("NEWKAIRO, Krypton and the G Developments portfolio | Mahmoud Elhemaly", "Private advisory for G Developments in Egypt: NEWKAIRO with Krypton, Golf Views, Neon Views and Urban Living, plus NEWGIZA, IVY, Seashell and Playa. Official payment plans and brochures.", "assets/video/newkairo-poster.jpg", NEWKAIRO_THEME, nk_video["poster"])}
+    return f'''{head("NEWKAIRO, Krypton and the full portfolio | G Developments", "Private advisory for G Developments in Egypt: NEWKAIRO with Krypton, Golf Views, Neon Views and Urban Living, plus NEWGIZA, IVY, Seashell and Playa. Official payment plans and brochures.", "assets/video/newkairo-poster.jpg", NEWKAIRO_THEME, nk_video["poster"])}
 <body data-page="home">
 {masthead("NEWKAIRO")}
 
