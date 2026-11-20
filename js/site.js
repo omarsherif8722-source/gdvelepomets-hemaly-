@@ -16,6 +16,49 @@
   };
   const wa = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ------------------------------------------------------------------ */
+  /* Stats (Umami). Events queue until the tracker has loaded.           */
+  /* ------------------------------------------------------------------ */
+  const statQueue = [];
+  function track(name, data) {
+    const send = () => window.umami && typeof window.umami.track === "function" && (data ? window.umami.track(name, data) : window.umami.track(name));
+    if (!send()) statQueue.push([name, data]);
+  }
+  function initAnalytics(cfg) {
+    const a = cfg && cfg.analytics;
+    if (!a || !a.umamiWebsiteId || !a.umamiScript) return;
+    const sc = document.createElement("script");
+    sc.defer = true;
+    sc.src = a.umamiScript;
+    sc.dataset.websiteId = a.umamiWebsiteId;
+    if (a.domains) sc.dataset.domains = a.domains;
+    sc.onload = () => {
+      const flush = () => {
+        if (!(window.umami && window.umami.track)) return setTimeout(flush, 300);
+        statQueue.splice(0).forEach(([n, d]) => (d ? window.umami.track(n, d) : window.umami.track(n)));
+      };
+      flush();
+    };
+    document.head.appendChild(sc);
+  }
+  // Where on the page a click happened, for WhatsApp and call events
+  const placeOf = (el) => {
+    if (el.dataset.wa) return el.dataset.wa;
+    if (el.closest(".wa-float")) return "Floating button";
+    if (el.closest(".masthead, .mobile-nav")) return "Header";
+    if (el.closest(".dossier")) return "Project details";
+    const sec = el.closest("section[id]");
+    return sec ? sec.id : "Page";
+  };
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href]");
+    if (!a) return;
+    const href = a.getAttribute("href");
+    if (href.includes("wa.me/")) track("WhatsApp click", { place: placeOf(a) });
+    else if (href.startsWith("tel:")) track("Call click", { place: placeOf(a) });
+    else if (a.hasAttribute("download")) track("Brochure download", { file: href.split("/").pop() });
+  }, true);
   const WA_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>';
 
   const picture = (base, alt, sizes = "100vw", eager = false) => {
@@ -169,6 +212,7 @@
   const film = $("[data-film]");
   const filmVideo = $("[data-film-video]");
   $$("[data-film-open]").forEach((b) => b.addEventListener("click", () => {
+    track("Film play");
     film.showModal();
     filmVideo.currentTime = 0;
     filmVideo.play().catch(() => {});
@@ -218,6 +262,7 @@
       renderAtelier(ctx);
       renderLibrary(ctx);
       renderContact(ctx);
+      initAnalytics(config);
       document.documentElement.classList.add("is-ready");
     })
     .catch((err) => {
@@ -328,6 +373,7 @@
       const b = e.target.closest("button[data-code]");
       if (!b) return;
       showLayout(b.dataset.code);
+      track("Krypton layout viewed", { layout: b.dataset.code });
       if (window.innerWidth < 960) planEl.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
     });
     planEl.addEventListener("click", (e) => {
@@ -549,6 +595,7 @@
       </div>`;
     initTabs($('[role="tablist"]', body));
     dlg.showModal();
+    track("Project opened", { project: p.parent ? `${p.parent} ${p.name}` : p.name });
     body.scrollTop = 0;
     body.onclick = (e) => {
       if (e.target.closest("[data-dossier-close]")) dlg.close();
@@ -582,7 +629,7 @@
     };
 
     tabList.innerHTML = terms.destinations.map((d, i) => `<button role="tab" aria-selected="${i === 0}" ${i ? 'tabindex="-1"' : ""} data-dest="${d.id}">${esc(d.name)}</button>`).join("");
-    const tabs = initTabs(tabList, (t) => setDest(t.dataset.dest));
+    const tabs = initTabs(tabList, (t) => { setDest(t.dataset.dest); track("Payment plan opened", { destination: t.textContent.trim() }); });
 
     function setDest(id, phaseId, keepPrice) {
       dest = terms.destinations.find((d) => d.id === id);
@@ -734,6 +781,7 @@
       if (config.leadCapture && config.leadCapture.webhookUrl) {
         fetch(config.leadCapture.webhookUrl, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...d, source: location.href, at: new Date().toISOString() }) }).catch(() => {});
       }
+      track("Brief sent", { interest: d.interest, budget: d.budget, terms: d.terms });
       window.open(wa(text), "_blank", "noopener");
     });
   }

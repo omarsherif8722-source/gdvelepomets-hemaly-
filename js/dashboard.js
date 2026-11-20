@@ -39,7 +39,6 @@
     }
   });
   $("[data-lock]").addEventListener("click", () => { try { sessionStorage.removeItem(SESSION_KEY); } catch {} location.reload(); });
-  if (remembered()) unlock();
 
   /* ---------------- Helpers ---------------- */
   function initTabs(list, onChange) {
@@ -79,6 +78,7 @@
     if (started) return;
     started = true;
     const load = (f) => fetch(`data/${f}.json`, { cache: "no-cache" }).then((r) => r.json());
+    load("site_config").then(renderActivity).catch(() => renderActivity({}));
     Promise.all([load("inventory"), load("payment_terms")]).then(([inv, terms]) => {
       const units = inv.units.map((u) => Object.fromEntries(inv.fields.map((f, i) => [f, u[i]])));
       const plans = {};
@@ -87,6 +87,44 @@
       renderSummary(units, inv, name);
       renderTable(units, inv, plans, name);
     }).catch(() => { $("[data-ats-count]").textContent = "The inventory file could not load. Check data/inventory.json."; });
+  }
+
+  const EVENTS = [
+    ["Visits", "every page view, counted automatically"],
+    ["WhatsApp click", "any WhatsApp button, with where it was pressed"],
+    ["Call click", "any call button, with where it was pressed"],
+    ["Brochure download", "which PDF was downloaded"],
+    ["Film play", "the Krypton film opened"],
+    ["Project opened", "which project's details were opened"],
+    ["Krypton layout viewed", "which floor plan a visitor picked"],
+    ["Payment plan opened", "which destination's plans were explored"],
+    ["Brief sent", "the contact form, with interest, budget and terms"],
+  ];
+  function renderActivity(cfg) {
+    const a = (cfg && cfg.analytics) || {};
+    const body = $("[data-stats-body]");
+    const list = `<ul class="dash__events">${EVENTS.map(([n, d]) => `<li><strong>${n}</strong> ${d}</li>`).join("")}</ul>`;
+    if (a.umamiShareUrl) {
+      const url = esc(a.umamiShareUrl);
+      body.innerHTML = `
+        <div class="stats-frame"><iframe src="${url}" title="Website stats from Umami" loading="lazy" referrerpolicy="no-referrer"></iframe></div>
+        <p class="dash__note"><a class="btn btn--dark btn--small" href="${url}" target="_blank" rel="noopener">Open the full stats</a> Events appear under the Events tab.</p>
+        <details class="dash__details"><summary>What is tracked</summary>${list}</details>`;
+      return;
+    }
+    body.innerHTML = `
+      <div class="dash__setup">
+        <h3>Stats aren't connected yet</h3>
+        <ol>
+          <li>Create a free account at <a class="link" href="https://umami.is" target="_blank" rel="noopener">umami.is</a> (Hobby plan: 1 website, 100,000 events a month, 6 months of history).</li>
+          <li>Add a website named Mahmoud Elhemaly with the domain <code>mahmoud-elhemaly.onrender.com</code>.</li>
+          <li>Open the website's <em>Edit</em> page and copy the <em>Tracking code</em>.</li>
+          <li>In <em>Share URL</em>, click <em>Add</em>, include Overview and Events, save, and copy the link.</li>
+          <li>Send the tracking code and share link to Claude, or paste them into <code>data/site_config.json</code> under <code>analytics</code> and push.</li>
+        </ol>
+        <p class="dash__note">Once connected, this panel shows the stats here. The website already sends these events:</p>
+        ${list}
+      </div>`;
   }
 
   function renderSummary(units, inv, name) {
@@ -208,4 +246,7 @@
 
     fill(); setupBudget(); apply();
   }
+
+  // Reopen without the passcode for the rest of this browser session
+  if (remembered()) unlock();
 })();

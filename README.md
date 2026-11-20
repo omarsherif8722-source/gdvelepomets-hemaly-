@@ -18,6 +18,8 @@ Plain HTML, CSS and JavaScript, so any static host serves it as-is (Render, GitH
 
 `/dashboard` (unlisted, not indexed) opens with a passcode and shows inventory totals by project and status, the full unit list with filters, a "Send to client" WhatsApp share per unit and a CSV export. The passcode is checked in the browser, so treat it as a light lock: the data file is still reachable for anyone who knows its address. To change it, put the output of `printf '%s' 'NEW-CODE' | shasum -a 256` into `PASS_HASH` in `js/dashboard.js`.
 
+**Website stats.** The site sends visits and these events to Umami Cloud (free plan): WhatsApp click and Call click (with where on the page), Brochure download, Film play, Project opened, Krypton layout viewed, Payment plan opened and Brief sent. To switch it on, fill `analytics.umamiScript`, `analytics.umamiWebsiteId` and `analytics.umamiShareUrl` in `data/site_config.json` from your Umami account; the dashboard then shows the stats. Visits only count on `mahmoud-elhemaly.onrender.com` (set in `analytics.domains`), so local testing stays out of the numbers.
+
 The WhatsApp button with the number under it stays on screen everywhere.
 
 ## Updating

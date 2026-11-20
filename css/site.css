@@ -698,3 +698,16 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 }
 .dash__ats .ats__filters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 760px) { .dash__ats .ats__filters { grid-template-columns: minmax(0, 1fr); } }
+.dash__stats { background: var(--paper); padding: clamp(20px, 3vw, 36px); margin-bottom: 20px; }
+.stats-frame { border: 1px solid var(--mist); background: #fff; }
+.stats-frame iframe { display: block; width: 100%; height: min(1100px, 85vh); border: 0; }
+.dash__note { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 14px 0 0; font-size: 14.5px; color: var(--stone); }
+.dash__setup { border-top: 1px solid var(--ink); padding-top: 16px; }
+.dash__setup h3 { font-family: var(--display); font-size: 24px; margin-bottom: 10px; }
+.dash__setup ol { list-style: decimal; padding-left: 20px; display: grid; gap: 6px; max-width: 72ch; }
+.dash__setup code { font-size: 13.5px; background: var(--sand); padding: 2px 6px; }
+.dash__events { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0 24px; margin-top: 10px; border-top: 1px solid var(--mist); }
+.dash__events li { padding: 9px 0; border-bottom: 1px solid var(--mist); font-size: 14.5px; color: var(--stone); }
+.dash__events strong { color: var(--ink); font-weight: 500; margin-right: 6px; }
+.dash__details { margin-top: 14px; }
+.dash__details summary { cursor: pointer; font-weight: 500; }

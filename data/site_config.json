@@ -31,5 +31,13 @@
    "detail": "Ras El Hekma and Ghazala Bay viewings, May to October"
   }
  ],
- "disclaimer": "Independent advisory for G Developments projects in Egypt. This is not the official G Developments website. Prices, payment plans and availability come from developer releases (Standard Payment Plans of October 18, 2026 and Primary ATS sheets of November 2026) and are confirmed at reservation."
+ "disclaimer": "Independent advisory for G Developments projects in Egypt. This is not the official G Developments website. Prices, payment plans and availability come from developer releases (Standard Payment Plans of October 18, 2026 and Primary ATS sheets of November 2026) and are confirmed at reservation.",
+ "analytics": {
+  "provider": "Umami Cloud (free Hobby plan)",
+  "umamiScript": "",
+  "umamiWebsiteId": "",
+  "umamiShareUrl": "",
+  "domains": "mahmoud-elhemaly.onrender.com",
+  "note": "Paste the src and data-website-id from Umami's tracking code, and the share link from the website's Share URL settings. Stats switch on as soon as these are filled in."
+ }
 }
