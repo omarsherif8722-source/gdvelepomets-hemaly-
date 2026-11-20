@@ -263,10 +263,12 @@
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => {
         if (!en.isIntersecting) return;
-        navLinks.forEach((a) => a.classList.toggle("is-current", a.hash === `#${en.target.id}`));
+        // The project list sits under the developer story; both belong to Portfolio
+        const id = en.target.id === "projects" ? "portfolio" : en.target.id;
+        navLinks.forEach((a) => a.classList.toggle("is-current", a.hash === `#${id}`));
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
-    if (PAGE === "home") ["newkairo", "portfolio", "payments", "brochures", "contact"].forEach((id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+    if (PAGE === "home") ["newkairo", "portfolio", "projects", "payments", "brochures", "contact"].forEach((id) => { const s = document.getElementById(id); if (s) io.observe(s); });
   }
 
   /* ------------------------------------------------------------------ */
@@ -315,6 +317,22 @@
   /* ------------------------------------------------------------------ */
   const load = (f) => fetch(`/data/${f}.json`, { cache: "no-cache" }).then((r) => { if (!r.ok) throw new Error(`${f}.json ${r.status}`); return r.json(); });
 
+  // Arriving from another page at /#portfolio and the like: the browser jumps before the
+  // live data has filled the sections above, so land on the section again once it has,
+  // unless the visitor has already started scrolling.
+  let visitorScrolled = false;
+  ["wheel", "touchstart", "keydown"].forEach((ev) => window.addEventListener(ev, () => { visitorScrolled = true; }, { once: true, passive: true }));
+  function landOnHash() {
+    if (visitorScrolled || location.hash.length < 2) return;
+    const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (!target) return;
+    const root = document.documentElement;
+    const top = target.getBoundingClientRect().top + window.scrollY - masthead.offsetHeight;
+    root.style.scrollBehavior = "auto";
+    window.scrollTo(0, Math.max(0, top));
+    root.style.scrollBehavior = "";
+  }
+
   Promise.all([load("krypton"), load("portfolio"), load("payment_terms"), load("inventory"), load("site_config")])
     .then(([krypton, portfolio, terms, inv, config]) => {
       const units = inv.units.map((u) => Object.fromEntries(inv.fields.map((f, i) => [f, u[i]])));
@@ -333,6 +351,8 @@
       renderContact(ctx);
       initAnalytics(config);
       document.documentElement.classList.add("is-ready");
+      landOnHash();
+      window.addEventListener("load", landOnHash, { once: true });
     })
     .catch((err) => {
       console.error(err);

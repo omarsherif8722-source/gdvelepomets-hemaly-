@@ -92,7 +92,6 @@ MENU = [
     ("/#portfolio", "Portfolio"),
     ("/#payments", "Payment plans"),
     ("/#brochures", "Brochures"),
-    ("/#developer", "G Developments"),
     ("#contact", "Contact"),
 ]
 CURRENT = ' aria-current="page"'
