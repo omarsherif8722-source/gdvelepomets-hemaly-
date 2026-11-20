@@ -1,4 +1,4 @@
-/* Omar Sherif · Private advisory for G Developments
+/* Mahmoud Elhemaly · Private advisory for G Developments
    One script, no dependencies. Data lives in /data/*.json. */
 (() => {
   "use strict";
@@ -121,8 +121,8 @@
     if (!maskWord) return;
     maskWord.style.setProperty("--fit", "100px");
     const w = maskWord.getBoundingClientRect().width || 1;
-    const byWidth = (100 * window.innerWidth * (window.innerWidth < 760 ? 0.96 : 0.9)) / w;
-    const byHeight = window.innerHeight * 0.62;
+    const byWidth = (100 * window.innerWidth * (window.innerWidth < 760 ? 0.94 : 0.84)) / w;
+    const byHeight = window.innerHeight * 0.4;
     maskWord.style.setProperty("--fit", `${Math.min(byWidth, byHeight).toFixed(1)}px`);
   }
   fitMask();
@@ -216,15 +216,14 @@
       renderKrypton(ctx);
       renderAtlas(ctx);
       renderAtelier(ctx);
-      renderAvailability(ctx);
       renderLibrary(ctx);
       renderContact(ctx);
       document.documentElement.classList.add("is-ready");
     })
     .catch((err) => {
       console.error(err);
-      $$("[data-ats-count], [data-pay-result], [data-atlas-view]").forEach((el) => {
-        el.innerHTML = `<p class="muted">Live data could not load. Message Omar on WhatsApp at +20 122 727 5122 for current prices and availability.</p>`;
+      $$("[data-pay-result], [data-atlas-view]").forEach((el) => {
+        el.innerHTML = `<p class="muted">Live data could not load. Message a salesperson on WhatsApp at +20 122 727 5122 for current prices and availability.</p>`;
       });
     });
 
@@ -306,7 +305,7 @@
             </div>
           </div>
           <div class="plan-card__actions">
-            <a class="btn btn--dark btn--small" href="${wa(`Hello Omar, I'm interested in Krypton layout ${l.code} (${sizes}). Which units are available and at what price?`)}" target="_blank" rel="noopener">${WA_ICON} Ask about ${esc(l.code)}</a>
+            <a class="btn btn--dark btn--small" href="${wa(`Hello, I'm interested in Krypton layout ${l.code} (${sizes}). Which units are available and at what price?`)}" target="_blank" rel="noopener">${WA_ICON} Ask about ${esc(l.code)}</a>
             <button class="btn btn--line btn--small" type="button" data-kr-paybeds="${l.beds}">Payments for this size</button>
           </div>
         </article>`;
@@ -468,12 +467,11 @@
         <h3 class="atlas__title">${esc(p.name)}</h3>
         <p class="atlas__intro">${esc(p.intro)}</p>
         <dl class="facts">${p.facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
-        ${us.length ? `<p class="muted">${us.length === 1 ? "One unit is" : `${nf.format(us.length)} units are`} on the availability sheet today, from ${egp(min)} EGP.</p>` : ""}
+        ${us.length ? `<p class="muted">Available today from ${egp(min)} EGP.</p>` : ""}
         <div class="atlas__actions">
           <button class="btn btn--dark" type="button" data-open-dossier="${p.id}">Open the full details</button>
-          ${us.length ? `<button class="btn btn--line" type="button" data-see-units="${p.id}">${us.length === 1 ? "See the available unit" : `See ${nf.format(us.length)} available units`}</button>` : ""}
-          ${!us.length && pay ? `<button class="btn btn--line" type="button" data-see-plan="${p.id}">Work out the payments</button>` : ""}
-          ${!us.length && !pay ? `<a class="btn btn--line" href="${wa(`Hello Omar, I'd like to hear about ${p.name}.`)}" target="_blank" rel="noopener">Ask Omar about ${esc(p.name)}</a>` : ""}
+          ${pay ? `<button class="btn btn--line" type="button" data-see-plan="${p.id}">Work out the payments</button>` : ""}
+          <a class="btn btn--line" href="${wa(`Hello, which ${p.parent ? `${p.parent} ${p.name}` : p.name} units are available now?`)}" target="_blank" rel="noopener">${WA_ICON} Ask what's available</a>
         </div>`;
     }
     initTabs(tabList, (tab) => showRegion(tab.dataset.region));
@@ -481,8 +479,6 @@
     view.addEventListener("click", (e) => {
       const d = e.target.closest("[data-open-dossier]");
       if (d) openDossier(ctx, d.dataset.openDossier);
-      const s = e.target.closest("[data-see-units]");
-      if (s) ctx.showUnits && ctx.showUnits(portfolio.projects.find((x) => x.id === s.dataset.seeUnits));
       const pl = e.target.closest("[data-see-plan]");
       if (pl) ctx.showPlan && ctx.showPlan(portfolio.projects.find((x) => x.id === pl.dataset.seePlan));
     });
@@ -511,7 +507,7 @@
     const dest = phases[0] && phases[0].destination;
     const books = (p.brochures || []).map((b) => LIBRARY.find((x) => x.id === b)).filter(Boolean);
     const homesHtml = types.length
-      ? `<ul class="typelist">${types.map((t) => `<li><strong>${esc(t.type)}</strong><span>${t.bmin < Infinity ? (t.bmin === t.bmax ? `${t.bmin} m²` : `${t.bmin} – ${t.bmax} m²`) : ""}, ${t.n} available</span><em>from ${short(t.min)}</em></li>`).join("")}</ul>`
+      ? `<ul class="typelist">${types.map((t) => `<li><strong>${esc(t.type)}</strong><span>${t.bmin < Infinity ? (t.bmin === t.bmax ? `${t.bmin} m²` : `${t.bmin} – ${t.bmax} m²`) : ""}</span><em>from ${short(t.min)}</em></li>`).join("")}</ul>`
       : p.homes ? `<ul class="typelist">${p.homes.map((h) => `<li><strong>${esc(h.name)}</strong><span>${esc(h.size)}</span><em>from ${short(h.from)}</em></li>`).join("")}</ul>`
       : `<p class="muted">Unit lists for ${esc(p.name)} are shared on request.</p>`;
     body.innerHTML = `
@@ -537,18 +533,17 @@
           <ul class="ticks">${(p.highlights || []).map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
         </div>
         <div role="tabpanel" id="dp-h" aria-labelledby="dt-h" class="panel" hidden>
-          ${us.length ? `<p class="muted">${nf.format(us.length)} units on the developer's availability sheet, grouped by type.</p>` : ""}
+          ${us.length ? `<p class="muted">Homes on the developer's current availability sheet, grouped by type.</p>` : ""}
           ${homesHtml}
         </div>
         <div role="tabpanel" id="dp-p" aria-labelledby="dt-p" class="panel" hidden>
           ${phases.length ? `<ul class="planlist">${phases.map((ph) => `<li><strong>${esc(ph.name)}</strong>${ph.plans.map((pl) => `<span>${esc(planSentence(pl))}</span>`).join("<br>")}${ph.note ? `<br><span>${esc(ph.note)}</span>` : ""}</li>`).join("")}</ul>
           <p class="muted" style="margin-top:14px">Maintenance: ${dest.maintenance.pct}% of the unit price, due ${esc(dest.maintenance.due)}.${dest.maintenance.extra ? ` ${esc(dest.maintenance.extra)}.` : ""} Source: Standard Payment Plans, October 18, 2026.</p>`
-          : `<p class="muted">Payment terms for ${esc(p.name)} are quoted per unit. Ask Omar for the current offer.</p>`}
+          : `<p class="muted">Payment terms for ${esc(p.name)} are quoted per unit. Ask a salesperson for the current offer.</p>`}
         </div>
         ${books.length ? `<div role="tabpanel" id="dp-b" aria-labelledby="dt-b" class="panel" hidden><ul class="planlist">${books.map((b) => `<li><strong>${esc(b.title)}</strong><span>${esc(b.meta)}</span><br><a class="link" href="${b.file}" download>Download the PDF</a></li>`).join("")}</ul></div>` : ""}
         <div class="dossier__cta">
-          <a class="btn btn--dark" href="${wa(`Hello Omar, I'd like details on ${p.parent ? `${p.parent} ${p.name}` : p.name}.`)}" target="_blank" rel="noopener">${WA_ICON} Ask Omar about ${esc(p.name)}</a>
-          ${us.length ? `<button class="btn btn--line" type="button" data-dossier-units>See available units</button>` : ""}
+          <a class="btn btn--dark" href="${wa(`Hello, I'd like details on ${p.parent ? `${p.parent} ${p.name}` : p.name}.`)}" target="_blank" rel="noopener">${WA_ICON} Ask about ${esc(p.name)}</a>
           ${p.anchor ? `<a class="btn btn--line" href="${p.anchor}" data-dossier-close>Explore ${esc(p.name)}</a>` : ""}
         </div>
       </div>`;
@@ -557,7 +552,6 @@
     body.scrollTop = 0;
     body.onclick = (e) => {
       if (e.target.closest("[data-dossier-close]")) dlg.close();
-      if (e.target.closest("[data-dossier-units]")) { dlg.close(); ctx.showUnits(p); }
     };
   }
   $("[data-dossier]").addEventListener("click", (e) => { if (e.target === e.currentTarget) e.currentTarget.close(); });
@@ -640,7 +634,7 @@
             <div><dt>Maintenance</dt><dd>${egp((price * m.pct) / 100)}<small>${m.pct}%, ${esc(m.due)}</small></dd></div>
           </dl>
           <div class="result__actions">
-            <a class="btn btn--light" href="${wa(`Hello Omar, I'm looking at ${dest.name} (${phase.name}) for about ${egp(price)} EGP cash. What is available?`)}" target="_blank" rel="noopener">${WA_ICON} Ask about cash units</a>
+            <a class="btn btn--light" href="${wa(`Hello, I'm looking at ${dest.name} (${phase.name}) for about ${egp(price)} EGP cash. What is available?`)}" target="_blank" rel="noopener">${WA_ICON} Ask about cash units</a>
           </div>`;
         return;
       }
@@ -673,13 +667,9 @@
         </ol>
         ${s.cashPrice ? `<div class="result__cash"><p>Paying cash instead</p><strong>${egp(s.cashPrice)} EGP</strong><p>${pl.cash}% discount on the installment price.</p></div>` : ""}
         <div class="result__actions">
-          <a class="btn btn--light" href="${wa(`Hello Omar, please send me the ${dest.name} ${phase.name} plan for a unit around ${egp(price)} EGP: ${planLabel(pl)}, ${egp(s.each)} per ${freq}.`)}" target="_blank" rel="noopener">${WA_ICON} Send me this plan</a>
-          ${units.some((u) => u.plan === phase.id) ? `<button class="btn btn--ghost-light" type="button" data-pay-units>See units at this price</button>` : ""}
+          <a class="btn btn--light" href="${wa(`Hello, please send me the ${dest.name} ${phase.name} plan for a unit around ${egp(price)} EGP: ${planLabel(pl)}, ${egp(s.each)} per ${freq}.`)}" target="_blank" rel="noopener">${WA_ICON} Send me this plan</a>
         </div>`;
     }
-    result.addEventListener("click", (e) => {
-      if (e.target.closest("[data-pay-units]")) ctx.showUnitsForPlan && ctx.showUnitsForPlan(phase.id, price);
-    });
 
     // Hooks used by other sections
     ctx.showPlan = (p) => {
@@ -697,141 +687,6 @@
   }
 
   /* ------------------------------------------------------------------ */
-  /* Availability                                                        */
-  /* ------------------------------------------------------------------ */
-  function renderAvailability(ctx) {
-    const { units, inv } = ctx;
-    const tabList = $("[data-ats-tabs]");
-    const selPhase = $("[data-ats-phase]");
-    const selType = $("[data-ats-type]");
-    const selSort = $("[data-ats-sort]");
-    const q = $("[data-ats-q]");
-    const budget = $("[data-ats-budget]");
-    const budgetOut = $("[data-ats-budget-out]");
-    const hist = $("[data-ats-hist]");
-    const rowsEl = $("[data-ats-rows]");
-    const count = $("[data-ats-count]");
-    const more = $("[data-ats-more]");
-    const asofEl = $("[data-ats-asof]");
-    const dates = Object.values(inv.projects).map((p) => p.asOf).sort();
-    asofEl.textContent = new Date(dates[dates.length - 1]).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-
-    const projects = [["", "All", units.length], ...Object.entries(inv.projects).map(([id, p]) => [id, p.name === "Playa" ? "Playa Ghazala" : p.name, units.filter((u) => u.project === id).length])];
-    tabList.innerHTML = projects.map(([id, name, n], i) => `<button role="tab" aria-selected="${i === 0}" ${i ? 'tabindex="-1"' : ""} data-p="${id}">${esc(name)}<small>${nf.format(n)}</small></button>`).join("");
-    const state = { project: "", phase: "", phases: null, type: "", beds: "", sort: "price-asc", q: "", max: Infinity, shown: 30, plan: "" };
-    const tabs = initTabs(tabList, (t) => { state.project = t.dataset.p; state.phase = ""; state.phases = null; state.type = ""; state.plan = ""; state.max = Infinity; fillSelects(); setupBudget(); apply(); });
-    const bedSeg = initSeg($("[data-ats-beds]"), (b) => { state.beds = b.dataset.v; apply(); });
-
-    const scoped = () => units.filter((u) => (!state.project || u.project === state.project) && (!state.phases || state.phases.includes(u.phase)));
-    function fillSelects() {
-      const base = scoped();
-      const phases = [...new Set(base.map((u) => u.phase))];
-      selPhase.innerHTML = `<option value="">All</option>${phases.map((p) => `<option ${p === state.phase ? "selected" : ""}>${esc(p)}</option>`).join("")}`;
-      const types = [...new Set(base.filter((u) => !state.phase || u.phase === state.phase).map((u) => u.type))].sort();
-      selType.innerHTML = `<option value="">All</option>${types.map((t) => `<option ${t === state.type ? "selected" : ""}>${esc(t)}</option>`).join("")}`;
-    }
-    let lo = 0, hi = 1;
-    function setupBudget() {
-      const ps = scoped().map((u) => u.price);
-      lo = Math.log(Math.min(...ps)); hi = Math.log(Math.max(...ps));
-      budget.value = state.max === Infinity ? 100 : Math.round(((Math.log(state.max) - lo) / (hi - lo)) * 100);
-      drawBudget();
-    }
-    const budgetValue = () => (Number(budget.value) >= 100 ? Infinity : Math.round(Math.exp(lo + (Number(budget.value) / 100) * (hi - lo)) / 100000) * 100000);
-    function drawBudget() {
-      state.max = budgetValue();
-      budgetOut.textContent = state.max === Infinity ? "Any" : `${short(state.max)} EGP`;
-      budget.setAttribute("aria-valuetext", state.max === Infinity ? "Any budget" : `${egp(state.max)} Egyptian pounds`);
-      const bins = new Array(48).fill(0);
-      const base = filtered(true);
-      base.forEach((u) => { const i = Math.min(47, Math.max(0, Math.floor(((Math.log(u.price) - lo) / (hi - lo || 1)) * 48))); bins[i]++; });
-      const peak = Math.max(1, ...bins);
-      const cut = state.max === Infinity ? 48 : ((Math.log(state.max) - lo) / (hi - lo)) * 48;
-      hist.innerHTML = bins.map((n, i) => `<i class="${i >= cut ? "off" : ""}" style="height:${n ? Math.max(6, (n / peak) * 100) : 2}%"></i>`).join("");
-    }
-    function filtered(ignoreBudget) {
-      const needle = state.q.trim().toUpperCase();
-      return scoped().filter((u) =>
-        (!state.phase || u.phase === state.phase) &&
-        (!state.type || u.type === state.type) &&
-        (!state.plan || u.plan === state.plan) &&
-        (!state.beds || (state.beds === "5" ? (u.beds || 0) >= 5 : u.beds === Number(state.beds))) &&
-        (ignoreBudget || u.price <= state.max) &&
-        (!needle || u.unit.toUpperCase().includes(needle)));
-    }
-    const sorters = {
-      "price-asc": (a, b) => a.price - b.price,
-      "price-desc": (a, b) => b.price - a.price,
-      "bua-desc": (a, b) => (b.bua || 0) - (a.bua || 0),
-      "ppm-asc": (a, b) => a.price / (a.bua || 1e9) - b.price / (b.bua || 1e9),
-    };
-    const projectName = (id) => (id === "playa" ? "Playa Ghazala" : inv.projects[id].name);
-    function row(u) {
-      const pl = ctx.planForUnit(u);
-      const s = pl ? schedule(u.price, pl) : null;
-      const land = u.garden ? `Garden ${nf.format(u.garden)} m²` : u.land ? `Land ${nf.format(u.land)} m²` : "";
-      const tag = u.status === "hold" ? '<span class="tag tag--hold">On hold</span>' : u.status === "requested" || u.status === "ready" ? '<span class="tag tag--hold">Being reserved</span>' : "";
-      const sub = [u.view, u.floor ? `${u.floor} floor`.replace("Ground floor floor", "Ground floor") : ""].filter(Boolean).join(", ");
-      const msg = `Hello Omar, is unit ${u.unit} still available? ${projectName(u.project)}, ${u.phase}, ${u.type}${u.bua ? `, ${u.bua} m²` : ""}, listed at ${egp(u.price)} EGP.`;
-      return `<div class="ats__row" role="row">
-        <span class="ats__unit" role="cell"><strong>${esc(u.unit)}</strong><span>${esc(projectName(u.project))}, ${esc(u.phase)}</span>${tag}</span>
-        <span class="ats__home" role="cell">${esc(u.type)}${sub ? `<span>${esc(sub)}</span>` : ""}</span>
-        <span class="ats__cell-beds" role="cell">${u.beds ?? "–"}</span>
-        <span class="ats__cell-bua" role="cell">${u.bua ? `${nf.format(u.bua)} m²` : "–"}</span>
-        <span class="ats__cell-land" role="cell">${land}</span>
-        <span class="ats__price" role="cell">${egp(u.price)}</span>
-        <span class="ats__quarter" role="cell">${s && !s.cashOnly ? `${short(s.each)}<small>per ${pl.annual ? "year" : "quarter"}, ${pl.years} yrs</small>` : "Cash<small>handover soon</small>"}</span>
-        <span role="cell"><a class="ats__ask" href="${wa(msg)}" target="_blank" rel="noopener" aria-label="Ask Omar about unit ${esc(u.unit)} on WhatsApp">${WA_ICON}Ask</a></span>
-      </div>`;
-    }
-    function apply(keepShown) {
-      if (!keepShown) state.shown = 30;
-      const list = filtered().sort(sorters[state.sort]);
-      count.innerHTML = list.length
-        ? `<strong>${nf.format(list.length)}</strong> ${list.length === 1 ? "unit" : "units"} match, from ${egp(list[0] && Math.min(...list.map((u) => u.price)))} EGP.`
-        : "";
-      rowsEl.innerHTML = list.length
-        ? list.slice(0, state.shown).map(row).join("")
-        : `<p class="ats__empty">No units match these filters. Raise the budget or clear a filter, or <a class="link" href="${wa("Hello Omar, I couldn't find a unit that fits my brief on your site. Can you help?")}" target="_blank" rel="noopener">tell Omar what you need</a>.</p>`;
-      more.hidden = list.length <= state.shown;
-      more.textContent = `Show more units (${nf.format(list.length - state.shown)} left)`;
-      drawBudget();
-    }
-    selPhase.addEventListener("change", () => { state.phase = selPhase.value; state.type = ""; if (state.phases && !state.phase) { state.phases = null; setupBudget(); } fillSelects(); apply(); });
-    selType.addEventListener("change", () => { state.type = selType.value; apply(); });
-    selSort.addEventListener("change", () => { state.sort = selSort.value; apply(); });
-    q.addEventListener("input", () => { state.q = q.value; apply(); });
-    budget.addEventListener("input", () => { drawBudget(); apply(); });
-    more.addEventListener("click", () => { state.shown += 30; apply(true); });
-
-    function goTo(projectId, opts = {}) {
-      const tab = $(`[data-p="${projectId}"]`, tabList);
-      tabs.select(tab, true);
-      Object.assign(state, { project: projectId, phase: opts.phase || "", phases: opts.phases || null, type: "", plan: opts.plan || "", beds: "", q: "", max: Infinity });
-      q.value = "";
-      bedSeg.set($('[data-ats-beds] [data-v=""]'), true);
-      fillSelects();
-      setupBudget();
-      if (opts.max) { state.max = opts.max; budget.value = Math.min(100, Math.max(0, Math.round(((Math.log(opts.max) - lo) / (hi - lo)) * 100))); }
-      apply();
-      document.getElementById("availability").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
-    }
-    ctx.showUnits = (p) => {
-      if (!p.inventory) return;
-      const phases = p.inventory.phases;
-      goTo(p.inventory.project, phases && phases.length === 1 ? { phase: phases[0] } : { phases: phases || null });
-    };
-    ctx.showUnitsForPlan = (planId, maxPrice) => {
-      const u = units.find((x) => x.plan === planId);
-      if (u) goTo(u.project, { plan: planId, max: maxPrice * 1.1 });
-    };
-
-    fillSelects();
-    setupBudget();
-    apply();
-  }
-
-  /* ------------------------------------------------------------------ */
   /* Library                                                             */
   /* ------------------------------------------------------------------ */
   const LIBRARY = [
@@ -839,9 +694,6 @@
     { id: "krypton-block-2", title: "Krypton, Block 2", meta: "77 pages, 31 MB. Block 2 floor plates with released units.", file: "assets/brochures/krypton-block-2.pdf", cover: "assets/img/krypton/kr-lighter" },
     { id: "golf-views", title: "NEWKAIRO Golf, Argon Views", meta: "71 pages, 17 MB. Golf estates, Fairscapes, Tee View and twin villas.", file: "assets/brochures/newkairo-golf-views-argon.pdf", cover: "assets/img/golf/golf-clubhouse" },
     { id: "neon-views", title: "Neon Views", meta: "83 pages, 34 MB. Landscape, typologies and floor plans.", file: "assets/brochures/newkairo-neon-views.pdf", cover: "assets/img/neon/neon-cover" },
-    { id: "newkairo", title: "NEWKAIRO, the masterplan story", meta: "60 pages, 12 MB. Location, schools, golf, hotels and the Boulevard.", file: "assets/brochures/newkairo-conceptual-brochure.pdf", cover: "assets/img/newkairo/nk-welcome" },
-    { id: "masterplan", title: "NEWKAIRO masterplan with Krypton", meta: "1 page, 1.8 MB. Where each phase sits.", file: "assets/brochures/newkairo-masterplan-krypton.pdf", cover: "assets/img/newkairo/nk-masterplan" },
-    { id: "payment-terms", title: "Standard payment plans", meta: "2 pages, 0.1 MB. Issued October 18, 2026, all destinations.", file: "assets/brochures/standard-payment-terms-2026-10-18.pdf", cover: "assets/img/covers/payment-terms" },
   ];
 
   function renderLibrary() {
@@ -852,7 +704,7 @@
         <p>${esc(b.meta)}</p>
         <div class="book__actions">
           <a class="btn btn--light" href="${b.file}" download>Download PDF</a>
-          <a class="btn btn--ghost-light" href="${wa(`Hello Omar, please send me the ${b.title} brochure on WhatsApp.`)}" target="_blank" rel="noopener">Send it on WhatsApp</a>
+          <a class="btn btn--ghost-light" href="${wa(`Hello, please send me the ${b.title} brochure on WhatsApp.`)}" target="_blank" rel="noopener">Send it on WhatsApp</a>
         </div>
       </article>`).join("");
   }
@@ -873,7 +725,7 @@
       if (!d.name.trim()) { err.hidden = false; form.elements.name.focus(); return; }
       err.hidden = true;
       const text = [
-        `Hello Omar, this is ${d.name.trim()}.`,
+        `Hello, this is ${d.name.trim()}.`,
         `Interested in: ${d.interest}.`,
         `Budget: ${d.budget}.`,
         `Payment: ${d.terms}.`,

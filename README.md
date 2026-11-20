@@ -1,4 +1,4 @@
-# Omar Sherif · Private advisory for G Developments
+# Mahmoud Elhemaly · Private advisory for G Developments
 
 A static, no-build website for Krypton at NEWKAIRO and the wider G Developments portfolio.
 Plain HTML, CSS and JavaScript, so any static host serves it as-is (Render, GitHub Pages, Netlify).
@@ -11,9 +11,12 @@ Plain HTML, CSS and JavaScript, so any static host serves it as-is (Render, GitH
 | Krypton | Tabs for the place, 25 floor plans with room sizes, floor-by-floor released units (Blocks 1–2), payment steps and a gallery | `data/krypton.json`, `assets/img/plans/` |
 | Portfolio | Destination tabs (East Cairo, West Cairo, North Coast, Ain Sokhna), 13 projects, a details panel with homes, payment terms and brochures | `data/portfolio.json` |
 | Payment plans | Every destination and phase from the Standard Payment Plans of October 18, 2026, with a price input, schedule, maintenance and cash price | `data/payment_terms.json` |
-| Availability | 1,787 units from the November 2026 Primary ATS sheets, with filters, a budget histogram and a WhatsApp "Ask" on each unit | `data/inventory.json` |
-| Brochures | Seven official PDFs, compressed for the web | `assets/brochures/` |
-| Contact | WhatsApp and call to +20 122 727 5122, and a brief form that opens WhatsApp pre-filled | `data/site_config.json` |
+| Brochures | Krypton Blocks 1 and 2, Golf Views and Neon Views PDFs, compressed for the web | `assets/brochures/` |
+| Contact | WhatsApp and "Call a salesperson" on +20 122 727 5122, and a brief form that opens WhatsApp pre-filled | `data/site_config.json` |
+
+## Private dashboard
+
+`/dashboard` (unlisted, not indexed) opens with a passcode and shows inventory totals by project and status, the full unit list with filters, a "Send to client" WhatsApp share per unit and a CSV export. The passcode is checked in the browser, so treat it as a light lock: the data file is still reachable for anyone who knows its address. To change it, put the output of `printf '%s' 'NEW-CODE' | shasum -a 256` into `PASS_HASH` in `js/dashboard.js`.
 
 The WhatsApp button with the number under it stays on screen everywhere.
 

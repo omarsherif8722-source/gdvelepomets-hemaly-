@@ -95,8 +95,7 @@
    },
    "brochures": [
     "krypton-block-1",
-    "krypton-block-2",
-    "masterplan"
+    "krypton-block-2"
    ],
    "anchor": "#krypton"
   },
@@ -261,9 +260,7 @@
      "Urban Living"
     ]
    },
-   "brochures": [
-    "newkairo"
-   ]
+   "brochures": []
   },
   {
    "id": "newgiza",

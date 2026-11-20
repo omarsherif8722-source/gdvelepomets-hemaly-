@@ -1,24 +1,35 @@
 {
-  "advisor": {
-    "name": "Omar Sherif",
-    "title": "Senior property advisor, G Developments portfolio",
-    "firm": "Hemaly Real Estate Advisory"
+ "advisor": {
+  "name": "Mahmoud Elhemaly",
+  "title": "Private real estate advisory, G Developments portfolio"
+ },
+ "contact": {
+  "phoneDisplay": "+20 122 727 5122",
+  "phoneHref": "+201227275122",
+  "whatsapp": "201227275122",
+  "hours": "Daily, 10:00 – 22:00 Cairo time"
+ },
+ "leadCapture": {
+  "webhookUrl": "",
+  "note": "Optional. Paste a Formspree, Make.com or Google Apps Script URL here to receive a copy of every enquiry in addition to the WhatsApp message."
+ },
+ "offices": [
+  {
+   "area": "New Cairo",
+   "detail": "NEWKAIRO and Krypton viewings, masterplan walkthroughs"
   },
-  "contact": {
-    "phoneDisplay": "+20 122 727 5122",
-    "phoneHref": "+201227275122",
-    "whatsapp": "201227275122",
-    "hours": "Daily, 10:00 – 22:00 Cairo time"
+  {
+   "area": "West Cairo",
+   "detail": "NEWGIZA, Artlife and IVY site visits"
   },
-  "leadCapture": {
-    "webhookUrl": "",
-    "note": "Optional. Paste a Formspree, Make.com or Google Apps Script URL here to receive a copy of every enquiry in addition to the WhatsApp message."
+  {
+   "area": "Zamalek",
+   "detail": "Private investor meetings, by appointment"
   },
-  "offices": [
-    { "area": "New Cairo", "detail": "NEWKAIRO and Krypton viewings, masterplan walkthroughs" },
-    { "area": "West Cairo", "detail": "NEWGIZA, Artlife and IVY site visits" },
-    { "area": "Zamalek", "detail": "Private investor meetings, by appointment" },
-    { "area": "North Coast", "detail": "Ras El Hekma and Ghazala Bay viewings, May to October" }
-  ],
-  "disclaimer": "Independent advisory for G Developments projects in Egypt. This is not the official G Developments website. Prices, payment plans and availability come from developer releases (Standard Payment Plans of October 18, 2026 and Primary ATS sheets of November 2026) and are confirmed at reservation."
+  {
+   "area": "North Coast",
+   "detail": "Ras El Hekma and Ghazala Bay viewings, May to October"
+  }
+ ],
+ "disclaimer": "Independent advisory for G Developments projects in Egypt. This is not the official G Developments website. Prices, payment plans and availability come from developer releases (Standard Payment Plans of October 18, 2026 and Primary ATS sheets of November 2026) and are confirmed at reservation."
 }

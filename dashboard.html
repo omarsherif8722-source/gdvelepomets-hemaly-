@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Dashboard | Mahmoud Elhemaly</title>
+  <meta name="theme-color" content="#421115">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23421115'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' fill='%23fff' text-anchor='middle'%3Ek%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body class="dash-body">
+  <div class="gate" data-gate>
+    <form class="gate__card" data-gate-form>
+      <p class="brandline">Mahmoud Elhemaly<span>/</span>Dashboard</p>
+      <h1>Sales dashboard</h1>
+      <label class="field"><span>Passcode</span><input type="password" name="code" autocomplete="current-password" required autofocus></label>
+      <p class="gate__error" data-gate-error hidden>That passcode doesn't match. Try again.</p>
+      <button class="btn btn--dark" type="submit">Open dashboard</button>
+    </form>
+  </div>
+
+  <div class="dash" data-dash hidden>
+    <header class="dash__bar">
+      <p class="dash__mark">Mahmoud Elhemaly <span>Dashboard</span></p>
+      <nav class="dash__links">
+        <a href="./" target="_blank" rel="noopener">Open the website</a>
+        <a href="https://dashboard.render.com/" target="_blank" rel="noopener">Hosting on Render</a>
+        <button type="button" data-lock>Lock</button>
+      </nav>
+    </header>
+
+    <main class="wrap dash__main">
+      <section class="dash__summary">
+        <div class="sec-head sec-head--split">
+          <div>
+            <p class="brandline">Primary availability<span>/</span><span data-ats-asof>November 2026</span></p>
+            <h2 class="sec-title">Inventory at a glance.</h2>
+          </div>
+          <p class="sec-lede">Every unit on the developer's Primary ATS sheets. Visitors to the website see prices from the same data but never the unit list.</p>
+        </div>
+        <dl class="kpis" data-kpis></dl>
+        <div class="dash__table-wrap">
+          <table class="projects" data-projects>
+            <thead><tr><th>Project</th><th>Sheet date</th><th>Units</th><th>Available</th><th>On hold</th><th>Being reserved</th><th>From</th><th>To</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="ats dash__ats" id="availability">
+        <div class="tabs tabs--scroll" role="tablist" aria-label="Project" data-ats-tabs></div>
+
+        <div class="ats__filters">
+          <label class="field"><span>Neighbourhood</span><select data-ats-phase><option value="">All</option></select></label>
+          <label class="field"><span>Home type</span><select data-ats-type><option value="">All</option></select></label>
+          <div class="field">
+            <span id="ats-beds-label">Bedrooms</span>
+            <div class="seg seg--small" role="radiogroup" aria-labelledby="ats-beds-label" data-ats-beds>
+              <button type="button" role="radio" aria-checked="true" data-v="">Any</button>
+              <button type="button" role="radio" aria-checked="false" data-v="1">1</button>
+              <button type="button" role="radio" aria-checked="false" data-v="2">2</button>
+              <button type="button" role="radio" aria-checked="false" data-v="3">3</button>
+              <button type="button" role="radio" aria-checked="false" data-v="4">4</button>
+              <button type="button" role="radio" aria-checked="false" data-v="5">5+</button>
+            </div>
+          </div>
+          <label class="field"><span>Status</span>
+            <select data-ats-status>
+              <option value="">All</option>
+              <option value="available">Available</option>
+              <option value="hold">On hold</option>
+              <option value="reserving">Being reserved</option>
+            </select>
+          </label>
+          <label class="field"><span>Sort</span>
+            <select data-ats-sort>
+              <option value="price-asc">Price, low to high</option>
+              <option value="price-desc">Price, high to low</option>
+              <option value="bua-desc">Largest first</option>
+              <option value="ppm-asc">Lowest price per m²</option>
+            </select>
+          </label>
+          <label class="field field--search"><span>Unit code</span><input type="search" placeholder="e.g. KR01-208" data-ats-q></label>
+        </div>
+
+        <div class="budget">
+          <div class="budget__head">
+            <span>Budget up to</span>
+            <output data-ats-budget-out>Any</output>
+          </div>
+          <div class="budget__chart" data-ats-hist aria-hidden="true"></div>
+          <input type="range" min="0" max="100" step="1" value="100" aria-label="Maximum budget" data-ats-budget>
+        </div>
+
+        <div class="dash__countbar">
+          <p class="ats__count" data-ats-count aria-live="polite"></p>
+          <button class="btn btn--line btn--small" type="button" data-ats-export>Download this list as CSV</button>
+        </div>
+        <div class="ats__table" role="table" aria-label="Units" data-ats-table>
+          <div class="ats__row ats__row--head" role="row">
+            <span role="columnheader">Unit</span>
+            <span role="columnheader">Home</span>
+            <span role="columnheader">Beds</span>
+            <span role="columnheader">Built-up</span>
+            <span role="columnheader">Land or garden</span>
+            <span role="columnheader">Price</span>
+            <span role="columnheader">Per quarter</span>
+            <span role="columnheader"><span class="sr-only">Action</span></span>
+          </div>
+          <div data-ats-rows></div>
+        </div>
+        <button class="btn btn--line ats__more" type="button" data-ats-more hidden>Show more units</button>
+      </section>
+
+      <section class="dash__help">
+        <h2>Updating the numbers</h2>
+        <ol>
+          <li>Export the new Primary ATS reports from Salesforce as Excel files.</li>
+          <li>In the project folder run <code>python3 scripts/build_inventory.py ~/Downloads/"Primary ATS"*.xlsx</code></li>
+          <li>Commit and push. Render publishes the update on its own within a minute or two.</li>
+        </ol>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/dashboard.js" defer></script>
+</body>
+</html>
