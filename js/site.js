@@ -322,144 +322,85 @@
   }
 
   /* ------------------------------------------------------------------ */
-  /* Krypton                                                             */
+  /* Krypton (Focused Call-Now & Upsell Mode)                            */
   /* ------------------------------------------------------------------ */
   function renderKrypton({ krypton }) {
-    const krTabs = initTabs($("[data-kr-tabs]"));
-    const tabFor = (id) => $(`#${id}`);
+    initTabs($("[data-kr-tabs]"));
 
-    // Residences
     const band = $("[data-kr-band]");
     const list = $("[data-kr-list]");
     const planEl = $("[data-kr-plan]");
-    let beds = 1, code = null;
-    const layoutsFor = (b) => krypton.layouts.filter((l) => l.beds === b);
 
-    function showLayout(c) {
-      code = c;
-      const l = krypton.layouts.find((x) => x.code === c);
-      $$("button", list).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.code === c)));
-      const sizes = l.sqmMax !== l.sqm ? `${l.sqm} – ${l.sqmMax} m²` : `${l.sqm} m²`;
-      const bandInfo = krypton.priceBands.find((p) => p.beds === l.beds);
-      const bedWord = ["", "One bedroom", "Two bedrooms", "Three bedrooms"][l.beds];
+    const UPSELL_COPY = {
+      1: {
+        hookDown: "393,750 EGP",
+        scarcity: "High demand · Limited Block 1 & Block 2 park-view quotas",
+        upsell: "Advisory upgrade note: For a modest step-up in quarterly payment, compare our 2-bedroom corner layouts with double the rental yield and wider park frontage.",
+      },
+      2: {
+        hookDown: "564,375 EGP",
+        scarcity: "Most requested tier · Released holds update daily",
+        upsell: "Advisory upgrade note: At a 2-bedroom budget, ask us on your call to compare a 3-bedroom terrace home or an Urban Living ground-garden apartment at nearly the same entry.",
+      },
+      3: {
+        hookDown: "740,500 EGP",
+        scarcity: "Corner & terrace allocations · Priority call list",
+        upsell: "Advisory upgrade note: Qualifying for a 3-bedroom apartment means you can also step into a Fully Finished Private-Garden Townhouse in Neon Views with 5% down. Ask Mahmoud to compare both live.",
+      },
+    };
+
+    function showBeds(b) {
+      const pb = krypton.priceBands.find((p) => p.beds === b) || krypton.priceBands[0];
+      const ls = krypton.layouts.filter((l) => l.beds === b);
+      const sample = ls[0];
+      const uInfo = UPSELL_COPY[b] || UPSELL_COPY[1];
+      const bedWord = ["", "One bedroom", "Two bedrooms", "Three bedrooms"][b];
+
+      band.innerHTML = `<strong>${pb.label}</strong> · ${pb.sqm} m² · Start with <strong>${uInfo.hookDown} (5% EOI)</strong>`;
+
+      list.innerHTML = `
+        <li style="padding:16px 0;border-bottom:1px solid var(--on-dark-3);color:var(--on-dark-2);font-size:15px;">
+          <strong style="display:block;color:#fff;font-family:var(--display);font-size:21px;margin-bottom:4px;">5% Down Payment Entry</strong>
+          Start from ${uInfo.hookDown} at reservation, 5% after 3 months, and equal installments over 8 years.
+        </li>
+        <li style="padding:16px 0;border-bottom:1px solid var(--on-dark-3);color:var(--on-dark-2);font-size:15px;">
+          <strong style="display:block;color:#fff;font-family:var(--display);font-size:21px;margin-bottom:4px;">Unlisted Holds &amp; Cash Rate</strong>
+          Exact released unit codes, floor levels, and today's private cash discount are shared directly by phone or WhatsApp.
+        </li>
+        <li style="padding:16px 0;color:var(--on-dark-2);font-size:15px;">
+          <strong style="display:block;color:var(--vermilion);font-family:var(--display);font-size:21px;margin-bottom:4px;">Smart Upgrade Comparison</strong>
+          ${esc(uInfo.upsell)}
+        </li>`;
+
       planEl.innerHTML = `
         <article class="plan-card">
           <div class="plan-card__head">
-            <h3 class="plan-card__title">${esc(l.code)} <span>/</span> ${sizes}</h3>
-            <p class="plan-card__meta">${bedWord}${l.units ? `, ${l.units} homes of this layout in Block 1` : ""}</p>
+            <h3 class="plan-card__title">${bedWord} Collection <span>/</span> ${pb.sqm} m²</h3>
+            <p class="plan-card__meta">${esc(uInfo.scarcity)}</p>
           </div>
           <div class="plan-card__body">
-            <button class="plan-card__img" type="button" data-zoom="${esc(u(l.plan))}" aria-label="Enlarge floor plan ${esc(l.code)}">
-              <img src="${esc(u(l.plan))}" alt="Floor plan of Krypton layout ${esc(l.code)}, ${sizes}" loading="lazy">
+            <button class="plan-card__img" type="button" data-zoom="${esc(u(sample.plan))}" aria-label="Preview representative ${bedWord} floor plan">
+              <img src="${esc(u(sample.plan))}" alt="Representative floor plan of Krypton ${bedWord}" loading="lazy">
             </button>
             <div>
-              <ul class="rooms">${l.rooms.map((r) => `<li><span>${r.n}</span><span>${esc(r.room)}</span><span>${esc(r.dims)} m</span></li>`).join("")}</ul>
-              ${l.variants.length ? `<p class="plan-card__variants">Variants: ${l.variants.map((v) => `${esc(v.code)} ${v.sqm} m²`).join(", ")}.</p>` : ""}
-              <p class="plan-card__variants">${bedWord} prices run ${short(bandInfo.min)} to ${short(bandInfo.max)} EGP depending on floor and view.</p>
+              <p style="font-family:var(--display);font-size:24px;line-height:1.2;margin-bottom:12px;">Reserve with ${uInfo.hookDown} (5% down) and up to 8 years to pay.</p>
+              <p class="plan-card__variants" style="margin-top:0;">We hold the complete ${ls.length}-layout floor-plan book, sun orientations, and live Block 1 &amp; Block 2 availability sheet at our advisory desk.</p>
+              <p class="plan-card__variants"><strong>Call or message now</strong> to receive the exact available unit numbers, net cash price, and a side-by-side upgrade comparison.</p>
             </div>
           </div>
           <div class="plan-card__actions">
-            <a class="btn btn--dark btn--small" href="${wa(`Hello, I'm interested in Krypton layout ${l.code} (${sizes}). Which units are available and at what price?`)}" target="_blank" rel="noopener">${WA_ICON} Ask about ${esc(l.code)}</a>
-            <button class="btn btn--line btn--small" type="button" data-kr-paybeds="${l.beds}">Payments for this size</button>
+            <a class="btn btn--red btn--small" href="tel:+201227275122">Call +20 122 727 5122 Now</a>
+            <a class="btn btn--dark btn--small" href="${wa(`Hello Mahmoud, I'm looking at a Krypton ${bedWord.toLowerCase()} (${pb.sqm} m²). Please send me the available unit numbers, cash price, and upgrade options.`)}" target="_blank" rel="noopener">${WA_ICON} Unlock Units on WhatsApp</a>
           </div>
         </article>`;
     }
-    function showBeds(b, keepCode) {
-      beds = b;
-      const pb = krypton.priceBands.find((p) => p.beds === b);
-      band.innerHTML = `<strong>${pb.label}</strong>, ${pb.sqm} m², ${short(pb.min)} – ${short(pb.max)} EGP`;
-      const ls = layoutsFor(b);
-      list.innerHTML = ls.map((l) => `
-        <li><button type="button" aria-pressed="false" data-code="${esc(l.code)}">
-          <span class="homes__code">${esc(l.code)}</span>
-          <span class="homes__size">${l.sqmMax !== l.sqm ? `${l.sqm} – ${l.sqmMax}` : l.sqm} m²</span>
-          <span class="homes__count">${l.units ? `${l.units} in Block 1` : "On request"}</span>
-        </button></li>`).join("");
-      showLayout(keepCode && ls.some((l) => l.code === keepCode) ? keepCode : ls[0].code);
-    }
-    const bedSeg = initSeg($("[data-kr-beds]"), (btn) => showBeds(Number(btn.dataset.beds)));
-    list.addEventListener("click", (e) => {
-      const b = e.target.closest("button[data-code]");
-      if (!b) return;
-      showLayout(b.dataset.code);
-      track("Krypton layout viewed", { layout: b.dataset.code });
-      if (window.innerWidth < 960) planEl.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-    });
+
+    initSeg($("[data-kr-beds]"), (btn) => showBeds(Number(btn.dataset.beds)));
     planEl.addEventListener("click", (e) => {
       const z = e.target.closest("[data-zoom]");
-      if (z) openLightbox([{ src: z.dataset.zoom, caption: `Krypton layout ${code}` }]);
-      const p = e.target.closest("[data-kr-paybeds]");
-      if (p) { krTabs.select(tabFor("kt-pay")); paySeg.set($(`[data-krpay-beds] [data-beds="${p.dataset.krPaybeds}"]`)); }
+      if (z) openLightbox([{ src: z.dataset.zoom, caption: "Representative Krypton residence layout — call for full layout book" }]);
     });
     showBeds(1);
-
-    function goToLayout(layoutCode) {
-      const base = layoutCode.slice(0, 5);
-      const l = krypton.layouts.find((x) => x.code === base);
-      if (!l) return;
-      krTabs.select(tabFor("kt-homes"));
-      bedSeg.set($(`[data-kr-beds] [data-beds="${l.beds}"]`), true);
-      showBeds(l.beds, base);
-      $("[data-kr-homes]").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-    }
-
-    // Floor by floor
-    const floorWrap = $("[data-kr-floor]");
-    const plateEl = $("[data-kr-plate]");
-    const unitsEl = $("[data-kr-units]");
-    let block = "Block 1", floor = "Second";
-    function renderFloors() {
-      const floors = krypton.blockFloors[block];
-      floorWrap.innerHTML = [...floors].reverse().map((f) => `
-        <button type="button" role="radio" aria-checked="${f.floor === floor}" data-floor="${f.floor}">
-          <span>${f.floor} floor</span><span>${f.units.length} released</span>
-        </button>`).join("");
-      initSeg(floorWrap, (b) => { floor = b.dataset.floor; renderFloor(); });
-      renderFloor();
-    }
-    function renderFloor() {
-      const f = krypton.blockFloors[block].find((x) => x.floor === floor);
-      const src = u(krypton.plates[block][floor]);
-      plateEl.innerHTML = `<img src="${src}" alt="${block}, ${floor.toLowerCase()} floor plate" loading="lazy">`;
-      plateEl.onclick = () => openLightbox([{ src, caption: `Krypton ${block}, ${floor.toLowerCase()} floor` }]);
-      unitsEl.innerHTML = f.units.map((u) => `
-        <li><button type="button" data-layout="${esc(u.layout)}">
-          <strong>${esc(u.unit)}</strong>
-          <span>Layout ${esc(u.layout)}, ${u.sqm} m², ${u.view === "Park" ? "park and pool view" : "Boulevard view"}</span>
-        </button></li>`).join("");
-    }
-    initSeg($("[data-kr-block]"), (b) => { block = b.dataset.block; renderFloors(); });
-    unitsEl.addEventListener("click", (e) => { const b = e.target.closest("[data-layout]"); if (b) goToLayout(b.dataset.layout); });
-    renderFloors();
-
-    // Payment
-    const range = $("[data-krpay-range]");
-    const out = $("[data-krpay-out]");
-    const ends = $("[data-krpay-ends]");
-    const steps = $("[data-krpay-steps]");
-    const kp = krypton.payment;
-    let payBand = krypton.priceBands[1];
-    function renderPay() {
-      const price = Number(range.value);
-      out.textContent = `${egp(price)} EGP`;
-      const each = (price * (100 - kp.down[0] - kp.down[1])) / 100 / kp.installments;
-      steps.innerHTML = `
-        <li><span class="step__what">Down payment</span><span class="step__when">At reservation, starting with your 5% expression of interest</span><span class="step__amt">${egp((price * kp.down[0]) / 100)}<small>${kp.down[0]}% of the price</small></span></li>
-        <li><span class="step__what">Second payment</span><span class="step__when">Three months after reservation</span><span class="step__amt">${egp((price * kp.down[1]) / 100)}<small>${kp.down[1]}% of the price</small></span></li>
-        <li><span class="step__what">Quarterly installments</span><span class="step__when">${kp.installments} equal payments over ${kp.years} years</span><span class="step__amt">${egp(each)}<small>each quarter, 90% in total</small></span></li>
-        <li><span class="step__what">Maintenance deposit</span><span class="step__when">Due 12 months before delivery</span><span class="step__amt">${egp((price * kp.maintenance) / 100)}<small>${kp.maintenance}% of the price</small></span></li>`;
-      range.setAttribute("aria-valuetext", `${egp(price)} Egyptian pounds`);
-    }
-    function setPayBand(b) {
-      payBand = krypton.priceBands.find((p) => p.beds === b);
-      range.min = payBand.min; range.max = payBand.max; range.step = 5000;
-      range.value = payBand.min;
-      ends.innerHTML = `<span>${short(payBand.min)}</span><span>${short(payBand.max)}</span>`;
-      renderPay();
-    }
-    const paySeg = initSeg($("[data-krpay-beds]"), (btn) => setPayBand(Number(btn.dataset.beds)));
-    range.addEventListener("input", renderPay);
-    setPayBand(2);
 
     // Gallery
     const gal = [
@@ -470,8 +411,10 @@
       ["kr-terrace", "Rooftop lounge"], ["kr-promenade", "The promenade"], ["kr-aerial-2", "Krypton blocks from above"], ["kr-street-life", "Street life on The Boulevard"],
     ].map(([f, c]) => ({ base: `assets/img/krypton/${f}`, caption: c }));
     const galEl = $("[data-kr-gallery]");
-    galEl.innerHTML = gal.map((g, i) => `<button type="button" data-i="${i}" aria-label="Open image: ${esc(g.caption)}">${picture(g.base, g.caption, "(min-width: 900px) 33vw, 100vw")}</button>`).join("");
-    galEl.addEventListener("click", (e) => { const b = e.target.closest("[data-i]"); if (b) openLightbox(gal.map((g) => ({ src: `${u(g.base)}.jpg`, caption: g.caption })), Number(b.dataset.i)); });
+    if (galEl) {
+      galEl.innerHTML = gal.map((g, i) => `<button type="button" data-i="${i}" aria-label="Open image: ${esc(g.caption)}">${picture(g.base, g.caption, "(min-width: 900px) 33vw, 100vw")}</button>`).join("");
+      galEl.addEventListener("click", (e) => { const b = e.target.closest("[data-i]"); if (b) openLightbox(gal.map((g) => ({ src: `${u(g.base)}.jpg`, caption: g.caption })), Number(b.dataset.i)); });
+    }
   }
 
   /* ------------------------------------------------------------------ */
@@ -521,12 +464,12 @@
         <p class="atlas__place">${esc(p.place)}</p>
         <h3 class="atlas__title">${esc(p.name)}</h3>
         <p class="atlas__intro">${esc(p.intro)}</p>
-        <dl class="facts">${p.facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
-        ${min ? `<p class="muted">From ${egp(min)} EGP.</p>` : ""}
+        <dl class="facts">${p.facts.filter(([k]) => !/cash/i.test(k)).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
+        ${min ? `<p class="muted">Entry from <strong>${short(min * 0.05)} EGP (5% down)</strong> · Exact unit prices &amp; cash discounts shared on call.</p>` : ""}
         <div class="atlas__actions">
-          <a class="btn btn--dark" href="/${p.slug}/">Visit ${esc(p.name)}</a>
-          ${pay ? `<button class="btn btn--line" type="button" data-see-plan="${p.id}">Work out the payments</button>` : ""}
-          <a class="btn btn--line" href="${wa(`Hello, which ${p.parent ? `${p.parent} ${p.name}` : p.name} units are available now?`)}" target="_blank" rel="noopener">${WA_ICON} Ask what's available</a>
+          <a class="btn btn--red" href="tel:+201227275122">Call +20 122 727 5122</a>
+          <a class="btn btn--dark" href="${wa(`Hello Mahmoud, which ${p.parent ? `${p.parent} ${p.name}` : p.name} units and released holds are available right now?`)}" target="_blank" rel="noopener">${WA_ICON} Ask what's available</a>
+          <a class="btn btn--line" href="/${p.slug}/">Explore ${esc(p.name)}</a>
         </div>`;
     }
     initTabs(tabList, (tab) => showRegion(tab.dataset.region));
@@ -562,7 +505,7 @@
     $$("[data-from]").forEach((el) => {
       const p = ctx.portfolio.projects.find((x) => x.id === el.dataset.from);
       const min = p && fromPrice(ctx, p);
-      el.textContent = min ? `From ${short(min)} EGP` : p ? p.status : "";
+      el.textContent = min ? `5% down · From ${short(min * 0.05)} EGP at signing` : p ? p.status : "";
     });
   }
 
@@ -588,28 +531,33 @@
     if (!p) return;
     initTabs($('#project [role="tablist"]'));
 
-    // Homes: grouped from the availability sheet, or the published price list
+    // Homes: high-urgency 5% entry hooks + call-to-unlock (no full price dump)
     const homesEl = $("[data-p-homes]");
     const us = unitsFor(ctx, p);
     const types = typesSummary(us);
-    const pl = p.payment ? ctx.planById[p.payment.phases[0]] : null;
-    const each = (price) => { const s = pl && schedule(price, pl.plans[0]); return s && !s.cashOnly ? `${short(s.each)} per ${pl.plans[0].annual ? "year" : "quarter"}` : ""; };
-    const ask = (what) => `<a class="ats__ask ats__ask--light" href="${wa(`Hello, I'm interested in ${what} at ${p.parent ? `${p.parent} ${p.name}` : p.name}. What is available?`)}" target="_blank" rel="noopener">${WA_ICON}Ask</a>`;
+    const ask = (what) => `
+      <span style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+        <a class="ats__ask ats__ask--light" href="tel:+201227275122">Call Now</a>
+        <a class="ats__ask ats__ask--light" href="${wa(`Hello Mahmoud, I'm interested in ${what} at ${p.parent ? `${p.parent} ${p.name}` : p.name}. Please send me the available units, exact prices, and upgrade options.`)}" target="_blank" rel="noopener">${WA_ICON}Unlock Price</a>
+      </span>`;
     const rows = [
       ...(p.homes || []).map((x) => ({ name: x.name, size: x.size, from: x.from })),
       ...types.map((t) => ({ name: t.type, size: t.bmin < Infinity ? (t.bmin === t.bmax ? `${nf.format(t.bmin)} m²` : `${nf.format(t.bmin)} – ${nf.format(t.bmax)} m²`) : "", from: t.min })),
     ];
     homesEl.innerHTML = rows.length
-      ? `<p class="p-homes__note">${types.length ? "Home types on the developer's current sheets, with the lowest price for each." : "Published starting prices."}</p>
+      ? `<p class="p-homes__note">Exact unit numbers, plot positions, released holds, and today's private cash discount are shared directly by phone or WhatsApp so we can match—or upgrade—your brief.</p>
          <ul class="p-homes__list">${rows.map((r) => `
            <li class="p-homes__row">
              <span class="p-homes__name">${esc(r.name)}</span>
              <span class="p-homes__size">${esc(r.size)}</span>
-             <span class="p-homes__from"><small>From</small>${egp(r.from)} EGP${each(r.from) ? `<small>about ${each(r.from)}</small>` : ""}</span>
+             <span class="p-homes__from"><small>5% Down Entry From</small>${short(r.from * 0.05)} EGP<small>Full sheet &amp; cash rate on call</small></span>
              ${ask(r.name)}
            </li>`).join("")}</ul>`
-      : `<p class="p-homes__note">Unit lists for ${esc(p.name)} are shared on request, with current prices and status.</p>
-         <a class="btn btn--light" href="${wa(`Hello, please send me the available units at ${p.name}.`)}" target="_blank" rel="noopener">${WA_ICON} Ask for the unit list</a>`;
+      : `<p class="p-homes__note">Priority unit allocations and released holds for ${esc(p.name)} are shared directly on a quick advisory call.</p>
+         <div style="display:flex;gap:12px;flex-wrap:wrap;">
+           <a class="btn btn--light" href="tel:+201227275122">Call +20 122 727 5122</a>
+           <a class="btn btn--ghost-light" href="${wa(`Hello Mahmoud, please send me the available units and cash discount at ${p.name}.`)}" target="_blank" rel="noopener">${WA_ICON} Ask on WhatsApp</a>
+         </div>`;
 
     // Payment, scoped to this project's phases
     const payRoot = $("#project [data-pay-root]");
@@ -694,56 +642,24 @@
 
     function draw() {
       const pl = phase.plans[planIdx];
-      const s = schedule(price, pl);
-      const m = dest.maintenance;
-      note.innerHTML = [
-        phase.note ? esc(phase.note) : "",
-        `Maintenance deposit: ${m.pct}% of the unit price, due ${esc(m.due)}.${m.extra ? ` ${esc(m.extra)}.` : ""}`,
-        phase.official ? "" : "These terms are not on the October 18 sheet; confirm them per unit.",
-      ].filter(Boolean).join(" ");
+      const downFirst = pl.cashOnly ? "Cash" : `${pl.down[0] || 5}%`;
+      const secondNote = !pl.cashOnly && pl.down[1] ? `Then ${pl.down[1]}% after 3 months` : "Flexible contract entry";
+      const horizon = pl.cashOnly ? "Immediate cash contract" : `Up to ${pl.years} years`;
 
-      if (s.cashOnly) {
-        result.innerHTML = `
-          <dl class="result__lead">
-            <div class="is-key"><dt>Paid at contract</dt><dd>${egp(price)}<small>EGP, cash</small></dd></div>
-            <div><dt>Delivery</dt><dd>${pl.delivery ? `${pl.delivery} months` : "With main unit"}<small>${dest.id === "newgiza" ? "Kingsrange 1 prototype; 18 – 30 months elsewhere" : "from contract"}</small></dd></div>
-            <div><dt>Maintenance</dt><dd>${egp((price * m.pct) / 100)}<small>${m.pct}%, ${esc(m.due)}</small></dd></div>
-          </dl>
-          <div class="result__actions">
-            <a class="btn btn--light" href="${wa(`Hello, I'm looking at ${dest.name} (${phase.name}) for about ${egp(price)} EGP cash. What is available?`)}" target="_blank" rel="noopener">${WA_ICON} Ask about cash units</a>
-          </div>`;
-        return;
-      }
+      note.innerHTML = `Exact unit pricing, quarterly installment schedules, and private cash discount rates for <strong>${esc(dest.name)} (${esc(phase.name)})</strong> are calculated per unit. Speak directly with Mahmoud Elhemaly to unlock today's released holds and compare upgrade options.`;
 
-      const freq = pl.annual ? "year" : "quarter";
-      const widths = [...pl.down, s.restPct, pl.atDelivery || 0];
       result.innerHTML = `
         <dl class="result__lead">
-          <div><dt>At signing</dt><dd>${egp(s.down[0])}<small>${pl.down[0]}% of the price${pl.down[1] ? `, then ${egp(s.down[1])} after 3 months` : ""}</small></dd></div>
-          <div class="is-key"><dt>Each ${freq}</dt><dd>${egp(s.each)}<small>${pl.installments} installments over ${pl.years} years</small></dd></div>
-          <div><dt>${s.cashPrice ? "Cash price" : "Delivery"}</dt><dd${!s.cashPrice && !pl.delivery ? ' class="is-text"' : ""}>${s.cashPrice ? egp(s.cashPrice) : pl.delivery ? `${pl.delivery} months` : "On request"}<small>${s.cashPrice ? `${pl.cash}% off, saves ${egp(price - s.cashPrice)}` : pl.delivery ? "from contract" : "confirmed per unit"}</small></dd></div>
+          <div class="is-key"><dt>Contract entry</dt><dd>${downFirst}<small>${esc(secondNote)}</small></dd></div>
+          <div><dt>Installment horizon</dt><dd>${horizon}<small>${pl.cashOnly ? "Priority handover" : "Equal installments"}</small></dd></div>
+          <div><dt>Cash &amp; hold-list rate</dt><dd class="is-text">On Call<small>Private cash discount &amp; upgrades</small></dd></div>
         </dl>
-        <div class="split" role="img" aria-label="Price split: ${pl.down.map((d) => `${d}%`).join(" and ")} down, ${s.restPct}% in installments${pl.atDelivery ? `, ${pl.atDelivery}% on delivery` : ""}">
-          <div class="split__bar">
-            ${pl.down.map((d) => `<i class="down" style="width:${d}%"></i>`).join("")}
-            <i class="inst" style="width:${s.restPct}%;--q:calc(100% / ${pl.installments})"></i>
-            ${pl.atDelivery ? `<i class="deliv" style="width:${pl.atDelivery}%"></i>` : ""}
-          </div>
-          <div class="split__legend">
-            <span style="--c: var(--vermilion)">Down payment ${pl.down.reduce((a, b) => a + b, 0)}%</span>
-            <span style="--c: rgba(255,255,255,.75)">${pl.installments} installments, ${s.restPct}%</span>
-            ${pl.atDelivery ? `<span style="--c:#f0b9ad">On delivery ${pl.atDelivery}%</span>` : ""}
-          </div>
+        <div class="result__cash" style="margin-top:24px;">
+          <p><strong>Advisor Upgrade &amp; Cash Comparison:</strong> Before locking a unit from a standard price list, call our desk to check released "Hold" units, corner plots, and how stepping up to the next tier compares on a quarterly basis.</p>
         </div>
-        <ol class="schedule">
-          ${pl.down.map((d, i) => `<li><b>${i === 0 ? "Down payment" : "Second down payment"}</b><span>${i === 0 ? "At signing" : "Three months after signing"}</span><em>${egp(s.down[i])}</em></li>`).join("")}
-          <li><b>${pl.installments} ${pl.annual ? "annual" : "quarterly"} installments</b><span>${pl.years} years, ${egp(s.each)} each</span><em>${egp(s.each * pl.installments)}</em></li>
-          ${pl.atDelivery ? `<li><b>On delivery</b><span>At handover</span><em>${egp((price * pl.atDelivery) / 100)}</em></li>` : ""}
-          <li><b>Maintenance deposit</b><span>${m.pct}%, ${esc(m.due)}${pl.delivery ? `; delivery in ${pl.delivery} months` : ""}</span><em>${egp((price * m.pct) / 100)}</em></li>
-        </ol>
-        ${s.cashPrice ? `<div class="result__cash"><p>Paying cash instead</p><strong>${egp(s.cashPrice)} EGP</strong><p>${pl.cash}% discount on the installment price.</p></div>` : ""}
-        <div class="result__actions">
-          <a class="btn btn--light" href="${wa(`Hello, please send me the ${dest.name} ${phase.name} plan for a unit around ${egp(price)} EGP: ${planLabel(pl)}, ${egp(s.each)} per ${freq}.`)}" target="_blank" rel="noopener">${WA_ICON} Send me this plan</a>
+        <div class="result__actions" style="margin-top:24px;">
+          <a class="btn btn--red" href="tel:+201227275122">Call +20 122 727 5122 Now</a>
+          <a class="btn btn--light" href="${wa(`Hello Mahmoud, please send me the exact payment sheet, cash discount, and best available units for ${dest.name} (${phase.name}).`)}" target="_blank" rel="noopener">${WA_ICON} Get Custom Sheet on WhatsApp</a>
         </div>`;
     }
 
@@ -776,8 +692,8 @@
         <h3>${esc(b.title)}</h3>
         <p>${esc(b.meta)}</p>
         <div class="book__actions">
-          <a class="btn btn--light" href="${u(b.file)}" download>Download PDF</a>
-          <a class="btn btn--ghost-light" href="${wa(`Hello, please send me the ${b.title} brochure on WhatsApp.`)}" target="_blank" rel="noopener">Send it on WhatsApp</a>
+          <a class="btn btn--light" href="${wa(`Hello Mahmoud, please send me the ${b.title} brochure along with today's available units and cash discount.`)}" target="_blank" rel="noopener">${WA_ICON} Get Brochure &amp; Price List on WhatsApp</a>
+          <a class="btn btn--ghost-light" href="tel:+201227275122">Call to Review Layouts</a>
         </div>
       </article>`;
   }

@@ -136,6 +136,7 @@ def hero(word, brand, title, lede, wa_text, video=None, image=None, illustrative
           <h1 class="hero__title">{h(title)}</h1>
           <p class="hero__lede">{h(lede)}</p>
           <div class="hero__actions">
+            <a class="btn btn--red" href="tel:{PHONE_TEL}" data-wa="{h(label)} hero call">Call {PHONE}</a>
             {film_btn}<a class="btn btn--ghost-light" href="{wa(wa_text)}" target="_blank" rel="noopener" data-wa="{h(label)} hero">{WA_SVG} Message a salesperson</a>
           </div>
         </div>
@@ -297,7 +298,13 @@ def project_page(p):
     tab_html = "\n".join(
         f'          <button role="tab" id="pt-{k}" aria-controls="pp-{k}" aria-selected="{"true" if i == 0 else "false"}"{"" if i == 0 else rest}>{label}</button>'
         for i, (k, label) in enumerate(tabs))
-    facts = "".join(f'<div><dt>{h(k)}</dt><dd>{h(v)}</dd></div>' for k, v in p["facts"])
+    def mask_fact(k, v):
+        if k.lower() == "cash" and "off" in v.lower():
+            return (k, "On call")
+        if k.lower() == "from":
+            return ("Entry", "5% down")
+        return (k, v)
+    facts = "".join(f'<div><dt>{h(k)}</dt><dd>{h(v)}</dd></div>' for k, v in (mask_fact(k, v) for k, v in p["facts"]))
     highlights = "".join(f'<li>{h(x)}</li>' for x in p.get("highlights", []))
     place_img = img(p["heroImage"], f'{p["name"]}, {p["place"]}', "(min-width: 900px) 60vw, 100vw") if p.get("heroImage") else f'<div class="typo-panel"><span>{h(p["name"])}</span></div>'
     illus = '<figcaption class="place__tag">Illustrative image</figcaption>' if p.get("illustrative") else ""
@@ -309,7 +316,7 @@ def project_page(p):
               <div class="atelier__controls">
                 <fieldset class="chips" data-pay-phases><legend>Phase</legend></fieldset>
                 <fieldset class="chips" data-pay-plans hidden><legend>Plan</legend></fieldset>
-                <label class="range">
+                <label class="range" hidden>
                   <span class="range__label">Unit price</span>
                   <span class="price-input"><input type="text" inputmode="numeric" autocomplete="off" aria-label="Unit price in EGP" data-pay-price><span>EGP</span></span>
                   <input type="range" aria-label="Unit price slider" data-pay-range>
@@ -384,7 +391,7 @@ def krypton_page(p):
 {masthead("Krypton")}
 
   <main id="main">
-{hero("krypton", "NEWKAIRO<span>/</span>Krypton", p["heroTitle"], "Fully finished one to three bedroom homes from 7.88M EGP. Five percent down, eight years to pay.", "Hello, I'd like to hear about Krypton at NEWKAIRO.", p["video"], None, False, "Krypton")}
+{hero("krypton", "NEWKAIRO<span>/</span>Krypton", p["heroTitle"], "Fully finished one to three bedroom serviced homes. Start from 394K EGP (5% down) with 8 years to pay — call for released holds and cash discount.", "Hello, I'd like to hear about Krypton at NEWKAIRO.", p["video"], None, False, "Krypton")}
 
 {src}
 
@@ -406,7 +413,7 @@ def home_page():
 {masthead("NEWKAIRO")}
 
   <main id="main">
-{hero("NEWKAIRO", "G Developments<span>/</span>NEWKAIRO", "A new city for East Cairo, built around an 18-hole course.", "Krypton, Golf Views, Neon Views and Urban Living. From 7.88M EGP, with 5% down and up to 8 years to pay.", "Hello, I'd like to hear about NEWKAIRO.", nk_video, None, False, "NEWKAIRO")}
+{hero("NEWKAIRO", "G Developments<span>/</span>NEWKAIRO", "A new city for East Cairo, built around an 18-hole course.", "Krypton, Golf Views, Neon Views and Urban Living. Enter with 5% down and up to 8 years to pay — call for released holds and private cash terms.", "Hello, I'd like to hear about NEWKAIRO.", nk_video, None, False, "NEWKAIRO")}
 
 {src}
 

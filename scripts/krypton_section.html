@@ -9,9 +9,7 @@
 
         <div class="tabs tabs--light" role="tablist" aria-label="Krypton" data-kr-tabs>
           <button role="tab" id="kt-place" aria-controls="kp-place" aria-selected="true">The place</button>
-          <button role="tab" id="kt-homes" aria-controls="kp-homes" aria-selected="false" tabindex="-1">Residences</button>
-          <button role="tab" id="kt-floors" aria-controls="kp-floors" aria-selected="false" tabindex="-1">Floor by floor</button>
-          <button role="tab" id="kt-pay" aria-controls="kp-pay" aria-selected="false" tabindex="-1">Payment</button>
+          <button role="tab" id="kt-homes" aria-controls="kp-homes" aria-selected="false" tabindex="-1">Residences &amp; 5% Entry</button>
           <button role="tab" id="kt-gallery" aria-controls="kp-gallery" aria-selected="false" tabindex="-1">Gallery</button>
           <button role="tab" id="kt-books" aria-controls="kp-books" aria-selected="false" tabindex="-1">Brochures</button>
         </div>
@@ -52,43 +50,6 @@
                 <ul class="homes__list" data-kr-list aria-label="Layouts"></ul>
               </div>
               <div class="homes__plan" data-kr-plan aria-live="polite"></div>
-            </div>
-          </div>
-
-          <div class="panel" role="tabpanel" id="kp-floors" aria-labelledby="kt-floors" hidden>
-            <div class="floors" data-kr-floors>
-              <div class="floors__controls">
-                <div class="seg" role="radiogroup" aria-label="Block" data-kr-block>
-                  <button type="button" role="radio" aria-checked="true" data-block="Block 1">Block 1</button>
-                  <button type="button" role="radio" aria-checked="false" data-block="Block 2">Block 2</button>
-                </div>
-                <div class="elevation" role="radiogroup" aria-label="Floor" data-kr-floor></div>
-                <p class="floors__note">Units released on each floor plate in the November 2026 block brochures. Ask for the current hold list before you choose.</p>
-              </div>
-              <div class="floors__view">
-                <figure class="floors__plate" data-kr-plate></figure>
-                <ul class="floors__units" data-kr-units aria-live="polite"></ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel" role="tabpanel" id="kp-pay" aria-labelledby="kt-pay" hidden>
-            <div class="krpay" data-kr-pay>
-              <div class="krpay__controls">
-                <div class="seg" role="radiogroup" aria-label="Bedrooms" data-krpay-beds>
-                  <button type="button" role="radio" aria-checked="false" data-beds="1">One bedroom</button>
-                  <button type="button" role="radio" aria-checked="true" data-beds="2">Two</button>
-                  <button type="button" role="radio" aria-checked="false" data-beds="3">Three</button>
-                </div>
-                <label class="range">
-                  <span class="range__label">Unit price</span>
-                  <output class="range__value" data-krpay-out></output>
-                  <input type="range" data-krpay-range aria-label="Unit price in EGP">
-                  <span class="range__ends" data-krpay-ends></span>
-                </label>
-              </div>
-              <ol class="krpay__steps" data-krpay-steps></ol>
-              <p class="krpay__note">5% expression of interest secures your place and counts toward the down payment. Maintenance deposit of 8%, due 12 months before delivery.</p>
             </div>
           </div>
 

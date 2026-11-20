@@ -60,8 +60,9 @@
         <div class="hero__copy">
           <p class="brandline brandline--light">NEWKAIRO<span>/</span>Krypton</p>
           <h1 class="hero__title">Serviced residences above The Boulevard.</h1>
-          <p class="hero__lede">Fully finished one to three bedroom homes from 7.88M EGP. Five percent down, eight years to pay.</p>
+          <p class="hero__lede">Fully finished one to three bedroom serviced homes. Start from 394K EGP (5% down) with 8 years to pay — call for released holds and cash discount.</p>
           <div class="hero__actions">
+            <a class="btn btn--red" href="tel:+201227275122" data-wa="Krypton hero call">Call +20 122 727 5122</a>
             <button class="btn btn--light" type="button" data-film-open><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg> Play the film</button>
             <a class="btn btn--ghost-light" href="https://wa.me/201227275122?text=Hello%2C%20I%27d%20like%20to%20hear%20about%20Krypton%20at%20NEWKAIRO." target="_blank" rel="noopener" data-wa="Krypton hero"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg> Message a salesperson</a>
           </div>
@@ -81,9 +82,7 @@
 
         <div class="tabs tabs--light" role="tablist" aria-label="Krypton" data-kr-tabs>
           <button role="tab" id="kt-place" aria-controls="kp-place" aria-selected="true">The place</button>
-          <button role="tab" id="kt-homes" aria-controls="kp-homes" aria-selected="false" tabindex="-1">Residences</button>
-          <button role="tab" id="kt-floors" aria-controls="kp-floors" aria-selected="false" tabindex="-1">Floor by floor</button>
-          <button role="tab" id="kt-pay" aria-controls="kp-pay" aria-selected="false" tabindex="-1">Payment</button>
+          <button role="tab" id="kt-homes" aria-controls="kp-homes" aria-selected="false" tabindex="-1">Residences &amp; 5% Entry</button>
           <button role="tab" id="kt-gallery" aria-controls="kp-gallery" aria-selected="false" tabindex="-1">Gallery</button>
           <button role="tab" id="kt-books" aria-controls="kp-books" aria-selected="false" tabindex="-1">Brochures</button>
         </div>
@@ -124,43 +123,6 @@
                 <ul class="homes__list" data-kr-list aria-label="Layouts"></ul>
               </div>
               <div class="homes__plan" data-kr-plan aria-live="polite"></div>
-            </div>
-          </div>
-
-          <div class="panel" role="tabpanel" id="kp-floors" aria-labelledby="kt-floors" hidden>
-            <div class="floors" data-kr-floors>
-              <div class="floors__controls">
-                <div class="seg" role="radiogroup" aria-label="Block" data-kr-block>
-                  <button type="button" role="radio" aria-checked="true" data-block="Block 1">Block 1</button>
-                  <button type="button" role="radio" aria-checked="false" data-block="Block 2">Block 2</button>
-                </div>
-                <div class="elevation" role="radiogroup" aria-label="Floor" data-kr-floor></div>
-                <p class="floors__note">Units released on each floor plate in the November 2026 block brochures. Ask for the current hold list before you choose.</p>
-              </div>
-              <div class="floors__view">
-                <figure class="floors__plate" data-kr-plate></figure>
-                <ul class="floors__units" data-kr-units aria-live="polite"></ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel" role="tabpanel" id="kp-pay" aria-labelledby="kt-pay" hidden>
-            <div class="krpay" data-kr-pay>
-              <div class="krpay__controls">
-                <div class="seg" role="radiogroup" aria-label="Bedrooms" data-krpay-beds>
-                  <button type="button" role="radio" aria-checked="false" data-beds="1">One bedroom</button>
-                  <button type="button" role="radio" aria-checked="true" data-beds="2">Two</button>
-                  <button type="button" role="radio" aria-checked="false" data-beds="3">Three</button>
-                </div>
-                <label class="range">
-                  <span class="range__label">Unit price</span>
-                  <output class="range__value" data-krpay-out></output>
-                  <input type="range" data-krpay-range aria-label="Unit price in EGP">
-                  <span class="range__ends" data-krpay-ends></span>
-                </label>
-              </div>
-              <ol class="krpay__steps" data-krpay-steps></ol>
-              <p class="krpay__note">5% expression of interest secures your place and counts toward the down payment. Maintenance deposit of 8%, due 12 months before delivery.</p>
             </div>
           </div>
 
