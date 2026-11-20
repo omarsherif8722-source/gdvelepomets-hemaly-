@@ -144,13 +144,16 @@
   const hero = $("[data-hero]");
   const menuBtn = $("[data-menu]");
   const mobileNav = $("#mobile-nav");
+  const areaItems = $$("[data-area]");
+  const areaPanel = (item) => $(".areas__panel", item);
+  const openAreaItem = () => areaItems.find((item) => !areaPanel(item).hidden);
 
   function onScroll() {
     const y = window.scrollY;
     const travel = Math.max(1, hero.offsetHeight - window.innerHeight);
     const p = Math.min(1, Math.max(0, y / travel));
     if (!reduceMotion) hero.style.setProperty("--p", p.toFixed(4));
-    masthead.classList.toggle("is-solid", y > travel - 40 || !mobileNav.hidden);
+    masthead.classList.toggle("is-solid", y > travel - 40 || !mobileNav.hidden || !!openAreaItem());
   }
   let ticking = false;
   window.addEventListener("scroll", () => {
@@ -185,16 +188,73 @@
     }).observe(hero);
   }
 
-  menuBtn.addEventListener("click", () => {
-    const open = mobileNav.hidden;
+  function setMenu(open) {
     mobileNav.hidden = !open;
     menuBtn.setAttribute("aria-expanded", String(open));
     menuBtn.textContent = open ? "Close" : "Menu";
     document.body.style.overflow = open ? "hidden" : "";
     onScroll();
+  }
+  menuBtn.addEventListener("click", () => {
+    const open = mobileNav.hidden;
+    if (open) closeAreas();
+    setMenu(open);
   });
   mobileNav.addEventListener("click", (e) => {
-    if (e.target.closest("a")) { mobileNav.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); menuBtn.textContent = "Menu"; document.body.style.overflow = ""; onScroll(); }
+    if (e.target.closest("a")) setMenu(false);
+  });
+
+  // Area tabs in the top bar: one dropdown per region, one open at a time
+  const fineHover = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1181px)");
+  let areaTimer = 0;
+  let hoverOpenedAt = 0;
+  function setArea(item, open) {
+    areaPanel(item).hidden = !open;
+    $("[data-area-tab]", item).setAttribute("aria-expanded", String(open));
+  }
+  function closeAreas(except) {
+    areaItems.forEach((item) => { if (item !== except) setArea(item, false); });
+    onScroll();
+  }
+  function openArea(item) {
+    clearTimeout(areaTimer);
+    if (!mobileNav.hidden) setMenu(false);
+    closeAreas(item);
+    setArea(item, true);
+    onScroll();
+    // On a phone, bring a tab that is partly off screen into view
+    $("[data-area-tab]", item).scrollIntoView({ block: "nearest", inline: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+  }
+  areaItems.forEach((item) => {
+    const tab = $("[data-area-tab]", item);
+    tab.addEventListener("click", () => {
+      const isOpen = !areaPanel(item).hidden;
+      if (isOpen && Date.now() - hoverOpenedAt < 600) return; // the pointer just opened it
+      if (isOpen) closeAreas(); else openArea(item);
+    });
+    item.addEventListener("mouseenter", () => {
+      if (!fineHover.matches) return;
+      clearTimeout(areaTimer);
+      if (areaPanel(item).hidden) { openArea(item); hoverOpenedAt = Date.now(); }
+    });
+    item.addEventListener("mouseleave", () => {
+      if (!fineHover.matches) return;
+      clearTimeout(areaTimer);
+      areaTimer = setTimeout(() => { setArea(item, false); onScroll(); }, 220);
+    });
+    item.addEventListener("focusout", (e) => {
+      if (e.relatedTarget && !item.contains(e.relatedTarget)) { setArea(item, false); onScroll(); }
+    });
+    areaPanel(item).addEventListener("click", (e) => { if (e.target.closest("a")) closeAreas(); });
+  });
+  document.addEventListener("click", (e) => {
+    if (openAreaItem() && !e.target.closest("[data-area]")) closeAreas();
+  });
+  document.addEventListener("keydown", (e) => {
+    const item = e.key === "Escape" && openAreaItem();
+    if (!item) return;
+    closeAreas();
+    $("[data-area-tab]", item).focus();
   });
 
   // Current section in the nav

@@ -81,19 +81,50 @@ def head(title, desc, og_image, theme, poster=None):
 
 
 NAV = [
-    ("/#newkairo", "NEWKAIRO"),
-    ("/krypton/", "Krypton"),
     ("/#portfolio", "Portfolio"),
     ("/#payments", "Payment plans"),
     ("/#brochures", "Brochures"),
     ("#contact", "Contact"),
 ]
+MENU = [
+    ("/#newkairo", "NEWKAIRO"),
+    ("/krypton/", "Krypton"),
+    ("/#portfolio", "Portfolio"),
+    ("/#payments", "Payment plans"),
+    ("/#brochures", "Brochures"),
+    ("/#developer", "G Developments"),
+    ("#contact", "Contact"),
+]
+CURRENT = ' aria-current="page"'
+CHEVRON = '<svg class="areas__chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 
 
-def masthead(current=None):
-    cur = ' aria-current="page" class="is-current"'
-    links = "\n".join(f'      <a href="{href}"{cur if label == current else ""}>{label}</a>' for href, label in NAV)
-    mlinks = "\n".join(f'    <a href="{href}">{label}</a>' for href, label in NAV[:-1] + [("/#developer", "G Developments"), NAV[-1]])
+def area_menus(slug=None):
+    """The area tabs in the top bar: one dropdown per region, listing its projects."""
+    out = []
+    for r in P["regions"]:
+        rows = [("/#newkairo", "NEWKAIRO", "The city and its four parcels", False)] if r["id"] == "east" else []
+        rows += [(f'/{p["slug"]}/', p["name"], " · ".join(x for x in (p.get("parent"), p.get("status")) if x), p["slug"] == slug)
+                 for p in PROJECTS if p["region"] == r["id"]]
+        here = any(row[3] for row in rows)
+        items = "\n".join(
+            f'            <li><a href="{href}"{CURRENT if cur else ""}><span class="areas__name">{h(name)}</span><span class="areas__meta">{h(meta)}</span></a></li>'
+            for href, name, meta, cur in rows)
+        out.append(f'''      <div class="areas__item" data-area>
+        <button class="areas__tab{" is-current" if here else ""}" type="button" aria-expanded="false" aria-controls="area-{r["id"]}" data-area-tab>{h(r["name"])}{CHEVRON}</button>
+        <div class="areas__panel" id="area-{r["id"]}" hidden>
+          <p class="areas__line">{h(r["line"])}</p>
+          <ul>
+{items}
+          </ul>
+        </div>
+      </div>''')
+    return "\n".join(out)
+
+
+def masthead(slug=None):
+    links = "\n".join(f'      <a href="{href}">{label}</a>' for href, label in NAV)
+    mlinks = "\n".join(f'    <a href="{href}">{label}</a>' for href, label in MENU)
     return f'''  <a class="skip" href="#main">Skip to content</a>
 
   <header class="masthead" data-masthead>
@@ -106,6 +137,9 @@ def masthead(current=None):
     </nav>
     <a class="masthead__call" href="tel:{PHONE_TEL}" aria-label="Call a salesperson on {PHONE}">Call a salesperson</a>
     <button class="masthead__menu" type="button" aria-expanded="false" aria-controls="mobile-nav" data-menu>Menu</button>
+    <nav class="areas" aria-label="Projects by area">
+{area_menus(slug)}
+    </nav>
   </header>
 
   <nav class="mobile-nav" id="mobile-nav" hidden aria-label="Sections">
@@ -336,7 +370,7 @@ def project_page(p):
           </div>''' if books else ""
     body = f'''{head(f'{full_name(p)} | G Developments', f'{full_name(p)}: {p["heroTitle"]} {p["intro"]}', (p.get("heroImage") or "assets/img/krypton/kr-dusk") + ".jpg", t, (p.get("video") or {}).get("poster"))}
 <body data-page="project" data-project="{p["id"]}">
-{masthead()}
+{masthead(p["slug"])}
 
   <main id="main">
 {hero(p["wordmark"], brand, p["heroTitle"], lede, f"Hello, I'd like to hear about {full_name(p)}.", p.get("video"), p.get("heroImage"), p.get("illustrative"), p["name"])}
@@ -388,7 +422,7 @@ def krypton_page(p):
     src = (ROOT / "scripts/krypton_section.html").read_text()
     return f'''{head("Krypton, NEWKAIRO | G Developments", "Krypton at NEWKAIRO: fully finished serviced residences above The Boulevard, from 7.88M EGP with 5% down and 8 years to pay. Floor plans, released units and payment plans.", "assets/img/krypton/kr-dusk.jpg", t, p["video"]["poster"])}
 <body data-page="krypton" data-project="krypton">
-{masthead("Krypton")}
+{masthead("krypton")}
 
   <main id="main">
 {hero("krypton", "NEWKAIRO<span>/</span>Krypton", p["heroTitle"], "Fully finished one to three bedroom serviced homes. Start from 394K EGP (5% down) with 8 years to pay — call for released holds and cash discount.", "Hello, I'd like to hear about Krypton at NEWKAIRO.", p["video"], None, False, "Krypton")}
@@ -410,7 +444,7 @@ def home_page():
     src = src.replace("{{PARCELS}}", nk_cards)
     return f'''{head("NEWKAIRO, Krypton and the full portfolio | G Developments", "Private advisory for G Developments in Egypt: NEWKAIRO with Krypton, Golf Views, Neon Views and Urban Living, plus NEWGIZA, IVY, Seashell and Playa. Official payment plans and brochures.", "assets/video/newkairo-poster.jpg", NEWKAIRO_THEME, nk_video["poster"])}
 <body data-page="home">
-{masthead("NEWKAIRO")}
+{masthead()}
 
   <main id="main">
 {hero("NEWKAIRO", "G Developments<span>/</span>NEWKAIRO", "A new city for East Cairo, built around an 18-hole course.", "Krypton, Golf Views, Neon Views and Urban Living. Enter with 5% down and up to 8 years to pay — call for released holds and private cash terms.", "Hello, I'd like to hear about NEWKAIRO.", nk_video, None, False, "NEWKAIRO")}
