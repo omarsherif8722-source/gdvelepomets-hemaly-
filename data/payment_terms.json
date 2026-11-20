@@ -1,60 +1,116 @@
 {
-  "schemaVersion": "1.0",
-  "lastUpdated": "2026-11-20",
-  "sourceStatus": "verified_developer_release_plus_ats",
-  "note": "Drop updated payment milestones, cash discounts, maintenance fees, or delivery dates from the Standard Payment PDF here to update every calculator and project card dynamically.",
-  "newkairo": {
-    "krypton": {
-      "phaseName": "krypton at NEWKAIRO",
-      "category": "Fully Finished Serviced Residences with A/Cs",
-      "eoiPct": 5,
-      "downPaymentPct": 5,
-      "after3MonthsPct": 5,
-      "years": 8,
-      "quarterlyInstallments": 32,
-      "finishing": "Fully Finished with A/Cs",
-      "deliveryDate": "Phased · Target Q4 2028 / Early 2029 (Confirm on Standard Payment PDF)",
-      "cashDiscountPct": null,
-      "maintenancePct": null,
-      "plans": [
-        { "id": "standard-8y", "label": "Standard 8-Year Plan", "downPaymentPct": 5, "after3MonthsPct": 5, "years": 8, "cashDiscountPct": 0 }
+  "source": "Standard Payment Plans, October 18, 2026 (G Developments Commercial Operations Department)",
+  "sourceFile": "assets/brochures/standard-payment-terms-2026-10-18.pdf",
+  "updated": "2026-10-18",
+  "notes": [
+    "down: payments due at contracting, in order. [5, 5] means 5% at signing and 5% three months later.",
+    "atDelivery: share of the price due on handover (Meditown B1–B2 only).",
+    "installments: equal quarterly installments covering the remaining balance.",
+    "delivery: months from contracting. cash: cash discount % off the installment price."
+  ],
+  "destinations": [
+    {
+      "id": "newkairo",
+      "name": "NEWKAIRO",
+      "region": "East Cairo",
+      "maintenance": { "pct": 8, "due": "12 months before delivery" },
+      "phases": [
+        { "id": "nk-krypton", "name": "Krypton", "official": false, "note": "Launch terms from the Krypton release: 5% EOI, credited to the 5% down payment. Cash terms on request.", "plans": [ { "years": 8, "down": [5, 5], "installments": 32, "delivery": null, "cash": null } ] },
+        { "id": "nk-golf", "name": "NEWKAIRO Golf", "official": true, "plans": [ { "years": 8, "down": [5, 5], "installments": 32, "delivery": 48, "cash": 30 } ] },
+        { "id": "nk-neon", "name": "Neon Views", "official": true, "plans": [ { "years": 8, "down": [5, 5], "installments": 32, "delivery": 48, "cash": 30 } ] },
+        { "id": "nk-urban", "name": "Urban Living", "official": false, "note": "Not listed on the October 18 sheet. Shown with the NEWKAIRO 8-year structure; final terms are confirmed per unit.", "plans": [ { "years": 8, "down": [5, 5], "installments": 32, "delivery": null, "cash": null } ] }
       ]
     },
-    "neonViews": {
-      "phaseName": "Neon Views (Phases 01 & 02)",
-      "category": "Fully Finished Townhouses, Twinhouses & Standalone Villas",
-      "downPaymentPct": 5,
-      "after3MonthsPct": 5,
-      "years": 8,
-      "quarterlyInstallments": 32,
-      "finishing": "Fully Finished (without A/Cs)",
-      "deliveryDate": "Phased from Q4 2028 (Confirm on Standard Payment PDF)",
-      "cashDiscountPct": null,
-      "maintenancePct": null
+    {
+      "id": "ivy",
+      "name": "IVY",
+      "region": "West Cairo",
+      "maintenance": { "pct": 7, "due": "6 months before delivery" },
+      "phases": [
+        { "id": "ivy", "name": "IVY", "official": true, "plans": [ { "years": 7, "down": [5, 5], "installments": 28, "delivery": 36, "cash": 30 } ] },
+        { "id": "ivy-evergreen", "name": "Evergreen", "official": true, "plans": [ { "years": 7, "down": [5, 5], "installments": 28, "delivery": 48, "cash": 30 } ] }
+      ]
     },
-    "golfViews": {
-      "phaseName": "NEWKAIRO Golf Views (Argon & Cerium Views)",
-      "category": "Golf-Front Twin Villas, Tee View, Fairscapes & Golf Estates",
-      "downPaymentPct": 5,
-      "after3MonthsPct": 5,
-      "years": 8,
-      "quarterlyInstallments": 32,
-      "finishing": "Basic Finishing (Per Primary ATS Nov 2026)",
-      "deliveryDate": "Phased Delivery (Confirm on Standard Payment PDF)",
-      "cashDiscountPct": null,
-      "maintenancePct": null
+    {
+      "id": "newgiza",
+      "name": "NEWGIZA",
+      "region": "West Cairo",
+      "maintenance": { "pct": 7, "due": "6 months before delivery", "extra": "House of Giza: 8%, due 12 months before delivery" },
+      "phases": [
+        { "id": "ng-cash", "name": "All neighborhoods", "official": true, "note": "Cash payment. Delivery: Kingsrange 1 prototype 12 months, Kingsrange 1 & 2 SD 30 months, Kingsrange 2 prototype 18 months.", "plans": [ { "years": 0, "cashOnly": true, "down": [100], "installments": 0, "delivery": 12, "cash": null } ] },
+        { "id": "ng-utilities", "name": "Parking, storage & driver rooms", "official": true, "note": "Carnell, Kingsrange, Westridge, Jasper and Amberville. Delivered with the main unit.", "plans": [ { "years": 6, "down": [0], "installments": 6, "annual": true, "delivery": null, "cash": null } ] }
+      ]
     },
-    "urbanLiving": {
-      "phaseName": "NEWKAIRO Urban Living & Park",
-      "category": "Fully Finished 1–4 Bedroom Apartments",
-      "downPaymentPct": 5,
-      "after3MonthsPct": 5,
-      "years": 8,
-      "quarterlyInstallments": 32,
-      "finishing": "Fully Finished",
-      "deliveryDate": "Phased Delivery (Confirm on Standard Payment PDF)",
-      "cashDiscountPct": null,
-      "maintenancePct": null
+    {
+      "id": "artlife",
+      "name": "Artlife",
+      "region": "West Cairo",
+      "maintenance": { "pct": 8, "due": "12 months before delivery", "extra": "Block 13 Pixel Labs: 10%, due 12 months before delivery" },
+      "phases": [
+        { "id": "al-b1b6", "name": "B1 – B6", "official": true, "plans": [ { "years": 4, "down": [10], "installments": 16, "delivery": 24, "cash": 20 } ] },
+        { "id": "al-pixel", "name": "Block 13 Pixel Labs & Sudoku", "official": true, "plans": [ { "years": 6, "down": [10], "installments": 24, "delivery": 48, "cash": 25 } ] },
+        { "id": "al-twilight", "name": "Twilight", "official": true, "plans": [ { "years": 5, "down": [10], "installments": 20, "delivery": 42, "cash": 22 } ] },
+        { "id": "al-spectre", "name": "Spectre Series (TW01–TW03)", "official": true, "plans": [ { "years": 6, "down": [10], "installments": 24, "delivery": 42, "cash": 25 } ] },
+        { "id": "al-collection", "name": "The Collection", "official": true, "plans": [ { "years": 4, "down": [10], "installments": 16, "delivery": 24, "cash": 20 } ] },
+        { "id": "al-cypher", "name": "Cypher", "official": true, "plans": [ { "years": 6, "down": [10], "installments": 24, "delivery": 42, "cash": 25 } ] }
+      ]
+    },
+    {
+      "id": "meditown",
+      "name": "Meditown",
+      "region": "West Cairo",
+      "maintenance": { "pct": 8, "due": "6 months before delivery" },
+      "phases": [
+        { "id": "md-b12", "name": "Clinics B1 – B2", "official": true, "plans": [ { "years": 3, "down": [10], "atDelivery": 10, "installments": 12, "delivery": 6, "cash": 12.56 } ] },
+        { "id": "md-b34", "name": "Clinics B3 – B4", "official": true, "plans": [ { "years": 6, "down": [10], "installments": 24, "delivery": 12, "cash": 22.93 } ] }
+      ]
+    },
+    {
+      "id": "playa",
+      "name": "Playa",
+      "region": "North Coast",
+      "maintenance": { "pct": 8, "due": "12 months before delivery" },
+      "phases": [
+        { "id": "pl-1ae", "name": "Phase 1 A, B, C, D & E", "official": true, "plans": [ { "years": 4, "down": [10], "installments": 16, "delivery": 18, "cash": 24 }, { "years": 5, "down": [20], "installments": 20, "delivery": 18, "cash": 25 } ] },
+        { "id": "pl-1f", "name": "Phase 1 F", "official": true, "plans": [ { "years": 4, "down": [10], "installments": 16, "delivery": 24, "cash": 24 }, { "years": 5, "down": [20], "installments": 20, "delivery": 24, "cash": 25 } ] },
+        { "id": "pl-2a", "name": "Phase 2 A", "official": true, "plans": [ { "years": 4, "down": [10], "installments": 16, "delivery": 24, "cash": 24 }, { "years": 5, "down": [20], "installments": 20, "delivery": 24, "cash": 25 } ] },
+        { "id": "pl-2b", "name": "Phase 2 B", "official": true, "plans": [ { "years": 5, "down": [10], "installments": 20, "delivery": 28, "cash": 28 } ] },
+        { "id": "pl-cabins", "name": "Playa Cabins", "official": true, "plans": [ { "years": 2, "down": [10], "installments": 8, "delivery": 6, "cash": 14 } ] },
+        { "id": "pl-gvillas", "name": "G Villas", "official": true, "plans": [ { "years": 2, "down": [25], "installments": 8, "delivery": 12, "cash": 25 } ] },
+        { "id": "pl-gvillage", "name": "G Village", "official": true, "plans": [ { "years": 6, "down": [10], "installments": 24, "delivery": 36, "cash": 30 } ] }
+      ]
+    },
+    {
+      "id": "playa-rah",
+      "name": "Playa Ras El Hekma",
+      "region": "North Coast",
+      "maintenance": { "pct": 8, "due": "12 months before delivery" },
+      "phases": [
+        { "id": "pr-all", "name": "All phases", "official": true, "plans": [ { "years": 7, "down": [5, 5], "installments": 28, "delivery": 48, "cash": 32 } ] }
+      ]
+    },
+    {
+      "id": "seashell-rah",
+      "name": "Seashell Ras El Hekma",
+      "region": "North Coast",
+      "maintenance": { "pct": 8, "due": "12 months before delivery" },
+      "phases": [
+        { "id": "sr-p12", "name": "Phase 1 & 2", "official": true, "plans": [ { "years": 8, "down": [5, 5], "installments": 32, "delivery": 48, "cash": 35 } ] },
+        { "id": "sr-lagoon", "name": "Lagoon View", "official": true, "plans": [ { "years": 8, "down": [5, 5], "installments": 32, "delivery": 36, "cash": 35 } ] },
+        { "id": "sr-lagoon2", "name": "Lagoon View 02", "official": true, "plans": [ { "years": 8, "down": [5, 5], "installments": 32, "delivery": 48, "cash": 35 } ] },
+        { "id": "sr-cabins", "name": "Seashell Ras El Hekma Cabins", "official": true, "plans": [ { "years": 8, "down": [5, 5], "installments": 32, "delivery": 36, "cash": 35 } ] },
+        { "id": "sr-gvillas", "name": "G Villas", "official": true, "plans": [ { "years": 8, "down": [5, 5], "installments": 32, "delivery": 36, "cash": 35 } ] },
+        { "id": "sr-gres", "name": "G Residence", "official": true, "plans": [ { "years": 8, "down": [5, 5], "installments": 32, "delivery": 36, "cash": 35 } ] }
+      ]
+    },
+    {
+      "id": "seashell",
+      "name": "Seashell",
+      "region": "North Coast",
+      "maintenance": { "pct": 8, "due": "12 months before delivery" },
+      "phases": [
+        { "id": "ss-cash", "name": "All neighborhoods", "official": true, "plans": [ { "years": 0, "cashOnly": true, "down": [100], "installments": 0, "delivery": 3, "cash": null } ] }
+      ]
     }
-  }
+  ]
 }

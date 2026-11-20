@@ -1,0 +1,2003 @@
+{
+ "name": "Krypton",
+ "masterplan": "NEWKAIRO",
+ "tagline": "Serviced residences above The Boulevard",
+ "finishing": "Fully finished with air conditioning",
+ "service": "Hotel-style serviced apartments with concierge",
+ "blocks": [
+  "Block 01",
+  "Block 02",
+  "Block 03",
+  "Block 04",
+  "Block 05",
+  "Block 06"
+ ],
+ "anchors": [
+  "International school",
+  "Sports club",
+  "5-star hotel",
+  "Clubhouse",
+  "The Boulevard retail",
+  "Electric tram"
+ ],
+ "priceBands": [
+  {
+   "beds": 1,
+   "label": "One bedroom",
+   "sqm": "75 – 87",
+   "min": 7875000,
+   "max": 9171750
+  },
+  {
+   "beds": 2,
+   "label": "Two bedrooms",
+   "sqm": "108 – 131",
+   "min": 11287500,
+   "max": 13702500
+  },
+  {
+   "beds": 3,
+   "label": "Three bedrooms",
+   "sqm": "141 – 194",
+   "min": 14810000,
+   "max": 20354250
+  }
+ ],
+ "payment": {
+  "eoi": 5,
+  "down": [
+   5,
+   5
+  ],
+  "years": 8,
+  "installments": 32,
+  "maintenance": 8
+ },
+ "layouts": [
+  {
+   "code": "1B-01",
+   "beds": 1,
+   "sqm": 79,
+   "sqmMax": 79,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "3.60 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "3.60 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.40"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 2.00"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "1.70 × 2.40"
+    }
+   ],
+   "plan": "assets/img/plans/plan-1b-01.png",
+   "units": 4
+  },
+  {
+   "code": "1B-02",
+   "beds": 1,
+   "sqm": 77,
+   "sqmMax": 77,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "3.60 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "3.60 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 4.40"
+    },
+    {
+     "n": 5,
+     "room": "Master Bathroom",
+     "dims": "1.70 × 2.40"
+    }
+   ],
+   "plan": "assets/img/plans/plan-1b-02.png",
+   "units": null
+  },
+  {
+   "code": "1B-03",
+   "beds": 1,
+   "sqm": 87,
+   "sqmMax": 87,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "3.60 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "3.60 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 4.40"
+    },
+    {
+     "n": 5,
+     "room": "Master Bathroom",
+     "dims": "1.70 × 2.40"
+    }
+   ],
+   "plan": "assets/img/plans/plan-1b-03.png",
+   "units": 2
+  },
+  {
+   "code": "1B-04",
+   "beds": 1,
+   "sqm": 75,
+   "sqmMax": 75,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "3.60 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "3.60 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 4.40"
+    },
+    {
+     "n": 5,
+     "room": "Master Bathroom",
+     "dims": "1.70 × 2.40"
+    }
+   ],
+   "plan": "assets/img/plans/plan-1b-04.png",
+   "units": 22
+  },
+  {
+   "code": "1B-05",
+   "beds": 1,
+   "sqm": 77,
+   "sqmMax": 77,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "3.60 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "3.60 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.40"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 2.00"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "1.70 × 2.40"
+    }
+   ],
+   "plan": "assets/img/plans/plan-1b-05.png",
+   "units": 49
+  },
+  {
+   "code": "1B-06",
+   "beds": 1,
+   "sqm": 77,
+   "sqmMax": 77,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "3.60 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "3.60 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.40"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 2.00"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "1.70 × 2.40"
+    }
+   ],
+   "plan": "assets/img/plans/plan-1b-06.png",
+   "units": null
+  },
+  {
+   "code": "2B-01",
+   "beds": 2,
+   "sqm": 131,
+   "sqmMax": 131,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.80 × 2.80"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.80 × 4.10"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "2.50 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 8,
+     "room": "Bathroom 2",
+     "dims": "2.40 × 1.80"
+    },
+    {
+     "n": 9,
+     "room": "Corridor",
+     "dims": "3.20 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-2b-01.png",
+   "units": 1
+  },
+  {
+   "code": "2B-02",
+   "beds": 2,
+   "sqm": 114,
+   "sqmMax": 114,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.00 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "2.50 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 8,
+     "room": "Bathroom 2",
+     "dims": "2.40 × 1.80"
+    },
+    {
+     "n": 9,
+     "room": "Corridor",
+     "dims": "3.20 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-2b-02.png",
+   "units": 7
+  },
+  {
+   "code": "2B-03",
+   "beds": 2,
+   "sqm": 110,
+   "sqmMax": 110,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.00 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.15"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "2.50 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 3.15"
+    },
+    {
+     "n": 8,
+     "room": "Bathroom 2",
+     "dims": "2.40 × 1.80"
+    },
+    {
+     "n": 9,
+     "room": "Corridor",
+     "dims": "3.20 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-2b-03.png",
+   "units": null
+  },
+  {
+   "code": "2B-04",
+   "beds": 2,
+   "sqm": 118,
+   "sqmMax": 125,
+   "variants": [
+    {
+     "code": "2B-04A",
+     "sqm": 122
+    },
+    {
+     "code": "2B-04B",
+     "sqm": 118
+    },
+    {
+     "code": "2B-04C",
+     "sqm": 125
+    }
+   ],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.00 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "2.50 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 8,
+     "room": "Bathroom 2",
+     "dims": "2.40 × 1.80"
+    },
+    {
+     "n": 9,
+     "room": "Corridor",
+     "dims": "3.20 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-2b-04.png",
+   "units": 6
+  },
+  {
+   "code": "2B-05",
+   "beds": 2,
+   "sqm": 115,
+   "sqmMax": 120,
+   "variants": [
+    {
+     "code": "2B-05A",
+     "sqm": 116
+    },
+    {
+     "code": "2B-05D",
+     "sqm": 115
+    },
+    {
+     "code": "2B-05B",
+     "sqm": 119
+    },
+    {
+     "code": "2B-05E",
+     "sqm": 117
+    },
+    {
+     "code": "2B-05C",
+     "sqm": 120
+    },
+    {
+     "code": "2B-05F",
+     "sqm": 118
+    },
+    {
+     "code": "2B-05G",
+     "sqm": 117
+    }
+   ],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.00 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "2.50 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 8,
+     "room": "Bathroom 2",
+     "dims": "2.40 × 1.80"
+    },
+    {
+     "n": 9,
+     "room": "Corridor",
+     "dims": "3.20 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-2b-05.png",
+   "units": 18
+  },
+  {
+   "code": "2B-06",
+   "beds": 2,
+   "sqm": 111,
+   "sqmMax": 111,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.00 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "2.50 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 8,
+     "room": "Bathroom 2",
+     "dims": "2.40 × 1.80"
+    },
+    {
+     "n": 9,
+     "room": "Corridor",
+     "dims": "3.20 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-2b-06.png",
+   "units": 18
+  },
+  {
+   "code": "2B-07",
+   "beds": 2,
+   "sqm": 110,
+   "sqmMax": 110,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.00 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "2.50 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 8,
+     "room": "Bathroom 2",
+     "dims": "2.40 × 1.80"
+    },
+    {
+     "n": 9,
+     "room": "Corridor",
+     "dims": "3.20 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-2b-07.png",
+   "units": 14
+  },
+  {
+   "code": "2B-08",
+   "beds": 2,
+   "sqm": 108,
+   "sqmMax": 108,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.00 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.15"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "2.50 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 3.15"
+    },
+    {
+     "n": 8,
+     "room": "Bathroom 2",
+     "dims": "2.40 × 1.80"
+    },
+    {
+     "n": 9,
+     "room": "Corridor",
+     "dims": "3.20 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-2b-08.png",
+   "units": 2
+  },
+  {
+   "code": "2B-09",
+   "beds": 2,
+   "sqm": 116,
+   "sqmMax": 116,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.00 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Guest Bathroom",
+     "dims": "1.60 × 1.80"
+    },
+    {
+     "n": 4,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 5,
+     "room": "Dresser",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 6,
+     "room": "Master Bathroom",
+     "dims": "2.50 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 8,
+     "room": "Bathroom 2",
+     "dims": "2.40 × 1.80"
+    },
+    {
+     "n": 9,
+     "room": "Corridor",
+     "dims": "3.20 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-2b-09.png",
+   "units": 12
+  },
+  {
+   "code": "3B-01",
+   "beds": 3,
+   "sqm": 164,
+   "sqmMax": 164,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.80 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "5.15 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Reception",
+     "dims": "1.50 × 3.00"
+    },
+    {
+     "n": 4,
+     "room": "Guest Bathroom",
+     "dims": "2.00 × 1.80"
+    },
+    {
+     "n": 5,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 6,
+     "room": "Dresser",
+     "dims": "4.30 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Master Bathroom",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 8,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 4.35"
+    },
+    {
+     "n": 9,
+     "room": "Bedroom 3",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 10,
+     "room": "Bathroom 2",
+     "dims": "2.80 × 1.80"
+    },
+    {
+     "n": 11,
+     "room": "Corridor",
+     "dims": "4.00 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-3b-01.png",
+   "units": 7
+  },
+  {
+   "code": "3B-02",
+   "beds": 3,
+   "sqm": 158,
+   "sqmMax": 158,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.35 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Reception",
+     "dims": "1.50 × 3.00"
+    },
+    {
+     "n": 4,
+     "room": "Guest Bathroom",
+     "dims": "2.00 × 1.80"
+    },
+    {
+     "n": 5,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 6,
+     "room": "Dresser",
+     "dims": "4.30 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Master Bathroom",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 8,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 4.35"
+    },
+    {
+     "n": 9,
+     "room": "Bedroom 3",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 10,
+     "room": "Bathroom 2",
+     "dims": "2.80 × 1.80"
+    },
+    {
+     "n": 11,
+     "room": "Corridor",
+     "dims": "4.00 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-3b-02.png",
+   "units": 6
+  },
+  {
+   "code": "3B-03",
+   "beds": 3,
+   "sqm": 147,
+   "sqmMax": 147,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.35 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Reception",
+     "dims": "1.50 × 3.00"
+    },
+    {
+     "n": 4,
+     "room": "Guest Bathroom",
+     "dims": "2.00 × 1.80"
+    },
+    {
+     "n": 5,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 6,
+     "room": "Dresser",
+     "dims": "4.30 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Master Bathroom",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 8,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 4.35"
+    },
+    {
+     "n": 9,
+     "room": "Bedroom 3",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 10,
+     "room": "Bathroom 2",
+     "dims": "2.80 × 1.80"
+    },
+    {
+     "n": 11,
+     "room": "Corridor",
+     "dims": "4.00 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-3b-03.png",
+   "units": 9
+  },
+  {
+   "code": "3B-04",
+   "beds": 3,
+   "sqm": 143,
+   "sqmMax": 143,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.35 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Reception",
+     "dims": "1.50 × 3.00"
+    },
+    {
+     "n": 4,
+     "room": "Guest Bathroom",
+     "dims": "2.00 × 1.80"
+    },
+    {
+     "n": 5,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 6,
+     "room": "Dresser",
+     "dims": "4.30 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Master Bathroom",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 8,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 4.35"
+    },
+    {
+     "n": 9,
+     "room": "Bedroom 3",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 10,
+     "room": "Bathroom 2",
+     "dims": "2.80 × 1.80"
+    },
+    {
+     "n": 11,
+     "room": "Corridor",
+     "dims": "4.00 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-3b-04.png",
+   "units": 36
+  },
+  {
+   "code": "3B-05",
+   "beds": 3,
+   "sqm": 141,
+   "sqmMax": 141,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.35 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Reception",
+     "dims": "1.50 × 3.00"
+    },
+    {
+     "n": 4,
+     "room": "Guest Bathroom",
+     "dims": "2.00 × 1.80"
+    },
+    {
+     "n": 5,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 6,
+     "room": "Dresser",
+     "dims": "4.30 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Master Bathroom",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 8,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 4.35"
+    },
+    {
+     "n": 9,
+     "room": "Bedroom 3",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 10,
+     "room": "Bathroom 2",
+     "dims": "2.80 × 1.80"
+    },
+    {
+     "n": 11,
+     "room": "Corridor",
+     "dims": "4.00 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-3b-05.png",
+   "units": 9
+  },
+  {
+   "code": "3B-06",
+   "beds": 3,
+   "sqm": 149,
+   "sqmMax": 149,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.00 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "4.35 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Reception",
+     "dims": "1.50 × 3.00"
+    },
+    {
+     "n": 4,
+     "room": "Guest Bathroom",
+     "dims": "2.00 × 1.80"
+    },
+    {
+     "n": 5,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 6,
+     "room": "Dresser",
+     "dims": "4.30 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Master Bathroom",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 8,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 4.35"
+    },
+    {
+     "n": 9,
+     "room": "Bedroom 3",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 10,
+     "room": "Bathroom 2",
+     "dims": "2.80 × 1.80"
+    },
+    {
+     "n": 11,
+     "room": "Corridor",
+     "dims": "4.00 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-3b-06.png",
+   "units": 12
+  },
+  {
+   "code": "3B-07",
+   "beds": 3,
+   "sqm": 163,
+   "sqmMax": 163,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "4.80 × 2.90"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "5.15 × 4.00"
+    },
+    {
+     "n": 3,
+     "room": "Reception",
+     "dims": "1.50 × 3.00"
+    },
+    {
+     "n": 4,
+     "room": "Guest Bathroom",
+     "dims": "2.00 × 1.80"
+    },
+    {
+     "n": 5,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 3.75"
+    },
+    {
+     "n": 6,
+     "room": "Dresser",
+     "dims": "4.30 × 1.80"
+    },
+    {
+     "n": 7,
+     "room": "Master Bathroom",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 8,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 4.35"
+    },
+    {
+     "n": 9,
+     "room": "Bedroom 3",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 10,
+     "room": "Bathroom 2",
+     "dims": "2.80 × 1.80"
+    },
+    {
+     "n": 11,
+     "room": "Corridor",
+     "dims": "4.00 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-3b-07.png",
+   "units": 12
+  },
+  {
+   "code": "3B-08",
+   "beds": 3,
+   "sqm": 176,
+   "sqmMax": 176,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "5.20 × 3.00"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "5.15 × 3.90"
+    },
+    {
+     "n": 3,
+     "room": "Reception",
+     "dims": "1.30 × 3.00"
+    },
+    {
+     "n": 5,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 4.35"
+    },
+    {
+     "n": 6,
+     "room": "Dresser",
+     "dims": "3.40 × 1.10"
+    },
+    {
+     "n": 7,
+     "room": "Master Bathroom",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 8,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 4.35"
+    },
+    {
+     "n": 9,
+     "room": "Bedroom 3",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 10,
+     "room": "Bathroom 2",
+     "dims": "2.80 × 1.80"
+    },
+    {
+     "n": 11,
+     "room": "Corridor",
+     "dims": "4.90 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-3b-08.png",
+   "units": 6
+  },
+  {
+   "code": "3B-09",
+   "beds": 3,
+   "sqm": 161,
+   "sqmMax": 161,
+   "variants": [],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "5.20 × 3.00"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "5.15 × 3.90"
+    },
+    {
+     "n": 3,
+     "room": "Reception",
+     "dims": "1.30 × 3.00"
+    },
+    {
+     "n": 4,
+     "room": "Guest Bathroom",
+     "dims": "1.90 × 1.80"
+    },
+    {
+     "n": 5,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 4.35"
+    },
+    {
+     "n": 6,
+     "room": "Dresser",
+     "dims": "3.40 × 1.10"
+    },
+    {
+     "n": 7,
+     "room": "Master Bathroom",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 8,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 4.35"
+    },
+    {
+     "n": 9,
+     "room": "Bedroom 3",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 10,
+     "room": "Bathroom 2",
+     "dims": "2.80 × 1.80"
+    },
+    {
+     "n": 11,
+     "room": "Corridor",
+     "dims": "4.90 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-3b-09.png",
+   "units": 12
+  },
+  {
+   "code": "3B-10",
+   "beds": 3,
+   "sqm": 186,
+   "sqmMax": 194,
+   "variants": [
+    {
+     "code": "3B-10A",
+     "sqm": 194
+    },
+    {
+     "code": "3B-10B",
+     "sqm": 186
+    }
+   ],
+   "rooms": [
+    {
+     "n": 1,
+     "room": "Kitchen & Dining",
+     "dims": "5.20 × 3.00"
+    },
+    {
+     "n": 2,
+     "room": "Living Room",
+     "dims": "5.15 × 3.90"
+    },
+    {
+     "n": 3,
+     "room": "Reception",
+     "dims": "1.30 × 3.00"
+    },
+    {
+     "n": 4,
+     "room": "Guest Bathroom",
+     "dims": "1.90 × 1.80"
+    },
+    {
+     "n": 5,
+     "room": "Master Bedroom",
+     "dims": "3.40 × 4.35"
+    },
+    {
+     "n": 6,
+     "room": "Dresser",
+     "dims": "3.40 × 1.10"
+    },
+    {
+     "n": 7,
+     "room": "Master Bathroom",
+     "dims": "3.40 × 1.80"
+    },
+    {
+     "n": 8,
+     "room": "Bedroom 2",
+     "dims": "3.20 × 4.35"
+    },
+    {
+     "n": 9,
+     "room": "Bedroom 3",
+     "dims": "3.20 × 3.75"
+    },
+    {
+     "n": 10,
+     "room": "Bathroom 2",
+     "dims": "2.80 × 1.80"
+    },
+    {
+     "n": 11,
+     "room": "Corridor",
+     "dims": "4.90 × 1.10"
+    }
+   ],
+   "plan": "assets/img/plans/plan-3b-10.png",
+   "units": 8
+  }
+ ],
+ "plates": {
+  "Block 1": {
+   "Ground": "assets/img/plans/plate-b1-ground.png",
+   "First": "assets/img/plans/plate-b1-first.png",
+   "Second": "assets/img/plans/plate-b1-second.png",
+   "Third": "assets/img/plans/plate-b1-third.png",
+   "Fourth": "assets/img/plans/plate-b1-fourth.png"
+  },
+  "Block 2": {
+   "Ground": "assets/img/plans/plate-b2-ground.png",
+   "First": "assets/img/plans/plate-b2-first.png",
+   "Second": "assets/img/plans/plate-b2-second.png",
+   "Third": "assets/img/plans/plate-b2-third.png",
+   "Fourth": "assets/img/plans/plate-b2-fourth.png"
+  }
+ },
+ "blockFloors": {
+  "Block 1": [
+   {
+    "floor": "Ground",
+    "units": [
+     {
+      "unit": "KR01-010/P",
+      "layout": "3B-02",
+      "sqm": 158,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-005/P",
+      "layout": "3B-03",
+      "sqm": 147,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-002/P",
+      "layout": "3B-03",
+      "sqm": 147,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-004/P",
+      "layout": "3B-01",
+      "sqm": 164,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-003/P",
+      "layout": "3B-01",
+      "sqm": 164,
+      "view": "Park"
+     }
+    ]
+   },
+   {
+    "floor": "First",
+    "units": [
+     {
+      "unit": "KR01-107/P",
+      "layout": "3B-04",
+      "sqm": 143,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-103/P",
+      "layout": "3B-10A",
+      "sqm": 194,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-108/P",
+      "layout": "3B-06",
+      "sqm": 149,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-102/P",
+      "layout": "3B-05",
+      "sqm": 141,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-105/P",
+      "layout": "3B-05",
+      "sqm": 141,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-104/P",
+      "layout": "3B-05",
+      "sqm": 141,
+      "view": "Park"
+     }
+    ]
+   },
+   {
+    "floor": "Second",
+    "units": [
+     {
+      "unit": "KR01-208/P",
+      "layout": "3B-04",
+      "sqm": 143,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-203/P",
+      "layout": "3B-05",
+      "sqm": 141,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-204/P",
+      "layout": "3B-07",
+      "sqm": 163,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-213/U",
+      "layout": "2B-04C",
+      "sqm": 125,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-212/U",
+      "layout": "2B-05G",
+      "sqm": 117,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-211/U",
+      "layout": "2B-05G",
+      "sqm": 117,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-210/U",
+      "layout": "2B-05G",
+      "sqm": 117,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-209/P",
+      "layout": "3B-08",
+      "sqm": 176,
+      "view": "Park"
+     }
+    ]
+   },
+   {
+    "floor": "Third",
+    "units": [
+     {
+      "unit": "KR01-306/P",
+      "layout": "3B-04",
+      "sqm": 143,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-307/P",
+      "layout": "3B-09",
+      "sqm": 161,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-302/P",
+      "layout": "3B-07",
+      "sqm": 163,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-303/P",
+      "layout": "3B-07",
+      "sqm": 163,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-312/U",
+      "layout": "2B-09",
+      "sqm": 116,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-311/U",
+      "layout": "2B-06",
+      "sqm": 111,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-310/U",
+      "layout": "1B-04",
+      "sqm": 75,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-309/U",
+      "layout": "1B-05",
+      "sqm": 77,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-308/U",
+      "layout": "1B-05",
+      "sqm": 77,
+      "view": "Boulevard"
+     }
+    ]
+   },
+   {
+    "floor": "Fourth",
+    "units": [
+     {
+      "unit": "KR01-410/U",
+      "layout": "2B-09",
+      "sqm": 116,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-409/U",
+      "layout": "2B-06",
+      "sqm": 111,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-408/U",
+      "layout": "1B-04",
+      "sqm": 75,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-407/U",
+      "layout": "1B-05",
+      "sqm": 77,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-406/U",
+      "layout": "1B-05",
+      "sqm": 77,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR01-404/P",
+      "layout": "3B-04",
+      "sqm": 143,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-403/P",
+      "layout": "3B-04",
+      "sqm": 143,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-405/P",
+      "layout": "3B-09",
+      "sqm": 161,
+      "view": "Park"
+     },
+     {
+      "unit": "KR01-402/P",
+      "layout": "3B-10B",
+      "sqm": 186,
+      "view": "Park"
+     }
+    ]
+   }
+  ],
+  "Block 2": [
+   {
+    "floor": "Ground",
+    "units": [
+     {
+      "unit": "KR02-009/P",
+      "layout": "3B-02",
+      "sqm": 158,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-005/P",
+      "layout": "3B-03",
+      "sqm": 147,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-002/P",
+      "layout": "3B-03",
+      "sqm": 147,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-004/P",
+      "layout": "3B-01",
+      "sqm": 164,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-003/P",
+      "layout": "3B-01",
+      "sqm": 164,
+      "view": "Park"
+     }
+    ]
+   },
+   {
+    "floor": "First",
+    "units": [
+     {
+      "unit": "KR02-107/P",
+      "layout": "3B-04",
+      "sqm": 143,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-103/P",
+      "layout": "3B-10A",
+      "sqm": 194,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-108/P",
+      "layout": "3B-06",
+      "sqm": 149,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-102/P",
+      "layout": "3B-05",
+      "sqm": 141,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-104/P",
+      "layout": "3B-05",
+      "sqm": 141,
+      "view": "Park"
+     }
+    ]
+   },
+   {
+    "floor": "Second",
+    "units": [
+     {
+      "unit": "KR02-203/P",
+      "layout": "3B-05",
+      "sqm": 141,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-213/P",
+      "layout": "2B-04B",
+      "sqm": 118,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-212/U",
+      "layout": "2B-05D",
+      "sqm": 115,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-211/U",
+      "layout": "2B-05E",
+      "sqm": 117,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-210/P",
+      "layout": "2B-05F",
+      "sqm": 118,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-208/P",
+      "layout": "3B-04",
+      "sqm": 143,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-209/P",
+      "layout": "3B-08",
+      "sqm": 176,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-204/P",
+      "layout": "3B-07",
+      "sqm": 163,
+      "view": "Park"
+     }
+    ]
+   },
+   {
+    "floor": "Third",
+    "units": [
+     {
+      "unit": "KR02-312/U",
+      "layout": "2B-09",
+      "sqm": 116,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-311/U",
+      "layout": "2B-06",
+      "sqm": 111,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-310/U",
+      "layout": "1B-04",
+      "sqm": 77,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-309/U",
+      "layout": "1B-05",
+      "sqm": 77,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-308/U",
+      "layout": "1B-05",
+      "sqm": 77,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-303/P",
+      "layout": "3B-07",
+      "sqm": 163,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-302/P",
+      "layout": "3B-07",
+      "sqm": 163,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-306/P",
+      "layout": "3B-04",
+      "sqm": 143,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-307/P",
+      "layout": "3B-09",
+      "sqm": 161,
+      "view": "Park"
+     }
+    ]
+   },
+   {
+    "floor": "Fourth",
+    "units": [
+     {
+      "unit": "KR02-410/U",
+      "layout": "2B-09",
+      "sqm": 116,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-409/U",
+      "layout": "2B-06",
+      "sqm": 111,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-408/U",
+      "layout": "1B-04",
+      "sqm": 75,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-407/U",
+      "layout": "1B-05",
+      "sqm": 77,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-406/U",
+      "layout": "1B-05",
+      "sqm": 77,
+      "view": "Boulevard"
+     },
+     {
+      "unit": "KR02-403/P",
+      "layout": "3B-04",
+      "sqm": 143,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-404/P",
+      "layout": "3B-04",
+      "sqm": 143,
+      "view": "Park"
+     },
+     {
+      "unit": "KR02-405/P",
+      "layout": "3B-09",
+      "sqm": 161,
+      "view": "Park"
+     }
+    ]
+   }
+  ]
+ }
+}

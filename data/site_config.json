@@ -1,51 +1,24 @@
 {
-  "brand": {
-    "displayName": "G Developments",
-    "subLabel": "Private Brokerage & Property Advisory",
-    "brokerFirmName": "Hemaly Real Estate Advisory",
-    "advisorName": "Omar Sherif",
-    "advisorTitle": "Senior G Developments Property Advisor",
-    "tagline": "Official price sheets, live NEWKAIRO availability, floor plans, and zero-commission buyer advisory across NEWKAIRO, NEWGIZA, Seashell, Playa, IVY, and Ein Bay."
+  "advisor": {
+    "name": "Omar Sherif",
+    "title": "Senior property advisor, G Developments portfolio",
+    "firm": "Hemaly Real Estate Advisory"
   },
   "contact": {
-    "phoneDisplay": "+20 100 000 0000",
-    "phoneHref": "+201000000000",
-    "whatsappNumber": "201000000000",
-    "email": "advisory@gdevelopments-broker.com",
-    "responsePromise": "Dedicated advisor response within 15 minutes during business hours",
-    "workingHours": "Daily · 10:00 AM – 10:00 PM EET"
+    "phoneDisplay": "+20 122 727 5122",
+    "phoneHref": "+201227275122",
+    "whatsapp": "201227275122",
+    "hours": "Daily, 10:00 – 22:00 Cairo time"
   },
   "leadCapture": {
     "webhookUrl": "",
-    "webhookNote": "Optional: paste a Formspree, Make.com, Zapier, HubSpot, or Google Apps Script URL to forward leads automatically in addition to local CRM storage and WhatsApp routing.",
-    "enableWhatsAppHandoff": true,
-    "requirePhoneCountryCode": true
+    "note": "Optional. Paste a Formspree, Make.com or Google Apps Script URL here to receive a copy of every enquiry in addition to the WhatsApp message."
   },
   "offices": [
-    {
-      "region": "East Cairo · Advisory Hub",
-      "name": "New Cairo · Park Street & Suez Corridor",
-      "detail": "Private consultations, NEWKAIRO masterplan walkthroughs & live ATS reservation support",
-      "schedule": "By appointment · Daily"
-    },
-    {
-      "region": "West Cairo",
-      "name": "NEWGIZA & Sheikh Zayed",
-      "detail": "On-site tours of NEWGIZA, The Collection Cypher, Twilight Residence & IVY New Zayed",
-      "schedule": "By appointment · Daily"
-    },
-    {
-      "region": "Central Cairo",
-      "name": "Zamalek Private Desk",
-      "detail": "Investor briefings, multi-unit portfolio reviews & corporate consultations",
-      "schedule": "Sunday – Thursday"
-    },
-    {
-      "region": "North Coast · Seasonal",
-      "name": "Seashell Walk · Playa Ghazala · Ras El Hekma",
-      "detail": "Summer beachfront site visits, Ready-to-Move villa tours & Phase 3 hotel-serviced viewings",
-      "schedule": "Seasonal · May – October"
-    }
+    { "area": "New Cairo", "detail": "NEWKAIRO and Krypton viewings, masterplan walkthroughs" },
+    { "area": "West Cairo", "detail": "NEWGIZA, Artlife and IVY site visits" },
+    { "area": "Zamalek", "detail": "Private investor meetings, by appointment" },
+    { "area": "North Coast", "detail": "Ras El Hekma and Ghazala Bay viewings, May to October" }
   ],
-  "disclaimer": "Independent Authorized Real Estate Brokerage & Advisory portal specializing in G Developments projects in Egypt. This is not the official corporate website of G Developments. All starting prices, payment plans, and Primary ATS inventory figures are sourced from developer releases and subject to final confirmation upon unit reservation."
+  "disclaimer": "Independent advisory for G Developments projects in Egypt. This is not the official G Developments website. Prices, payment plans and availability come from developer releases (Standard Payment Plans of October 18, 2026 and Primary ATS sheets of November 2026) and are confirmed at reservation."
 }

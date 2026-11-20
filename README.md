@@ -1,29 +1,46 @@
-# G Developments — Company Profile & Private Brokerage Portal
+# Omar Sherif · Private advisory for G Developments
 
-A zero-build, dynamic real estate brokerage & company profile website for **G Developments** (founded by **Mahmoud El-Gamal**), centered on **NEWKAIRO & krypton** with live **Primary ATS inventory (262 units)**, full **10-project portfolio**, **multi-option brochure download center**, and built-in **Broker Studio CMS**.
+A static, no-build website for Krypton at NEWKAIRO and the wider G Developments portfolio.
+Plain HTML, CSS and JavaScript, so any static host serves it as-is (Render, GitHub Pages, Netlify).
 
-## Highlights
-- **NEWKAIRO & krypton Launch Center:** Interactive 22-layout krypton explorer (`7.875M – 20.35M EGP`, 5% down, 5% after 3 months, 8-year quarterly math) + phase cards.
-- **Live NEWKAIRO Primary ATS Explorer:** All 262 tracked units across Golf Views (Argon & Cerium), Neon Views 01 & 02, and Urban Living with multi-facet filters, real-time installment & cash discount calculator, one-click broker pitch copy, CSV upload, and filtered CSV export.
-- **Corporate Company Profile:** Complete executive profile of G Developments & Mahmoud El-Gamal (`docs/G_DEVELOPMENTS_COMPANY_PROFILE.md`) + printable PDF export right from the website.
-- **Multi-Option Brochure Center:** Direct PDF / printable dossier generation, lead-gated VIP unlocks, WhatsApp sheet requests, and multi-brochure bundle requests.
-- **Broker Studio (`?studio=1` or Footer Button):** Visually add new projects, attach brochures, import future Primary ATS / Cash Price CSVs, customize broker contact details & webhook URL, inspect captured leads CRM, and export updated JSON files.
+## What's on the page
 
-## Run Locally
+| Section | What it does | Data |
+| --- | --- | --- |
+| Hero | The Krypton film plays through the "krypton" wordmark, then opens full screen on scroll | `assets/video/` |
+| Krypton | Tabs for the place, 25 floor plans with room sizes, floor-by-floor released units (Blocks 1–2), payment steps and a gallery | `data/krypton.json`, `assets/img/plans/` |
+| Portfolio | Destination tabs (East Cairo, West Cairo, North Coast, Ain Sokhna), 13 projects, a details panel with homes, payment terms and brochures | `data/portfolio.json` |
+| Payment plans | Every destination and phase from the Standard Payment Plans of October 18, 2026, with a price input, schedule, maintenance and cash price | `data/payment_terms.json` |
+| Availability | 1,787 units from the November 2026 Primary ATS sheets, with filters, a budget histogram and a WhatsApp "Ask" on each unit | `data/inventory.json` |
+| Brochures | Seven official PDFs, compressed for the web | `assets/brochures/` |
+| Contact | WhatsApp and call to +20 122 727 5122, and a brief form that opens WhatsApp pre-filled | `data/site_config.json` |
+
+The WhatsApp button with the number under it stays on screen everywhere.
+
+## Updating
+
+**New availability sheets.** Export the Primary ATS reports to Excel, then:
+
 ```bash
-python3 -m http.server 8080
+pip3 install openpyxl
+python3 scripts/build_inventory.py ~/Downloads/"Primary ATS"*.xlsx
 ```
-Then open `http://localhost:8080`.
 
-## Update NEWKAIRO Availability / Cash Sheet
+The newest "As of" date wins when two files cover the same report. Unknown phases are listed so you can map them in `PHASES` at the top of the script. Commit and push; Render redeploys on its own.
+
+**New payment sheet.** Edit `data/payment_terms.json`. Each phase has `down` (payments at contracting, e.g. `[5, 5]`), `installments`, `delivery` months and `cash` discount.
+
+**Contact details.** `data/site_config.json`. Paste a Formspree or Google Apps Script URL into `leadCapture.webhookUrl` to receive a copy of every form brief by email or in a sheet.
+
+## Run locally
+
 ```bash
-python3 scripts/sync_ats_csv.py data/primary_ats_newkairo.csv data/newkairo_inventory.json
+python3 -m http.server 4174
 ```
 
-## Deploy on GitHub Pages
-1. Push this repository to GitHub (`main` branch).
-2. Open **Settings → Pages → Build and deployment → Source: Deploy from a branch (`main` / `/ (root)`)**.
-3. Your live website will be published automatically with zero build steps!
+Then open http://localhost:4174. Opening `index.html` directly from disk won't load the data files.
 
-## Continuing in Claude
-See [`CLAUDE_HANDOFF.md`](./CLAUDE_HANDOFF.md) for the complete technical architecture, data schemas, and Standard Payment PDF ingestion checklist.
+## Notes
+
+- Krypton, Golf Views, Neon Views and NEWKAIRO images are extracted from the developer brochures. Images for NEWGIZA, IVY, the North Coast and Ain Sokhna are illustrative and labelled as such.
+- The site states it is independent advisory and not the official G Developments website.

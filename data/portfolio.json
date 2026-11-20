@@ -1,0 +1,742 @@
+{
+ "regions": [
+  {
+   "id": "east",
+   "name": "East Cairo",
+   "line": "NEWKAIRO, on the Cairo–Suez Road in New Heliopolis."
+  },
+  {
+   "id": "west",
+   "name": "West Cairo",
+   "line": "NEWGIZA and IVY, along the Cairo–Alexandria Desert Road."
+  },
+  {
+   "id": "coast",
+   "name": "North Coast",
+   "line": "Ras El Hekma and Ghazala Bay, on the Mediterranean."
+  },
+  {
+   "id": "sokhna",
+   "name": "Ain Sokhna",
+   "line": "Ein Bay, ninety minutes from New Cairo on the Red Sea."
+  }
+ ],
+ "projects": [
+  {
+   "id": "krypton",
+   "region": "east",
+   "name": "Krypton",
+   "parent": "NEWKAIRO",
+   "place": "The Boulevard, NEWKAIRO",
+   "status": "New launch",
+   "image": "assets/img/krypton/kr-dusk",
+   "gallery": [
+    "assets/img/krypton/kr-canopy",
+    "assets/img/krypton/kr-pool",
+    "assets/img/krypton/kr-balcony",
+    "assets/img/krypton/kr-tram"
+   ],
+   "intro": "Serviced apartments set above an active retail street, with concierge, housekeeping and The Boulevard at the front door. Every home is delivered fully finished with air conditioning.",
+   "facts": [
+    [
+     "From",
+     "7.88M EGP"
+    ],
+    [
+     "Plan",
+     "5% + 5%, 8 years"
+    ],
+    [
+     "Finish",
+     "Fully finished, A/C"
+    ],
+    [
+     "Homes",
+     "1 to 3 bedrooms"
+    ]
+   ],
+   "homes": [
+    {
+     "name": "One bedroom",
+     "size": "75 – 87 m²",
+     "from": 7875000,
+     "to": 9171750
+    },
+    {
+     "name": "Two bedrooms",
+     "size": "108 – 131 m²",
+     "from": 11287500,
+     "to": 13702500
+    },
+    {
+     "name": "Three bedrooms",
+     "size": "141 – 194 m²",
+     "from": 14810000,
+     "to": 20354250
+    }
+   ],
+   "highlights": [
+    "Hotel-style service and concierge",
+    "Park and pool views or Boulevard views",
+    "Electric tram stop on The Boulevard",
+    "Next to the international school, sports club and 5-star hotel"
+   ],
+   "payment": {
+    "destination": "newkairo",
+    "phases": [
+     "nk-krypton"
+    ]
+   },
+   "inventory": {
+    "project": "newkairo",
+    "phases": [
+     "Krypton"
+    ]
+   },
+   "brochures": [
+    "krypton-block-1",
+    "krypton-block-2",
+    "masterplan"
+   ],
+   "anchor": "#krypton"
+  },
+  {
+   "id": "golf-views",
+   "region": "east",
+   "name": "Golf Views",
+   "parent": "NEWKAIRO",
+   "place": "Argon and Cerium Views, NEWKAIRO Golf",
+   "status": "Selling",
+   "image": "assets/img/golf/golf-estate-2s",
+   "gallery": [
+    "assets/img/golf/golf-fairscape",
+    "assets/img/golf/golf-teeview",
+    "assets/img/golf/golf-twinvilla",
+    "assets/img/golf/golf-clubhouse"
+   ],
+   "intro": "Villas facing the 18-hole championship course, from twin villas on the third row to Fairscapes and one-storey golf estates on the fairway.",
+   "facts": [
+    [
+     "Plan",
+     "5% + 5%, 8 years"
+    ],
+    [
+     "Cash",
+     "30% off"
+    ],
+    [
+     "Delivery",
+     "48 months"
+    ],
+    [
+     "Finish",
+     "Basic finishing"
+    ]
+   ],
+   "highlights": [
+    "Front-row golf estates of 654 and 732 m² on request",
+    "Golf hotel, clubhouse and lake",
+    "Main gate on the Cairo–Suez Road",
+    "Landscaped buffers between every row"
+   ],
+   "payment": {
+    "destination": "newkairo",
+    "phases": [
+     "nk-golf"
+    ]
+   },
+   "inventory": {
+    "project": "newkairo",
+    "phases": [
+     "Golf Views"
+    ]
+   },
+   "brochures": [
+    "golf-views"
+   ]
+  },
+  {
+   "id": "neon-views",
+   "region": "east",
+   "name": "Neon Views",
+   "parent": "NEWKAIRO",
+   "place": "Lily Plaza and Wadi Springs, NEWKAIRO",
+   "status": "Selling",
+   "image": "assets/img/neon/neon-standalone",
+   "gallery": [
+    "assets/img/neon/neon-lake",
+    "assets/img/neon/neon-semi",
+    "assets/img/neon/neon-townhouse",
+    "assets/img/neon/neon-standalone-interior"
+   ],
+   "intro": "Fully finished townhouses, semi-attached and standalone villas, many with a rooftop penthouse, arranged around garden ribbons and meditation lakes.",
+   "facts": [
+    [
+     "Plan",
+     "5% + 5%, 8 years"
+    ],
+    [
+     "Cash",
+     "30% off"
+    ],
+    [
+     "Delivery",
+     "48 months"
+    ],
+    [
+     "Finish",
+     "Fully finished"
+    ]
+   ],
+   "highlights": [
+    "Penthouse options on townhouses and villas",
+    "Wadi Springs and meditation lakes",
+    "Garden ribbons and active zones",
+    "Walking distance to NEWKAIRO Golf"
+   ],
+   "payment": {
+    "destination": "newkairo",
+    "phases": [
+     "nk-neon"
+    ]
+   },
+   "inventory": {
+    "project": "newkairo",
+    "phases": [
+     "Neon Views 01",
+     "Neon Views 02"
+    ]
+   },
+   "brochures": [
+    "neon-views"
+   ]
+  },
+  {
+   "id": "urban-living",
+   "region": "east",
+   "name": "Urban Living",
+   "parent": "NEWKAIRO",
+   "place": "Buildings B-03, B-10, B-11 and B-12, NEWKAIRO",
+   "status": "Selling",
+   "image": "assets/img/newkairo/nk-boulevard",
+   "gallery": [
+    "assets/img/newkairo/nk-downtown",
+    "assets/img/newkairo/nk-school",
+    "assets/img/newkairo/nk-sports-club"
+   ],
+   "intro": "Fully finished one to four bedroom apartments, from ground floors with private gardens to upper floors over the park.",
+   "facts": [
+    [
+     "Plan",
+     "8 years"
+    ],
+    [
+     "Finish",
+     "Fully finished"
+    ],
+    [
+     "Homes",
+     "1 to 4 bedrooms"
+    ],
+    [
+     "Gardens",
+     "Ground floors"
+    ]
+   ],
+   "highlights": [
+    "Garden apartments on the ground floor",
+    "Next to the downtown district",
+    "Three international schools in the masterplan",
+    "Two sports clubs and a medical hub"
+   ],
+   "payment": {
+    "destination": "newkairo",
+    "phases": [
+     "nk-urban"
+    ]
+   },
+   "inventory": {
+    "project": "newkairo",
+    "phases": [
+     "Urban Living"
+    ]
+   },
+   "brochures": [
+    "newkairo"
+   ]
+  },
+  {
+   "id": "newgiza",
+   "region": "west",
+   "name": "NEWGIZA",
+   "place": "KM 22, Cairo–Alexandria Desert Road",
+   "status": "Ready and near-ready",
+   "illustrative": true,
+   "image": "assets/images/newgiza-flagship",
+   "gallery": [],
+   "intro": "The founding city of G Developments: 1,550 acres on the Giza plateau with an 18-hole golf course, New Giza University, the sporting club and Health Park. Today's releases are cash sales close to handover.",
+   "facts": [
+    [
+     "Area",
+     "1,550+ acres"
+    ],
+    [
+     "Open space",
+     "90%"
+    ],
+    [
+     "Terms",
+     "Cash"
+    ],
+    [
+     "Delivery",
+     "12 – 30 months"
+    ]
+   ],
+   "highlights": [
+    "New Giza University and international schools",
+    "New Giza Sporting Club",
+    "New Giza Health Park",
+    "Kingsrange, Westridge and District One releases"
+   ],
+   "payment": {
+    "destination": "newgiza",
+    "phases": [
+     "ng-cash",
+     "ng-utilities"
+    ]
+   },
+   "inventory": {
+    "project": "newgiza",
+    "phases": [
+     "District One",
+     "Kingsrange Phase 2",
+     "Westridge"
+    ]
+   },
+   "brochures": []
+  },
+  {
+   "id": "artlife",
+   "region": "west",
+   "name": "Artlife",
+   "parent": "NEWGIZA",
+   "place": "Cypher, Twilight and Pixel Labs, NEWGIZA",
+   "status": "Selling",
+   "illustrative": true,
+   "image": "assets/images/hero-krypton-newkairo",
+   "gallery": [],
+   "intro": "NEWGIZA's branded quarter: Cypher residences operated by Autograph Collection, the Twilight and Spectre hotel-serviced series, The Collection, and Pixel Labs and Sudoku offices.",
+   "facts": [
+    [
+     "Cypher",
+     "10%, 6 years"
+    ],
+    [
+     "Cash",
+     "Up to 25% off"
+    ],
+    [
+     "Service",
+     "Autograph Collection"
+    ],
+    [
+     "Offices",
+     "From 45.2M EGP"
+    ]
+   ],
+   "homes": [
+    {
+     "name": "Cypher one bedroom",
+     "size": "103 m²",
+     "from": 14763000
+    },
+    {
+     "name": "Cypher two bedrooms",
+     "size": "147 m²",
+     "from": 19829000
+    },
+    {
+     "name": "Cypher three bedrooms",
+     "size": "297 m²",
+     "from": 43581000
+    },
+    {
+     "name": "Cypher four bedrooms",
+     "size": "366 m²",
+     "from": 56493000
+    },
+    {
+     "name": "Cypher penthouse",
+     "size": "1,070 m²",
+     "from": 140170000
+    }
+   ],
+   "highlights": [
+    "Residences operated by Autograph Collection Hotels",
+    "Twilight and Spectre hotel-serviced homes",
+    "Pixel Labs and Sudoku office floors",
+    "Maintenance 8%, Pixel Labs 10%"
+   ],
+   "payment": {
+    "destination": "artlife",
+    "phases": [
+     "al-cypher",
+     "al-twilight",
+     "al-spectre",
+     "al-collection",
+     "al-b1b6",
+     "al-pixel"
+    ]
+   },
+   "inventory": {
+    "project": "newgiza",
+    "phases": [
+     "Artlife · Pixel Labs",
+     "Artlife · Sudoku"
+    ]
+   },
+   "brochures": []
+  },
+  {
+   "id": "meditown",
+   "region": "west",
+   "name": "Meditown",
+   "parent": "NEWGIZA",
+   "place": "Health district, NEWGIZA",
+   "status": "Selling",
+   "illustrative": true,
+   "image": null,
+   "gallery": [],
+   "intro": "Fully finished clinics beside New Giza Health Park, for practitioners who want to own their practice in West Cairo's medical district.",
+   "facts": [
+    [
+     "Clinics",
+     "From 80 m²"
+    ],
+    [
+     "From",
+     "14.4M EGP"
+    ],
+    [
+     "Plan",
+     "Up to 6 years"
+    ],
+    [
+     "Cash",
+     "Up to 22.93% off"
+    ]
+   ],
+   "homes": [
+    {
+     "name": "Fully finished clinic",
+     "size": "80 m²",
+     "from": 14400000
+    }
+   ],
+   "highlights": [
+    "Next to New Giza Health Park",
+    "Blocks B1 – B2 deliver in 6 months",
+    "Blocks B3 – B4 over 6 years",
+    "Maintenance 8%"
+   ],
+   "payment": {
+    "destination": "meditown",
+    "phases": [
+     "md-b12",
+     "md-b34"
+    ]
+   },
+   "brochures": []
+  },
+  {
+   "id": "ivy",
+   "region": "west",
+   "name": "IVY",
+   "place": "New Zayed, Cairo–Alexandria Desert Road",
+   "status": "Selling",
+   "illustrative": true,
+   "image": "assets/images/ivy-new-zayed",
+   "gallery": [],
+   "intro": "A low-rise town by Alchemy Architecture around a 17-acre lake, with the IVYPARK sports club and The King's School Canterbury Cairo inside the gates.",
+   "facts": [
+    [
+     "Plan",
+     "5% + 5%, 7 years"
+    ],
+    [
+     "Cash",
+     "30% off"
+    ],
+    [
+     "Delivery",
+     "36 months"
+    ],
+    [
+     "Finish",
+     "Fully finished"
+    ]
+   ],
+   "highlights": [
+    "17-acre lake and IVYPARK sports club",
+    "The King's School Canterbury Cairo",
+    "Masterplan by Alchemy Architecture",
+    "Six entry gates"
+   ],
+   "payment": {
+    "destination": "ivy",
+    "phases": [
+     "ivy",
+     "ivy-evergreen"
+    ]
+   },
+   "inventory": {
+    "project": "ivy"
+   },
+   "brochures": []
+  },
+  {
+   "id": "seashell-rah",
+   "region": "coast",
+   "name": "Seashell Ras El Hekma",
+   "place": "KM 194, Ras El Hekma",
+   "status": "Selling",
+   "illustrative": true,
+   "image": "assets/images/seashell-ras-el-hekma",
+   "gallery": [],
+   "intro": "1.6 km of private beach with swimmable lagoons: lagoon chalets, floating chalets, Grand Beach Houses, G Residence lofts and duplexes, and beach villas.",
+   "facts": [
+    [
+     "Plan",
+     "5% + 5%, 8 years"
+    ],
+    [
+     "Cash",
+     "35% off"
+    ],
+    [
+     "Delivery",
+     "36 – 48 months"
+    ],
+    [
+     "Beach",
+     "1.6 km"
+    ]
+   ],
+   "highlights": [
+    "Floating chalets directly on the lagoon",
+    "Grand Beach Houses and Grand Twinhouses",
+    "G Residence lofts and duplexes",
+    "G Cabanas from 16.2M EGP"
+   ],
+   "payment": {
+    "destination": "seashell-rah",
+    "phases": [
+     "sr-p12",
+     "sr-lagoon",
+     "sr-lagoon2",
+     "sr-cabins",
+     "sr-gvillas",
+     "sr-gres"
+    ]
+   },
+   "inventory": {
+    "project": "seashell-rah"
+   },
+   "brochures": []
+  },
+  {
+   "id": "playa-rah",
+   "region": "coast",
+   "name": "Playa Ras El Hekma",
+   "place": "KM 204, Ras El Hekma",
+   "status": "Selling",
+   "illustrative": true,
+   "image": "assets/images/playa-ras-el-hekma",
+   "gallery": [],
+   "intro": "240 acres around more than 25 swimmable lagoons. Phase 3 brings the G Serviced Chalets, managed by G Hotel.",
+   "facts": [
+    [
+     "Plan",
+     "5% + 5%, 7 years"
+    ],
+    [
+     "Cash",
+     "32% off"
+    ],
+    [
+     "Delivery",
+     "48 months"
+    ],
+    [
+     "Area",
+     "240 acres"
+    ]
+   ],
+   "homes": [
+    {
+     "name": "G Serviced Chalet, two bedrooms",
+     "size": "118 – 127 m²",
+     "from": 15300000
+    },
+    {
+     "name": "G Serviced Chalet, three bedrooms",
+     "size": "167 – 174 m²",
+     "from": 21700000
+    },
+    {
+     "name": "Rooftop chalet, three bedrooms",
+     "size": "190 m²",
+     "from": 21633000
+    },
+    {
+     "name": "Penthouse",
+     "size": "180 – 218 m²",
+     "from": 24300000
+    }
+   ],
+   "highlights": [
+    "Chalets managed by G Hotel",
+    "More than 25 swimmable lagoons",
+    "One hour from El Alamein airport",
+    "Maintenance 8%"
+   ],
+   "payment": {
+    "destination": "playa-rah",
+    "phases": [
+     "pr-all"
+    ]
+   },
+   "brochures": []
+  },
+  {
+   "id": "playa",
+   "region": "coast",
+   "name": "Playa Ghazala",
+   "place": "KM 141, Ghazala Bay",
+   "status": "Selling and ready",
+   "illustrative": true,
+   "image": "assets/images/playa-ghazala",
+   "gallery": [],
+   "intro": "An operating resort on 1.5 km of Ghazala Bay. G Village adds chalets, duplexes and twin villas; Phase 1 and 2 offer standalone villas and townhomes.",
+   "facts": [
+    [
+     "G Village",
+     "10%, 6 years"
+    ],
+    [
+     "Cash",
+     "Up to 30% off"
+    ],
+    [
+     "Delivery",
+     "6 – 36 months"
+    ],
+    [
+     "Beach",
+     "1.5 km"
+    ]
+   ],
+   "highlights": [
+    "G Village chalets, duplexes and twin villas",
+    "Standalone villas in Phase 1 and 2A",
+    "Playa Cabins delivering in 6 months",
+    "Cable park, promenade and LA7 fitness"
+   ],
+   "payment": {
+    "destination": "playa",
+    "phases": [
+     "pl-gvillage",
+     "pl-1ae",
+     "pl-1f",
+     "pl-2a",
+     "pl-2b",
+     "pl-cabins",
+     "pl-gvillas"
+    ]
+   },
+   "inventory": {
+    "project": "playa"
+   },
+   "brochures": []
+  },
+  {
+   "id": "seashell",
+   "region": "coast",
+   "name": "Seashell",
+   "place": "KM 135, Sidi Abdelrahman",
+   "status": "Delivered",
+   "illustrative": true,
+   "image": null,
+   "gallery": [],
+   "intro": "The original Seashell on Sidi Abdelrahman bay. Remaining developer units sell for cash with handover in three months, alongside a resale desk.",
+   "facts": [
+    [
+     "Terms",
+     "Cash"
+    ],
+    [
+     "Handover",
+     "3 months"
+    ],
+    [
+     "Status",
+     "Delivered"
+    ],
+    [
+     "Resale",
+     "On request"
+    ]
+   ],
+   "highlights": [
+    "Seashell Walk dining and retail",
+    "Delivered and operating",
+    "Resale chalets and villas",
+    "Maintenance 8%"
+   ],
+   "payment": {
+    "destination": "seashell",
+    "phases": [
+     "ss-cash"
+    ]
+   },
+   "brochures": []
+  },
+  {
+   "id": "ein-bay",
+   "region": "sokhna",
+   "name": "Ein Bay",
+   "place": "KM 34, Suez–Sokhna Road",
+   "status": "Resale and releases",
+   "illustrative": true,
+   "image": "assets/images/ein-bay-sokhna",
+   "gallery": [],
+   "intro": "A year-round Red Sea address stepped into the hillside around The G Einbay Golf Resort, ninety minutes from New Cairo.",
+   "facts": [
+    [
+     "Drive",
+     "90 min from New Cairo"
+    ],
+    [
+     "Season",
+     "Year-round"
+    ],
+    [
+     "Golf",
+     "Einbay Golf Resort"
+    ],
+    [
+     "Units",
+     "On request"
+    ]
+   ],
+   "highlights": [
+    "Golf and sea views",
+    "Warm winters on the Red Sea",
+    "Chalets, townhouses and villas",
+    "Releases and resale on request"
+   ],
+   "brochures": []
+  }
+ ]
+}

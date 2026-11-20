@@ -6,6 +6,21 @@
 
 ---
 
+## 0. Current state (updated 2026-11-20, redesign branch `redesign/private-office`)
+
+The site was rebuilt from scratch. Sections 3 and 4 below describe the earlier Antigravity build and are kept only for history.
+
+- **Files:** `index.html`, `css/site.css`, `js/site.js` (no dependencies), data in `data/` (`krypton.json`, `portfolio.json`, `payment_terms.json`, `inventory.json`, `site_config.json`).
+- **Design:** NEWKAIRO brand system taken from the official brochures: Bodoni Moda (Didone) display, Instrument Sans text, oxblood `#421115`, vermilion `#CE3927`, charcoal `#221F20`, white, golf-sand `#F2EDE0`. Hero = Krypton film seen through the "krypton" wordmark.
+- **Payment terms:** `data/payment_terms.json` holds the full Standard Payment Plans of October 18, 2026 (NEWKAIRO, IVY, NEWGIZA, Artlife, Meditown, Playa, Playa Ras El Hekma, Seashell Ras El Hekma, Seashell). Krypton (5% EOI, 5% + 5%, 8 years, 32 quarters) and Urban Living are not on that sheet and are flagged in the UI.
+- **Availability:** `scripts/build_inventory.py` turns the Primary ATS `.xlsx` exports into `data/inventory.json` (1,787 units across NEWKAIRO, IVY, NEWGIZA/Artlife, Playa, Seashell Ras El Hekma as of Nov 2026).
+- **Assets:** official renders extracted from the brochures in `assets/img/{krypton,golf,neon,newkairo}`, 25 Krypton floor plans and Block 1–2 floor plates in `assets/img/plans`, the Krypton film in `assets/video`, web-compressed PDFs in `assets/brochures`.
+- **Contact:** WhatsApp and phone +20 122 727 5122 everywhere (floating button shows the number under the icon).
+- **Hosting:** Render static site from this repo (publish path `./`, no build command).
+- **Open items:** a lead webhook (`leadCapture.webhookUrl`), official renders for NEWGIZA/IVY/North Coast/Ein Bay (currently illustrative), Krypton cash terms and delivery date once released.
+
+---
+
 ## 1. Purpose of This Document
 
 This file contains **every resource, URL, dataset, design token, file contract, and pending task** used to build the G Developments company profile and broker lead-generation portal. Upload or paste this `.md` file directly into **Claude** (alongside any new PDFs or Excel/CSV sheets from your Google Drive folder) to continue development seamlessly without losing context.
