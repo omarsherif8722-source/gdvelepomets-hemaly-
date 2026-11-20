@@ -3,7 +3,23 @@
 A static, no-build website for Krypton at NEWKAIRO and the wider G Developments portfolio.
 Plain HTML, CSS and JavaScript, so any static host serves it as-is (Render, GitHub Pages, Netlify).
 
-## What's on the page
+## Pages
+
+- `/` NEWKAIRO home: the NEWKAIRO film through the wordmark, the four NEWKAIRO parcels, the portfolio, payment plans, brochures and contact.
+- `/krypton/` Krypton, a NEWKAIRO parcel: floor plans, floor by floor, payments, gallery and brochures.
+- One themed page per project: `/golf-views/`, `/neon-views/`, `/urban-living/`, `/newgiza/`, `/artlife/`, `/meditown/`, `/ivy/`, `/seashell-ras-el-hekma/`, `/playa-ras-el-hekma/`, `/playa-ghazala/`, `/seashell/`, `/ein-bay/`.
+
+All pages are generated from shared parts by `python3 scripts/build_pages.py`. Each project's text, colours (`theme`), wordmark, images and video live in `data/portfolio.json`.
+
+**Adding a project film.** Put three files in `assets/video/` (a short muted loop, the full film, a poster frame), add them to the project in `data/portfolio.json`:
+
+```json
+"video": { "loop": "assets/video/golf-loop.mp4", "film": "assets/video/golf-film.mp4", "poster": "assets/video/golf-poster.jpg" }
+```
+
+then run `python3 scripts/build_pages.py` and push. The page switches from the still image to the film, with a "Play the film" button.
+
+## What's on the home page
 
 | Section | What it does | Data |
 | --- | --- | --- |

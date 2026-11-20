@@ -61,8 +61,11 @@
   }, true);
   const WA_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>';
 
+  const u = (path) => (!path ? "" : /^(\/|https?:)/.test(path) ? path : `/${path}`);
+  const PAGE = document.body.dataset.page || "home";
   const picture = (base, alt, sizes = "100vw", eager = false) => {
     if (!base) return "";
+    base = u(base);
     return `<img src="${base}.jpg" srcset="${base}-sm.jpg 800w, ${base}.jpg 1800w" sizes="${sizes}" alt="${esc(alt)}" ${eager ? "" : 'loading="lazy"'} decoding="async">`;
   };
 
@@ -196,14 +199,14 @@
 
   // Current section in the nav
   const navLinks = $$(".masthead__nav a");
-  if ("IntersectionObserver" in window) {
+  if (PAGE === "home" && "IntersectionObserver" in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => {
         if (!en.isIntersecting) return;
-        navLinks.forEach((a) => a.classList.toggle("is-current", a.getAttribute("href") === `#${en.target.id}`));
+        navLinks.forEach((a) => a.classList.toggle("is-current", a.hash === `#${en.target.id}`));
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
-    ["krypton", "portfolio", "payments", "availability", "brochures", "contact"].forEach((id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+    if (PAGE === "home") ["newkairo", "portfolio", "payments", "brochures", "contact"].forEach((id) => { const s = document.getElementById(id); if (s) io.observe(s); });
   }
 
   /* ------------------------------------------------------------------ */
@@ -211,15 +214,17 @@
   /* ------------------------------------------------------------------ */
   const film = $("[data-film]");
   const filmVideo = $("[data-film-video]");
-  $$("[data-film-open]").forEach((b) => b.addEventListener("click", () => {
-    track("Film play");
-    film.showModal();
-    filmVideo.currentTime = 0;
-    filmVideo.play().catch(() => {});
-  }));
-  $("[data-film-close]").addEventListener("click", () => film.close());
-  film.addEventListener("close", () => filmVideo.pause());
-  film.addEventListener("click", (e) => { if (e.target === film) film.close(); });
+  if (film) {
+    $$("[data-film-open]").forEach((b) => b.addEventListener("click", () => {
+      track("Film play", { page: location.pathname });
+      film.showModal();
+      filmVideo.currentTime = 0;
+      filmVideo.play().catch(() => {});
+    }));
+    $("[data-film-close]").addEventListener("click", () => film.close());
+    film.addEventListener("close", () => filmVideo.pause());
+    film.addEventListener("click", (e) => { if (e.target === film) film.close(); });
+  }
 
   const lb = $("[data-lightbox-dialog]");
   const lbImg = $("[data-lightbox-img]");
@@ -248,7 +253,7 @@
   /* ------------------------------------------------------------------ */
   /* Data                                                                */
   /* ------------------------------------------------------------------ */
-  const load = (f) => fetch(`data/${f}.json`, { cache: "no-cache" }).then((r) => { if (!r.ok) throw new Error(`${f}.json ${r.status}`); return r.json(); });
+  const load = (f) => fetch(`/data/${f}.json`, { cache: "no-cache" }).then((r) => { if (!r.ok) throw new Error(`${f}.json ${r.status}`); return r.json(); });
 
   Promise.all([load("krypton"), load("portfolio"), load("payment_terms"), load("inventory"), load("site_config")])
     .then(([krypton, portfolio, terms, inv, config]) => {
@@ -256,11 +261,15 @@
       const ctx = { krypton, portfolio, terms, inv, units, config };
       ctx.planById = {};
       terms.destinations.forEach((d) => d.phases.forEach((ph) => { ctx.planById[ph.id] = { ...ph, destination: d }; }));
+      ctx.planForUnit = (x) => { const ph = ctx.planById[x.plan]; return ph ? ph.plans[0] : null; };
       renderStats(ctx);
-      renderKrypton(ctx);
-      renderAtlas(ctx);
-      renderAtelier(ctx);
-      renderLibrary(ctx);
+      renderParcelPrices(ctx);
+      if ($("[data-kr-tabs]")) renderKrypton(ctx);
+      if ($("[data-nk-gallery]")) renderNewkairo(ctx);
+      if ($("[data-region-tabs]")) renderAtlas(ctx);
+      if ($("[data-pay-tabs]")) renderAtelier(ctx);
+      if (PAGE === "project") renderProject(ctx);
+      renderBooks();
       renderContact(ctx);
       initAnalytics(config);
       document.documentElement.classList.add("is-ready");
@@ -316,7 +325,7 @@
   /* Krypton                                                             */
   /* ------------------------------------------------------------------ */
   function renderKrypton({ krypton }) {
-    const krTabs = initTabs($('.krypton [role="tablist"]'));
+    const krTabs = initTabs($("[data-kr-tabs]"));
     const tabFor = (id) => $(`#${id}`);
 
     // Residences
@@ -340,8 +349,8 @@
             <p class="plan-card__meta">${bedWord}${l.units ? `, ${l.units} homes of this layout in Block 1` : ""}</p>
           </div>
           <div class="plan-card__body">
-            <button class="plan-card__img" type="button" data-zoom="${esc(l.plan)}" aria-label="Enlarge floor plan ${esc(l.code)}">
-              <img src="${esc(l.plan)}" alt="Floor plan of Krypton layout ${esc(l.code)}, ${sizes}" loading="lazy">
+            <button class="plan-card__img" type="button" data-zoom="${esc(u(l.plan))}" aria-label="Enlarge floor plan ${esc(l.code)}">
+              <img src="${esc(u(l.plan))}" alt="Floor plan of Krypton layout ${esc(l.code)}, ${sizes}" loading="lazy">
             </button>
             <div>
               <ul class="rooms">${l.rooms.map((r) => `<li><span>${r.n}</span><span>${esc(r.room)}</span><span>${esc(r.dims)} m</span></li>`).join("")}</ul>
@@ -410,7 +419,7 @@
     }
     function renderFloor() {
       const f = krypton.blockFloors[block].find((x) => x.floor === floor);
-      const src = krypton.plates[block][floor];
+      const src = u(krypton.plates[block][floor]);
       plateEl.innerHTML = `<img src="${src}" alt="${block}, ${floor.toLowerCase()} floor plate" loading="lazy">`;
       plateEl.onclick = () => openLightbox([{ src, caption: `Krypton ${block}, ${floor.toLowerCase()} floor` }]);
       unitsEl.innerHTML = f.units.map((u) => `
@@ -462,7 +471,7 @@
     ].map(([f, c]) => ({ base: `assets/img/krypton/${f}`, caption: c }));
     const galEl = $("[data-kr-gallery]");
     galEl.innerHTML = gal.map((g, i) => `<button type="button" data-i="${i}" aria-label="Open image: ${esc(g.caption)}">${picture(g.base, g.caption, "(min-width: 900px) 33vw, 100vw")}</button>`).join("");
-    galEl.addEventListener("click", (e) => { const b = e.target.closest("[data-i]"); if (b) openLightbox(gal.map((g) => ({ src: `${g.base}.jpg`, caption: g.caption })), Number(b.dataset.i)); });
+    galEl.addEventListener("click", (e) => { const b = e.target.closest("[data-i]"); if (b) openLightbox(gal.map((g) => ({ src: `${u(g.base)}.jpg`, caption: g.caption })), Number(b.dataset.i)); });
   }
 
   /* ------------------------------------------------------------------ */
@@ -502,7 +511,7 @@
       current = p;
       $$("button", listEl).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.project === id)));
       const us = unitsFor(ctx, p);
-      const min = us.length ? Math.min(...us.map((u) => u.price)) : null;
+      const min = fromPrice(ctx, p);
       const pay = p.payment ? ctx.planById[p.payment.phases[0]] : null;
       view.innerHTML = `
         <figure class="atlas__figure">
@@ -513,9 +522,9 @@
         <h3 class="atlas__title">${esc(p.name)}</h3>
         <p class="atlas__intro">${esc(p.intro)}</p>
         <dl class="facts">${p.facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
-        ${us.length ? `<p class="muted">Available today from ${egp(min)} EGP.</p>` : ""}
+        ${min ? `<p class="muted">From ${egp(min)} EGP.</p>` : ""}
         <div class="atlas__actions">
-          <button class="btn btn--dark" type="button" data-open-dossier="${p.id}">Open the full details</button>
+          <a class="btn btn--dark" href="/${p.slug}/">Visit ${esc(p.name)}</a>
           ${pay ? `<button class="btn btn--line" type="button" data-see-plan="${p.id}">Work out the payments</button>` : ""}
           <a class="btn btn--line" href="${wa(`Hello, which ${p.parent ? `${p.parent} ${p.name}` : p.name} units are available now?`)}" target="_blank" rel="noopener">${WA_ICON} Ask what's available</a>
         </div>`;
@@ -523,8 +532,6 @@
     initTabs(tabList, (tab) => showRegion(tab.dataset.region));
     listEl.addEventListener("click", (e) => { const b = e.target.closest("[data-project]"); if (b) showProject(b.dataset.project); });
     view.addEventListener("click", (e) => {
-      const d = e.target.closest("[data-open-dossier]");
-      if (d) openDossier(ctx, d.dataset.openDossier);
       const pl = e.target.closest("[data-see-plan]");
       if (pl) ctx.showPlan && ctx.showPlan(portfolio.projects.find((x) => x.id === pl.dataset.seePlan));
     });
@@ -534,7 +541,7 @@
   function typesSummary(us) {
     const by = new Map();
     us.forEach((u) => {
-      const k = u.type;
+      const k = /apartment/i.test(u.type) && u.beds ? `${u.type}, ${u.beds} bedroom${u.beds > 1 ? "s" : ""}` : u.type;
       const g = by.get(k) || { type: k, n: 0, min: Infinity, bmin: Infinity, bmax: 0 };
       g.n++; g.min = Math.min(g.min, u.price);
       if (u.bua) { g.bmin = Math.min(g.bmin, u.bua); g.bmax = Math.max(g.bmax, u.bua); }
@@ -543,65 +550,75 @@
     return [...by.values()].sort((a, b) => a.min - b.min);
   }
 
-  function openDossier(ctx, id) {
-    const p = ctx.portfolio.projects.find((x) => x.id === id);
-    const dlg = $("[data-dossier]");
-    const body = $("[data-dossier-body]");
+
+  /* ------------------------------------------------------------------ */
+  /* Parcels, NEWKAIRO and project pages                                 */
+  /* ------------------------------------------------------------------ */
+  function fromPrice(ctx, p) {
+    const prices = [...unitsFor(ctx, p).map((x) => x.price), ...(p.homes || []).map((x) => x.from)];
+    return prices.length ? Math.min(...prices) : null;
+  }
+  function renderParcelPrices(ctx) {
+    $$("[data-from]").forEach((el) => {
+      const p = ctx.portfolio.projects.find((x) => x.id === el.dataset.from);
+      const min = p && fromPrice(ctx, p);
+      el.textContent = min ? `From ${short(min)} EGP` : p ? p.status : "";
+    });
+  }
+
+  function renderNewkairo() {
+    initTabs($('#newkairo [role="tablist"]'));
+    const gal = [
+      ["newkairo/nk-welcome", "The main gate"], ["newkairo/nk-boulevard", "The Boulevard"], ["newkairo/nk-golf-lake", "NEWKAIRO Golf and the lake"],
+      ["newkairo/nk-golf-hotel", "The golf hotel"], ["newkairo/nk-golf-clubhouse", "The golf clubhouse"], ["newkairo/nk-downtown", "The downtown district"],
+      ["newkairo/nk-school", "International school"], ["newkairo/nk-sports-club", "Sports club"], ["newkairo/nk-hospitality", "Hospitality"],
+      ["krypton/kr-dusk", "Krypton at dusk"], ["golf/golf-estate-2s", "Golf estates"], ["neon/neon-lake", "Neon Views lakes"],
+    ].map(([f, c]) => ({ base: `assets/img/${f}`, caption: c }));
+    mountGallery($("[data-nk-gallery]"), gal);
+  }
+
+  function mountGallery(el, gal) {
+    if (!el) return;
+    el.innerHTML = gal.map((g, i) => `<button type="button" data-i="${i}" aria-label="Open image: ${esc(g.caption)}">${picture(g.base, g.caption, "(min-width: 900px) 33vw, 100vw")}</button>`).join("");
+    el.addEventListener("click", (e) => { const b = e.target.closest("[data-i]"); if (b) openLightbox(gal.map((g) => ({ src: `${u(g.base)}.jpg`, caption: g.caption })), Number(b.dataset.i)); });
+  }
+
+  function renderProject(ctx) {
+    const p = ctx.portfolio.projects.find((x) => x.id === document.body.dataset.project);
+    if (!p) return;
+    initTabs($('#project [role="tablist"]'));
+
+    // Homes: grouped from the availability sheet, or the published price list
+    const homesEl = $("[data-p-homes]");
     const us = unitsFor(ctx, p);
     const types = typesSummary(us);
-    const phases = p.payment ? p.payment.phases.map((pid) => ctx.planById[pid]).filter(Boolean) : [];
-    const dest = phases[0] && phases[0].destination;
-    const books = (p.brochures || []).map((b) => LIBRARY.find((x) => x.id === b)).filter(Boolean);
-    const homesHtml = types.length
-      ? `<ul class="typelist">${types.map((t) => `<li><strong>${esc(t.type)}</strong><span>${t.bmin < Infinity ? (t.bmin === t.bmax ? `${t.bmin} m²` : `${t.bmin} – ${t.bmax} m²`) : ""}</span><em>from ${short(t.min)}</em></li>`).join("")}</ul>`
-      : p.homes ? `<ul class="typelist">${p.homes.map((h) => `<li><strong>${esc(h.name)}</strong><span>${esc(h.size)}</span><em>from ${short(h.from)}</em></li>`).join("")}</ul>`
-      : `<p class="muted">Unit lists for ${esc(p.name)} are shared on request.</p>`;
-    body.innerHTML = `
-      <div class="dossier__hero">
-        <button class="dossier__close" type="button" data-dossier-close>Close</button>
-        ${p.image ? picture(p.image, p.name, "760px", true) : `<div class="typo-panel"><span>${esc(p.name)}</span></div>`}
-      </div>
-      <div class="dossier__head">
-        <p class="brandline">${p.parent ? `${esc(p.parent)}<span>/</span>` : "G Developments<span>/</span>"}${esc(p.name)}</p>
-        <h2 id="dossier-title">${esc(p.name)}</h2>
-        <p class="muted">${esc(p.place)}${p.illustrative && p.image ? ". Image is illustrative." : ""}</p>
-      </div>
-      <div class="dossier__body">
-        <div class="tabs" role="tablist" aria-label="${esc(p.name)} details">
-          <button role="tab" id="dt-o" aria-controls="dp-o" aria-selected="true">Overview</button>
-          <button role="tab" id="dt-h" aria-controls="dp-h" aria-selected="false" tabindex="-1">Homes</button>
-          <button role="tab" id="dt-p" aria-controls="dp-p" aria-selected="false" tabindex="-1">Payment</button>
-          ${books.length ? '<button role="tab" id="dt-b" aria-controls="dp-b" aria-selected="false" tabindex="-1">Brochures</button>' : ""}
-        </div>
-        <div role="tabpanel" id="dp-o" aria-labelledby="dt-o" class="panel">
-          <p>${esc(p.intro)}</p>
-          <dl class="facts">${p.facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
-          <ul class="ticks">${(p.highlights || []).map((h) => `<li>${esc(h)}</li>`).join("")}</ul>
-        </div>
-        <div role="tabpanel" id="dp-h" aria-labelledby="dt-h" class="panel" hidden>
-          ${us.length ? `<p class="muted">Homes on the developer's current availability sheet, grouped by type.</p>` : ""}
-          ${homesHtml}
-        </div>
-        <div role="tabpanel" id="dp-p" aria-labelledby="dt-p" class="panel" hidden>
-          ${phases.length ? `<ul class="planlist">${phases.map((ph) => `<li><strong>${esc(ph.name)}</strong>${ph.plans.map((pl) => `<span>${esc(planSentence(pl))}</span>`).join("<br>")}${ph.note ? `<br><span>${esc(ph.note)}</span>` : ""}</li>`).join("")}</ul>
-          <p class="muted" style="margin-top:14px">Maintenance: ${dest.maintenance.pct}% of the unit price, due ${esc(dest.maintenance.due)}.${dest.maintenance.extra ? ` ${esc(dest.maintenance.extra)}.` : ""} Source: Standard Payment Plans, October 18, 2026.</p>`
-          : `<p class="muted">Payment terms for ${esc(p.name)} are quoted per unit. Ask a salesperson for the current offer.</p>`}
-        </div>
-        ${books.length ? `<div role="tabpanel" id="dp-b" aria-labelledby="dt-b" class="panel" hidden><ul class="planlist">${books.map((b) => `<li><strong>${esc(b.title)}</strong><span>${esc(b.meta)}</span><br><a class="link" href="${b.file}" download>Download the PDF</a></li>`).join("")}</ul></div>` : ""}
-        <div class="dossier__cta">
-          <a class="btn btn--dark" href="${wa(`Hello, I'd like details on ${p.parent ? `${p.parent} ${p.name}` : p.name}.`)}" target="_blank" rel="noopener">${WA_ICON} Ask about ${esc(p.name)}</a>
-          ${p.anchor ? `<a class="btn btn--line" href="${p.anchor}" data-dossier-close>Explore ${esc(p.name)}</a>` : ""}
-        </div>
-      </div>`;
-    initTabs($('[role="tablist"]', body));
-    dlg.showModal();
-    track("Project opened", { project: p.parent ? `${p.parent} ${p.name}` : p.name });
-    body.scrollTop = 0;
-    body.onclick = (e) => {
-      if (e.target.closest("[data-dossier-close]")) dlg.close();
-    };
+    const pl = p.payment ? ctx.planById[p.payment.phases[0]] : null;
+    const each = (price) => { const s = pl && schedule(price, pl.plans[0]); return s && !s.cashOnly ? `${short(s.each)} per ${pl.plans[0].annual ? "year" : "quarter"}` : ""; };
+    const ask = (what) => `<a class="ats__ask ats__ask--light" href="${wa(`Hello, I'm interested in ${what} at ${p.parent ? `${p.parent} ${p.name}` : p.name}. What is available?`)}" target="_blank" rel="noopener">${WA_ICON}Ask</a>`;
+    const rows = [
+      ...(p.homes || []).map((x) => ({ name: x.name, size: x.size, from: x.from })),
+      ...types.map((t) => ({ name: t.type, size: t.bmin < Infinity ? (t.bmin === t.bmax ? `${nf.format(t.bmin)} m²` : `${nf.format(t.bmin)} – ${nf.format(t.bmax)} m²`) : "", from: t.min })),
+    ];
+    homesEl.innerHTML = rows.length
+      ? `<p class="p-homes__note">${types.length ? "Home types on the developer's current sheets, with the lowest price for each." : "Published starting prices."}</p>
+         <ul class="p-homes__list">${rows.map((r) => `
+           <li class="p-homes__row">
+             <span class="p-homes__name">${esc(r.name)}</span>
+             <span class="p-homes__size">${esc(r.size)}</span>
+             <span class="p-homes__from"><small>From</small>${egp(r.from)} EGP${each(r.from) ? `<small>about ${each(r.from)}</small>` : ""}</span>
+             ${ask(r.name)}
+           </li>`).join("")}</ul>`
+      : `<p class="p-homes__note">Unit lists for ${esc(p.name)} are shared on request, with current prices and status.</p>
+         <a class="btn btn--light" href="${wa(`Hello, please send me the available units at ${p.name}.`)}" target="_blank" rel="noopener">${WA_ICON} Ask for the unit list</a>`;
+
+    // Payment, scoped to this project's phases
+    const payRoot = $("#project [data-pay-root]");
+    if (payRoot) mountPayment(payRoot, ctx, { dest: payRoot.dataset.dest, phases: payRoot.dataset.phases.split(",") });
+
+    // Gallery
+    const galEl = $("[data-p-gallery]");
+    if (galEl) mountGallery(galEl, [p.heroImage, ...(p.gallery || [])].filter(Boolean).map((b, i) => ({ base: b, caption: `${p.name}${i ? "" : `, ${p.place}`}` })));
   }
-  $("[data-dossier]").addEventListener("click", (e) => { if (e.target === e.currentTarget) e.currentTarget.close(); });
 
   /* ------------------------------------------------------------------ */
   /* Payment atelier                                                     */
@@ -611,14 +628,28 @@
   const fromSlider = (v) => Math.round(Math.exp(LOG_MIN + (v / 1000) * (LOG_MAX - LOG_MIN)) / 10000) * 10000;
 
   function renderAtelier(ctx) {
-    const { terms, units } = ctx;
     const tabList = $("[data-pay-tabs]");
-    const phasesEl = $("[data-pay-phases]");
-    const plansEl = $("[data-pay-plans]");
-    const priceIn = $("[data-pay-price]");
-    const range = $("[data-pay-range]");
-    const note = $("[data-pay-note]");
-    const result = $("[data-pay-result]");
+    const first = ctx.terms.destinations[0];
+    tabList.innerHTML = ctx.terms.destinations.map((d, i) => `<button role="tab" aria-selected="${i === 0}" ${i ? 'tabindex="-1"' : ""} data-dest="${d.id}">${esc(d.name)}</button>`).join("");
+    const calc = mountPayment($("[data-pay-root]", $("#payments")), ctx, { dest: first.id });
+    const tabs = initTabs(tabList, (t) => { calc.setDest(t.dataset.dest); track("Payment plan opened", { destination: t.textContent.trim() }); });
+    ctx.showPlan = (p) => {
+      if (!p.payment) return;
+      tabs.select($(`[data-dest="${p.payment.destination}"]`, tabList), true);
+      calc.setDest(p.payment.destination, p.payment.phases[0]);
+      document.getElementById("payments").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+    };
+  }
+
+  function mountPayment(root, ctx, opts) {
+    const { terms, units } = ctx;
+    const phasesEl = $("[data-pay-phases]", root);
+    const plansEl = $("[data-pay-plans]", root);
+    const priceIn = $("[data-pay-price]", root);
+    const range = $("[data-pay-range]", root);
+    const note = $("[data-pay-note]", root);
+    const result = $("[data-pay-result]", root);
+    const allowed = opts.phases || null;
     range.min = 0; range.max = 1000; range.step = 1;
 
     let dest = terms.destinations[0], phase = dest.phases[0], planIdx = 0, price = 11287500;
@@ -628,13 +659,11 @@
       return { "nk-krypton": 11287500, "md-b12": 14400000, "md-b34": 14400000, "al-cypher": 19829000, "pr-all": 15300000, "ng-utilities": 1500000 }[ph.id] || 20000000;
     };
 
-    tabList.innerHTML = terms.destinations.map((d, i) => `<button role="tab" aria-selected="${i === 0}" ${i ? 'tabindex="-1"' : ""} data-dest="${d.id}">${esc(d.name)}</button>`).join("");
-    const tabs = initTabs(tabList, (t) => { setDest(t.dataset.dest); track("Payment plan opened", { destination: t.textContent.trim() }); });
-
     function setDest(id, phaseId, keepPrice) {
       dest = terms.destinations.find((d) => d.id === id);
-      phasesEl.innerHTML = `<legend>Phase</legend>${dest.phases.map((ph) => `<button type="button" aria-pressed="false" data-phase="${ph.id}">${esc(ph.name)}</button>`).join("")}`;
-      setPhase(phaseId || dest.phases[0].id, keepPrice);
+      const phases = dest.phases.filter((ph) => !allowed || allowed.includes(ph.id));
+      phasesEl.innerHTML = `<legend>Phase</legend>${phases.map((ph) => `<button type="button" aria-pressed="false" data-phase="${ph.id}">${esc(ph.name)}</button>`).join("")}`;
+      setPhase(phaseId || phases[0].id, keepPrice);
     }
     function setPhase(id, keepPrice) {
       phase = dest.phases.find((p) => p.id === id) || dest.phases[0];
@@ -718,19 +747,8 @@
         </div>`;
     }
 
-    // Hooks used by other sections
-    ctx.showPlan = (p) => {
-      if (!p.payment) return;
-      const btn = $(`[data-dest="${p.payment.destination}"]`, tabList);
-      tabs.select(btn, true);
-      setDest(p.payment.destination, p.payment.phases[0]);
-      document.getElementById("payments").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
-    };
-    ctx.planForUnit = (u) => {
-      const ph = ctx.planById[u.plan];
-      return ph ? ph.plans[0] : null;
-    };
-    setDest(dest.id);
+    setDest(opts.dest, opts.phase);
+    return { setDest };
   }
 
   /* ------------------------------------------------------------------ */
@@ -743,17 +761,25 @@
     { id: "neon-views", title: "Neon Views", meta: "83 pages, 34 MB. Landscape, typologies and floor plans.", file: "assets/brochures/newkairo-neon-views.pdf", cover: "assets/img/neon/neon-cover" },
   ];
 
-  function renderLibrary() {
-    $("[data-library]").innerHTML = LIBRARY.map((b) => `
+  function renderBooks() {
+    const lib = $("[data-library]");
+    if (lib) lib.innerHTML = LIBRARY.map(bookCard).join("");
+    $$("[data-p-books]").forEach((el) => {
+      const ids = el.dataset.pBooks.split(",");
+      el.innerHTML = LIBRARY.filter((b) => ids.includes(b.id)).map(bookCard).join("");
+    });
+  }
+  function bookCard(b) {
+    return `
       <article class="book">
         <figure class="book__cover">${picture(b.cover, `Cover image for ${b.title}`, "(min-width: 960px) 33vw, 100vw")}</figure>
         <h3>${esc(b.title)}</h3>
         <p>${esc(b.meta)}</p>
         <div class="book__actions">
-          <a class="btn btn--light" href="${b.file}" download>Download PDF</a>
+          <a class="btn btn--light" href="${u(b.file)}" download>Download PDF</a>
           <a class="btn btn--ghost-light" href="${wa(`Hello, please send me the ${b.title} brochure on WhatsApp.`)}" target="_blank" rel="noopener">Send it on WhatsApp</a>
         </div>
-      </article>`).join("");
+      </article>`;
   }
 
   /* ------------------------------------------------------------------ */

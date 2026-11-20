@@ -1,0 +1,154 @@
+    <!-- Home sections between the NEWKAIRO hero and Contact. Included by scripts/build_pages.py -->
+    <section class="office" id="office">
+      <div class="wrap office__grid">
+        <h2 class="office__title">Every G Developments address, priced from the developer's own sheets.</h2>
+        <div class="office__body">
+          <p>I advise private buyers and investors on G Developments projects across East Cairo, West Cairo, the North Coast and Ain Sokhna. You see the same payment plans and unit sheets the sales team works from, and one advisor handles your file from the first viewing to handover.</p>
+          <p class="office__sign">Mahmoud Elhemaly <span>Private real estate advisory</span></p>
+        </div>
+        <dl class="office__facts" data-facts>
+          <div><dt>Available today</dt><dd data-stat="units">1,787</dd><p data-stat="units-note">units across five destinations</p></div>
+          <div><dt>Lowest entry</dt><dd>5%</dd><p>down payment, with up to 8 years to pay</p></div>
+          <div><dt>Cash advantage</dt><dd>35%</dd><p>off at Seashell Ras El Hekma, 30% at NEWKAIRO</p></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- NEWKAIRO and its parcels -->
+    <section class="showcase" id="newkairo">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="brandline brandline--light">G Developments<span>/</span>NEWKAIRO</p>
+          <h2 class="sec-title">One city, four ways to live in it.</h2>
+          <p class="sec-lede">NEWKAIRO sits on the Cairo–Suez Road in New Heliopolis, opposite Madinaty. Only 13% of the land is built; the rest is golf, parks, schools and The Boulevard. Choose a parcel to step inside.</p>
+        </div>
+
+        <div class="tabs tabs--light" role="tablist" aria-label="NEWKAIRO">
+          <button role="tab" id="nt-parcels" aria-controls="np-parcels" aria-selected="true">The parcels</button>
+          <button role="tab" id="nt-city" aria-controls="np-city" aria-selected="false" tabindex="-1">The city</button>
+          <button role="tab" id="nt-gallery" aria-controls="np-gallery" aria-selected="false" tabindex="-1">Gallery</button>
+        </div>
+
+        <div class="panels">
+          <div class="panel" role="tabpanel" id="np-parcels" aria-labelledby="nt-parcels">
+            <div class="parcels" data-parcels>
+{{PARCELS}}
+            </div>
+          </div>
+
+          <div class="panel" role="tabpanel" id="np-city" aria-labelledby="nt-city" hidden>
+            <div class="place">
+              <figure class="place__hero">
+                <img src="/assets/img/newkairo/nk-welcome.jpg" srcset="/assets/img/newkairo/nk-welcome-sm.jpg 800w, /assets/img/newkairo/nk-welcome.jpg 1440w" sizes="(min-width: 900px) 60vw, 100vw" alt="NEWKAIRO main gate with its sculpted canopy and palms" loading="lazy" decoding="async">
+              </figure>
+              <div class="place__text">
+                <h3>Everything inside the gates.</h3>
+                <p>NEWKAIRO brings the NEWGIZA model to East Cairo: a whole town around a championship golf course, with schools, sports, work and hospitality within walking distance or a tram ride.</p>
+                <ul class="place__list">
+                  <li><strong>Golf</strong> An 18-hole championship course with a golf hotel, clubhouse and lake.</li>
+                  <li><strong>Schools</strong> Three international schools and a university campus.</li>
+                  <li><strong>The Boulevard</strong> Downtown retail, dining and offices along an electric tram line.</li>
+                  <li><strong>Sports and health</strong> Two sports clubs and a medical hub.</li>
+                </ul>
+                <dl class="facts facts--dark">
+                  <div><dt>Footprint</dt><dd>13% built</dd></div>
+                  <div><dt>Location</dt><dd>Cairo–Suez Road</dd></div>
+                  <div><dt>Plans</dt><dd>Up to 8 years</dd></div>
+                  <div><dt>Cash</dt><dd>30% off</dd></div>
+                </dl>
+              </div>
+              <figure class="place__side">
+                <img src="/assets/img/newkairo/nk-golf-lake-sm.jpg" alt="Golfers by the lake at NEWKAIRO Golf, with the golf hotel behind" loading="lazy" decoding="async">
+                <figcaption>The golf hotel across the lake.</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="panel" role="tabpanel" id="np-gallery" aria-labelledby="nt-gallery" hidden>
+            <div class="gallery" data-nk-gallery></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio atlas -->
+    <section class="atlas" id="portfolio">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="brandline">G Developments<span>/</span>Portfolio</p>
+          <h2 class="sec-title">Thirteen addresses, four directions.</h2>
+          <p class="sec-lede" data-region-line></p>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Destinations" data-region-tabs></div>
+        <div class="atlas__grid">
+          <ul class="atlas__list" data-atlas-list aria-label="Projects"></ul>
+          <article class="atlas__view" data-atlas-view aria-live="polite"></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Payment atelier -->
+    <section class="atelier" id="payments">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="brandline brandline--light">Standard payment plans<span>/</span>October 18, 2026</p>
+          <h2 class="sec-title">Your payment plan, worked out to the pound.</h2>
+          <p class="sec-lede">Choose a destination and a price. Every percentage, installment count, delivery date and cash discount below comes from the developer's current sheet.</p>
+        </div>
+        <div class="tabs tabs--light tabs--scroll" role="tablist" aria-label="Destination" data-pay-tabs></div>
+        <div class="atelier__grid" data-pay-root>
+          <div class="atelier__controls">
+            <fieldset class="chips" data-pay-phases><legend>Phase</legend></fieldset>
+            <fieldset class="chips" data-pay-plans hidden><legend>Plan</legend></fieldset>
+            <label class="range">
+              <span class="range__label">Unit price</span>
+              <span class="price-input">
+                <input type="text" inputmode="numeric" autocomplete="off" aria-label="Unit price in EGP" data-pay-price>
+                <span>EGP</span>
+              </span>
+              <input type="range" aria-label="Unit price slider" data-pay-range>
+            </label>
+            <p class="atelier__note" data-pay-note></p>
+          </div>
+          <div class="atelier__result" data-pay-result aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brochures -->
+    <section class="library" id="brochures">
+      <div class="wrap">
+        <div class="sec-head sec-head--split">
+          <div>
+            <p class="brandline brandline--light">Library<span>/</span>Official releases</p>
+            <h2 class="sec-title">The brochures, in full.</h2>
+          </div>
+          <p class="sec-lede">Download the developer's own brochures and floor plans, or have them sent on WhatsApp with the units that match your brief.</p>
+        </div>
+        <div class="library__grid" data-library></div>
+      </div>
+    </section>
+
+    <!-- The developer -->
+    <section class="developer" id="developer">
+      <div class="wrap">
+        <div class="developer__intro">
+          <p class="brandline">The developer<span>/</span>G Developments</p>
+          <h2 class="sec-title">Fifty years of building whole towns, not compounds.</h2>
+          <p>G Developments began as NEWGIZA Real Estate and Development, founded in 2006 by Mahmoud El-Gamal with Salah Diab. Its towns keep the built footprint to roughly a tenth of the land and give the rest to parks, golf, lagoons and schools, so the value holds as the neighbourhood matures.</p>
+        </div>
+        <dl class="developer__stats">
+          <div><dd>45+</dd><dt>years of the founders' experience in development and hospitality</dt></div>
+          <div><dd>1,550</dd><dt>acres at NEWGIZA, the first integrated city on the Giza plateau</dt></div>
+          <div><dd>13%</dd><dt>building footprint at NEWKAIRO, around an 18-hole course</dt></div>
+          <div><dd>4</dd><dt>regions: East and West Cairo, the North Coast and Ain Sokhna</dt></div>
+        </dl>
+        <ol class="timeline">
+          <li><span class="timeline__year">Before 2006</span><p>City View in West Cairo and Ein Bay on the Red Sea set the early standard.</p></li>
+          <li><span class="timeline__year">2006</span><p>NEWGIZA launches with a golf course, a university, a sporting club and a health park.</p></li>
+          <li><span class="timeline__year">2010s</span><p>Seashell and Playa bring the same approach to Sidi Abdelrahman and Ghazala Bay.</p></li>
+          <li><span class="timeline__year">2020 – 2024</span><p>The company becomes G Developments and opens Ras El Hekma and IVY New Zayed.</p></li>
+          <li><span class="timeline__year">2025 – 2026</span><p>NEWKAIRO and Krypton in East Cairo, Cypher with Autograph Collection, Seashell Waterfront.</p></li>
+        </ol>
+      </div>
+    </section>

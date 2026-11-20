@@ -97,7 +97,22 @@
     "krypton-block-1",
     "krypton-block-2"
    ],
-   "anchor": "#krypton"
+   "anchor": "#krypton",
+   "slug": "krypton",
+   "wordmark": "krypton",
+   "heroTitle": "Serviced residences above The Boulevard.",
+   "theme": {
+    "dark": "#421115",
+    "dark2": "#5b1c1e",
+    "dark3": "#2c0b0e",
+    "accent": "#ce3927"
+   },
+   "heroImage": "assets/img/krypton/kr-dusk",
+   "video": {
+    "loop": "assets/video/krypton-loop.mp4",
+    "film": "assets/video/krypton-film.mp4",
+    "poster": "assets/video/krypton-poster.jpg"
+   }
   },
   {
    "id": "golf-views",
@@ -152,7 +167,18 @@
    },
    "brochures": [
     "golf-views"
-   ]
+   ],
+   "slug": "golf-views",
+   "wordmark": "golf",
+   "heroTitle": "Villas on the fairway.",
+   "theme": {
+    "dark": "#3c1619",
+    "dark2": "#552326",
+    "dark3": "#240c0e",
+    "accent": "#d64e2c"
+   },
+   "heroImage": "assets/img/golf/golf-estate-2s",
+   "video": null
   },
   {
    "id": "neon-views",
@@ -208,7 +234,18 @@
    },
    "brochures": [
     "neon-views"
-   ]
+   ],
+   "slug": "neon-views",
+   "wordmark": "neon",
+   "heroTitle": "Finished villas around water and gardens.",
+   "theme": {
+    "dark": "#2b1e34",
+    "dark2": "#41304d",
+    "dark3": "#1a1220",
+    "accent": "#ee7a4f"
+   },
+   "heroImage": "assets/img/neon/neon-standalone",
+   "video": null
   },
   {
    "id": "urban-living",
@@ -260,7 +297,18 @@
      "Urban Living"
     ]
    },
-   "brochures": []
+   "brochures": [],
+   "slug": "urban-living",
+   "wordmark": "urban",
+   "heroTitle": "Finished apartments at the centre of NEWKAIRO.",
+   "theme": {
+    "dark": "#1f2547",
+    "dark2": "#2e3566",
+    "dark3": "#13172e",
+    "accent": "#e2734f"
+   },
+   "heroImage": "assets/img/newkairo/nk-boulevard",
+   "video": null
   },
   {
    "id": "newgiza",
@@ -311,7 +359,18 @@
      "Westridge"
     ]
    },
-   "brochures": []
+   "brochures": [],
+   "slug": "newgiza",
+   "wordmark": "NEWGIZA",
+   "heroTitle": "The original G Developments city, ready now.",
+   "theme": {
+    "dark": "#1e3328",
+    "dark2": "#2c4a3a",
+    "dark3": "#12211a",
+    "accent": "#c9a45c"
+   },
+   "heroImage": "assets/images/newgiza-flagship",
+   "video": null
   },
   {
    "id": "artlife",
@@ -393,7 +452,18 @@
      "Artlife · Sudoku"
     ]
    },
-   "brochures": []
+   "brochures": [],
+   "slug": "artlife",
+   "wordmark": "artlife",
+   "heroTitle": "Branded homes and offices in NEWGIZA's art quarter.",
+   "theme": {
+    "dark": "#1d1b2b",
+    "dark2": "#2e2b44",
+    "dark3": "#121019",
+    "accent": "#d9a441"
+   },
+   "heroImage": "assets/images/hero-krypton-newkairo",
+   "video": null
   },
   {
    "id": "meditown",
@@ -444,7 +514,18 @@
      "md-b34"
     ]
    },
-   "brochures": []
+   "brochures": [],
+   "slug": "meditown",
+   "wordmark": "meditown",
+   "heroTitle": "Own your clinic in West Cairo's medical district.",
+   "theme": {
+    "dark": "#123c3d",
+    "dark2": "#1d5556",
+    "dark3": "#0b2627",
+    "accent": "#7cc1a8"
+   },
+   "heroImage": "assets/images/newgiza-flagship",
+   "video": null
   },
   {
    "id": "ivy",
@@ -490,7 +571,18 @@
    "inventory": {
     "project": "ivy"
    },
-   "brochures": []
+   "brochures": [],
+   "slug": "ivy",
+   "wordmark": "IVY",
+   "heroTitle": "A low-rise town around a 17-acre lake.",
+   "theme": {
+    "dark": "#233d2b",
+    "dark2": "#345a3f",
+    "dark3": "#15261b",
+    "accent": "#a3c26a"
+   },
+   "heroImage": "assets/images/ivy-new-zayed",
+   "video": null
   },
   {
    "id": "seashell-rah",
@@ -540,7 +632,18 @@
    "inventory": {
     "project": "seashell-rah"
    },
-   "brochures": []
+   "brochures": [],
+   "slug": "seashell-ras-el-hekma",
+   "wordmark": "seashell",
+   "heroTitle": "1.6 km of private beach and swimmable lagoons.",
+   "theme": {
+    "dark": "#0f3445",
+    "dark2": "#18506a",
+    "dark3": "#09212c",
+    "accent": "#e4b98a"
+   },
+   "heroImage": "assets/images/seashell-ras-el-hekma",
+   "video": null
   },
   {
    "id": "playa-rah",
@@ -604,7 +707,18 @@
      "pr-all"
     ]
    },
-   "brochures": []
+   "brochures": [],
+   "slug": "playa-ras-el-hekma",
+   "wordmark": "playa",
+   "heroTitle": "Hotel-managed chalets on twenty-five lagoons.",
+   "theme": {
+    "dark": "#0d4250",
+    "dark2": "#145f72",
+    "dark3": "#082a33",
+    "accent": "#f08a5d"
+   },
+   "heroImage": "assets/images/playa-ras-el-hekma",
+   "video": null
   },
   {
    "id": "playa",
@@ -655,7 +769,18 @@
    "inventory": {
     "project": "playa"
    },
-   "brochures": []
+   "brochures": [],
+   "slug": "playa-ghazala",
+   "wordmark": "playa",
+   "heroTitle": "An operating resort on Ghazala Bay.",
+   "theme": {
+    "dark": "#12424a",
+    "dark2": "#1b5e69",
+    "dark3": "#0b2a2f",
+    "accent": "#e8c08a"
+   },
+   "heroImage": "assets/images/playa-ghazala",
+   "video": null
   },
   {
    "id": "seashell",
@@ -697,7 +822,18 @@
      "ss-cash"
     ]
    },
-   "brochures": []
+   "brochures": [],
+   "slug": "seashell",
+   "wordmark": "seashell",
+   "heroTitle": "The original Seashell, delivered and lived in.",
+   "theme": {
+    "dark": "#13304a",
+    "dark2": "#1e4769",
+    "dark3": "#0b1e2f",
+    "accent": "#e7c9a6"
+   },
+   "heroImage": "assets/images/seashell-ras-el-hekma",
+   "video": null
   },
   {
    "id": "ein-bay",
@@ -733,7 +869,18 @@
     "Chalets, townhouses and villas",
     "Releases and resale on request"
    ],
-   "brochures": []
+   "brochures": [],
+   "slug": "ein-bay",
+   "wordmark": "ein bay",
+   "heroTitle": "Golf and the Red Sea, ninety minutes from New Cairo.",
+   "theme": {
+    "dark": "#33241e",
+    "dark2": "#4a352c",
+    "dark3": "#211712",
+    "accent": "#4fa3c7"
+   },
+   "heroImage": "assets/images/ein-bay-sokhna",
+   "video": null
   }
  ]
 }
