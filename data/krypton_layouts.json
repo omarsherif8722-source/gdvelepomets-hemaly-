@@ -1,0 +1,67 @@
+{
+  "phase": "krypton at NEWKAIRO",
+  "developer": "G Developments",
+  "location": "The Boulevard · NEWKAIRO · East Cairo",
+  "finishing": "Fully Finished with A/Cs",
+  "eoiPct": 5,
+  "paymentTerms": {
+    "downPaymentPct": 5,
+    "after3MonthsPct": 5,
+    "years": 8,
+    "quarterlyCount": 32,
+    "summary": "5% Down Payment · 5% After 3 Months · Remaining 90% over 8 Years (32 equal quarterly installments)"
+  },
+  "totalLayouts": 22,
+  "totalBlock1Units": 276,
+  "categories": [
+    {
+      "id": "1br",
+      "label": "1 Bedroom",
+      "areaRange": "75 – 87 SQM",
+      "minPrice": 7875000,
+      "maxPrice": 9171750,
+      "layouts": [
+        { "code": "1B-04", "sqm": "75", "units": 22, "minPrice": 7875000, "maxPrice": 9171750 },
+        { "code": "1B-05", "sqm": "77", "units": 49, "minPrice": 7875000, "maxPrice": 9171750 },
+        { "code": "1B-01", "sqm": "79", "units": 4, "minPrice": 7875000, "maxPrice": 9171750 },
+        { "code": "1B-03", "sqm": "87", "units": 2, "minPrice": 7875000, "maxPrice": 9171750 }
+      ]
+    },
+    {
+      "id": "2br",
+      "label": "2 Bedrooms",
+      "areaRange": "108 – 131 SQM",
+      "minPrice": 11287500,
+      "maxPrice": 13702500,
+      "layouts": [
+        { "code": "2B-08", "sqm": "108", "units": 2, "minPrice": 11287500, "maxPrice": 13702500 },
+        { "code": "2B-07", "sqm": "110", "units": 14, "minPrice": 11287500, "maxPrice": 13702500 },
+        { "code": "2B-06", "sqm": "111", "units": 18, "minPrice": 11287500, "maxPrice": 13702500 },
+        { "code": "2B-02", "sqm": "114", "units": 7, "minPrice": 11287500, "maxPrice": 13702500 },
+        { "code": "2B-05", "sqm": "115–120", "units": 18, "minPrice": 11287500, "maxPrice": 13702500 },
+        { "code": "2B-09", "sqm": "116", "units": 12, "minPrice": 11287500, "maxPrice": 13702500 },
+        { "code": "2B-04", "sqm": "118–125", "units": 6, "minPrice": 11287500, "maxPrice": 13702500 },
+        { "code": "2B-01", "sqm": "131", "units": 1, "minPrice": 11287500, "maxPrice": 13702500 }
+      ]
+    },
+    {
+      "id": "3br",
+      "label": "3 Bedrooms",
+      "areaRange": "141 – 194 SQM",
+      "minPrice": 14810000,
+      "maxPrice": 20354250,
+      "layouts": [
+        { "code": "3B-05", "sqm": "141", "units": 9, "minPrice": 14810000, "maxPrice": 20354250 },
+        { "code": "3B-04", "sqm": "143", "units": 36, "minPrice": 14810000, "maxPrice": 20354250 },
+        { "code": "3B-03", "sqm": "147", "units": 9, "minPrice": 14810000, "maxPrice": 20354250 },
+        { "code": "3B-06", "sqm": "149", "units": 12, "minPrice": 14810000, "maxPrice": 20354250 },
+        { "code": "3B-02", "sqm": "158", "units": 6, "minPrice": 14810000, "maxPrice": 20354250 },
+        { "code": "3B-09", "sqm": "161", "units": 12, "minPrice": 14810000, "maxPrice": 20354250 },
+        { "code": "3B-07", "sqm": "163", "units": 12, "minPrice": 14810000, "maxPrice": 20354250 },
+        { "code": "3B-01", "sqm": "164", "units": 7, "minPrice": 14810000, "maxPrice": 20354250 },
+        { "code": "3B-08", "sqm": "176", "units": 6, "minPrice": 14810000, "maxPrice": 20354250 },
+        { "code": "3B-10", "sqm": "186–194", "units": 8, "minPrice": 14810000, "maxPrice": 20354250 }
+      ]
+    }
+  ]
+}

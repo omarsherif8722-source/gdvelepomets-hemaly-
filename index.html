@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G Developments | Company Profile, NEWKAIRO &amp; Krypton Live Availability, NEWGIZA, Seashell &amp; Playa</title>
+  <meta name="description" content="Official company profile of G Developments by Mahmoud El-Gamal — live NEWKAIRO Primary ATS availability (262 units), krypton serviced apartments from 7.9M EGP, NEWGIZA, Seashell, Playa, IVY &amp; downloadable project brochures." />
+  <meta property="og:title" content="G Developments | NEWKAIRO, krypton, NEWGIZA, Seashell &amp; Playa — Private Advisory" />
+  <meta property="og:description" content="Explore G Developments by Mahmoud El-Gamal: live NEWKAIRO inventory, krypton 22 floor plans, multi-project brochure downloads, and zero-commission buyer advisory." />
+  <meta property="og:image" content="assets/images/hero-krypton-newkairo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ==================== STICKY HEADER ==================== -->
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a href="#top" class="brand-lockup" aria-label="G Developments Private Brokerage Home">
+        <div class="brand-mark">G</div>
+        <div class="brand-text">
+          <span class="brand-name" data-bind="brand.displayName">G Developments</span>
+          <span class="brand-sub" data-bind="brand.subLabel">Private Brokerage &amp; Property Advisory</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="Primary Navigation">
+        <a href="#newkairo-hub" class="nav-link active">NEWKAIRO &amp; krypton</a>
+        <a href="#newkairo-inventory" class="nav-link"><span class="live-dot" aria-hidden="true"></span>Live Availability</a>
+        <div class="nav-dropdown" id="projectsDropdown">
+          <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+            Projects <span aria-hidden="true">▾</span>
+          </button>
+          <div class="mega-menu" id="megaMenuContent" role="menu"></div>
+        </div>
+        <a href="#company-profile" class="nav-link">Company Profile</a>
+        <a href="#brochures" class="nav-link">Brochures</a>
+        <a href="#compare" class="nav-link">Compare</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="tel:+201000000000" class="header-phone tabular" data-bind-phone>+20 100 000 0000</a>
+        <a href="#contact" class="btn btn-gold btn-sm">Request a Call</a>
+        <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <a href="#newkairo-hub" class="mobile-nav-link">NEWKAIRO &amp; krypton Launch</a>
+    <a href="#newkairo-inventory" class="mobile-nav-link">Live NEWKAIRO Availability (262 Units)</a>
+    <a href="#projects" class="mobile-nav-link">All G Developments Projects</a>
+    <a href="#company-profile" class="mobile-nav-link">Company Profile (Mahmoud El-Gamal)</a>
+    <a href="#brochures" class="mobile-nav-link">Brochure Download Center</a>
+    <a href="#compare" class="mobile-nav-link">NEWKAIRO vs NEWGIZA Guide</a>
+    <a href="#contact" class="mobile-nav-link">Register Interest / Book Consultation</a>
+    <button type="button" id="mobileOpenStudioBtn" style="color: var(--gold-hover); font-weight: 600;">Open Broker Studio (Add Projects / CSV)</button>
+  </div>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="hero" aria-label="G Developments Featured Launch">
+    <img
+      src="assets/images/hero-krypton-newkairo.jpg"
+      alt="Golden-hour aerial architectural view of krypton at NEWKAIRO by G Developments in East Cairo"
+      class="hero-bg"
+      fetchpriority="high"
+    />
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <div class="container hero-content">
+      <div class="hero-kicker">
+        <span>East Cairo · EOIs Open</span>
+        <span>·</span>
+        <span id="heroAtsCount">262 Live NEWKAIRO Units</span>
+      </div>
+      <h1 class="hero-title">G Developments</h1>
+      <p class="hero-subtitle">
+        Official developer profile by Mahmoud El-Gamal — live Primary ATS unit availability, krypton launch pricing, and zero-commission private advisory across NEWKAIRO, NEWGIZA, Seashell, Playa &amp; IVY.
+      </p>
+      <div class="gold-rule centered"></div>
+      <p class="hero-launch-line">krypton at NEWKAIRO · Fully Finished Serviced Residences</p>
+      <p class="hero-price-line tabular">From 7.9M EGP · Fully Finished with A/Cs · 5% Down Payment · 8-Year Plan</p>
+
+      <div class="hero-actions">
+        <a href="#newkairo-inventory" class="btn btn-gold">Explore Live NEWKAIRO Units</a>
+        <a href="#brochures" class="btn btn-ghost-light">Download Brochures</a>
+        <button type="button" class="btn btn-ghost-light" id="heroCompanyProfilePdfBtn">Company Profile PDF</button>
+      </div>
+    </div>
+
+    <div class="hero-metrics-bar">
+      <div class="container hero-metrics-grid" id="heroMetricsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ==================== FLAGSHIP FOCUS: NEWKAIRO & KRYPTON ==================== -->
+  <section class="page-section ivory-surface" id="newkairo-hub">
+    <div class="container">
+      <div class="section-header">
+        <span class="meta-tag">Flagship East Cairo Focus · New Heliopolis</span>
+        <h2>NEWKAIRO &amp; krypton Launch Center</h2>
+        <p>
+          Explore every phase of G Developments' signature East Cairo masterplan—from newly launched <strong>krypton</strong> serviced apartments (22 floor plans) to fully finished <strong>Neon Views</strong> villas, <strong>Argon &amp; Cerium Golf Views</strong> estates, and <strong>Urban Living</strong> residences.
+        </p>
+      </div>
+
+      <!-- 3 Visual Phase Cards jumping into Live ATS / Krypton -->
+      <div class="brochure-grid" style="margin-bottom: 42px;">
+        <article class="project-card">
+          <div class="project-media">
+            <img src="assets/images/hero-krypton-newkairo.jpg" alt="krypton at NEWKAIRO serviced residences" loading="lazy" />
+            <span class="project-status-badge">New Launch · EOI 5%</span>
+          </div>
+          <div class="project-body">
+            <div class="project-region-line">The Boulevard · Fully Finished w/ A/Cs</div>
+            <h3 style="font-size: 1.65rem;">krypton Serviced Apartments</h3>
+            <p class="project-desc">22 curated 1, 2 &amp; 3-bedroom layouts (75–194 SQM) above NEWKAIRO's active retail boulevard with an 8-year equal quarterly schedule.</p>
+            <div class="project-specs">
+              <div class="spec-cell"><span>Starting From</span><strong class="tabular">7.875M EGP</strong></div>
+              <div class="spec-cell"><span>Payment Plan</span><strong>5% + 5% · 8 Yrs</strong></div>
+            </div>
+            <div class="project-card-actions">
+              <a href="#krypton-explorer" class="btn btn-ink btn-sm">Compare 22 Layouts</a>
+              <button type="button" class="btn btn-outline btn-sm" data-open-brochure="nk-krypton">Brochure</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-media">
+            <img src="assets/images/newkairo-neon-views.jpg" alt="Neon Views fully finished townhouses and standalone villas" loading="lazy" />
+            <span class="project-status-badge">97 Units in Live ATS</span>
+          </div>
+          <div class="project-body">
+            <div class="project-region-line">Neon Views 01 &amp; 02 · Garden Ribbons</div>
+            <h3 style="font-size: 1.65rem;">Neon Views Villas</h3>
+            <p class="project-desc">Fully finished townhouses (180–215 SQM), semi-attached villas (192–237 SQM), and 5BR standalone villas (260 SQM) around Wadi Springs lakes.</p>
+            <div class="project-specs">
+              <div class="spec-cell"><span>Live ATS Range</span><strong class="tabular">19.23M – 34.05M</strong></div>
+              <div class="spec-cell"><span>Finishing</span><strong>Fully Finished</strong></div>
+            </div>
+            <div class="project-card-actions">
+              <button type="button" class="btn btn-ink btn-sm" data-filter-ats-phase="NEON">View 97 Live Units</button>
+              <button type="button" class="btn btn-outline btn-sm" data-open-brochure="nk-neon">Brochure</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-media">
+            <img src="assets/images/newkairo-golf-villas.jpg" alt="NEWKAIRO Golf Views Argon and Cerium fairway villas" loading="lazy" />
+            <span class="project-status-badge">65 Units in Live ATS</span>
+          </div>
+          <div class="project-body">
+            <div class="project-region-line">Argon &amp; Cerium Views · Fairway Rows</div>
+            <h3 style="font-size: 1.65rem;">Golf Collection Estates</h3>
+            <p class="project-desc">Golf-front Twin Villas (254 &amp; 281 SQM), Tee View Villas (346 SQM), Fairscapes (460 SQM), and 1st-row Golf Estates (654 &amp; 732 SQM).</p>
+            <div class="project-specs">
+              <div class="spec-cell"><span>Live ATS Range</span><strong class="tabular">37.82M – 72.47M</strong></div>
+              <div class="spec-cell"><span>Golf Rows</span><strong>1st, 2nd &amp; 3rd Row</strong></div>
+            </div>
+            <div class="project-card-actions">
+              <button type="button" class="btn btn-ink btn-sm" data-filter-ats-phase="NEWKAIRO GOLF VIEWS">View 65 Golf Units</button>
+              <button type="button" class="btn btn-outline btn-sm" data-open-brochure="nk-golf">Brochure</button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Interactive Krypton 22-Layout Explorer -->
+      <div id="krypton-explorer" style="background: #FFFFFF; border: 1px solid var(--border-hairline); padding: 28px;">
+        <div style="margin-bottom: 18px;">
+          <span class="meta-tag">Interactive Phase Spec · Block 1 (276 Units · 22 Curated Layouts)</span>
+          <h3 class="display-serif" style="font-size: 2.05rem; margin: 4px 0 6px;">krypton at NEWKAIRO — Floor Plans &amp; Dynamic Payment Schedule</h3>
+          <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">
+            Choose a bedroom collection below to inspect official sellable areas, Block 1 unit counts, 5% down payment, 5% after 3 months, and 32 quarterly installments.
+          </p>
+        </div>
+
+        <div class="krypton-selector-grid" id="kryptonBedTabs" role="tablist"></div>
+
+        <div class="payment-milestone-strip">
+          <div class="milestone-step"><span>Step 01 · EOI / Contract</span><strong class="tabular">5% Down Payment</strong></div>
+          <div class="milestone-step"><span>Step 02 · Month 3</span><strong class="tabular">5% Second Payment</strong></div>
+          <div class="milestone-step"><span>Step 03 · 8 Years</span><strong class="tabular">90% · 32 Equal Quarters</strong></div>
+          <div class="milestone-step"><span>Delivery Spec</span><strong>Fully Finished + A/Cs</strong></div>
+        </div>
+
+        <div class="ats-table-wrap">
+          <table class="ats-table compact" aria-label="krypton Floor Plans and Payment Schedule">
+            <thead>
+              <tr>
+                <th>Layout</th>
+                <th>Area</th>
+                <th>Units</th>
+                <th>Price Range (EGP)</th>
+                <th>5% Down</th>
+                <th>5% M3</th>
+                <th>Quarterly ×32</th>
+                <th>Inquire</th>
+              </tr>
+            </thead>
+            <tbody id="kryptonTableBody"></tbody>
+          </table>
+        </div>
+        <p style="margin: 12px 0 0; font-size: 0.78rem; color: var(--text-muted);" id="kryptonTermsFootnote"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LIVE NEWKAIRO PRIMARY ATS EXPLORER ==================== -->
+  <section class="page-section" id="newkairo-inventory">
+    <div class="container">
+      <div class="ats-top-bar">
+        <div class="section-header" style="margin-bottom: 0;">
+          <span class="meta-tag" id="atsMetaTag">Primary ATS NEWKAIRO · Live Sheet</span>
+          <h2>Live NEWKAIRO Availability &amp; Price Engine</h2>
+          <p id="atsSubtitle">
+            Filter exact unit numbers, buildings, golf rows, land areas, finishing, and availability status—with real-time installment &amp; cash discount modeling.
+          </p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <label class="btn btn-outline btn-sm" style="cursor: pointer;">
+            Upload New ATS / Cash CSV
+            <input type="file" id="quickCsvUpload" accept=".csv" hidden />
+          </label>
+          <button type="button" class="btn btn-ink btn-sm" id="exportFilteredCsvBtn">Export Filtered CSV</button>
+        </div>
+      </div>
+
+      <!-- Live KPI Summary -->
+      <div class="ats-kpi-row" id="atsKpiRow"></div>
+
+      <!-- One-Click Phase Quick Pills -->
+      <div class="phase-quick-pills" id="atsQuickPills" aria-label="Quick phase filter"></div>
+
+      <!-- Multi-Facet Filters -->
+      <div class="ats-controls" aria-label="Filter NEWKAIRO inventory">
+        <div class="ats-field">
+          <label for="atsSearch">Search Unit / Building / Design</label>
+          <input type="search" id="atsSearch" placeholder="e.g. AR-02-FS, NE-V-P, B10A, KR01..." />
+        </div>
+        <div class="ats-field">
+          <label for="atsPhase">Phase</label>
+          <select id="atsPhase"><option value="ALL">All Phases</option></select>
+        </div>
+        <div class="ats-field">
+          <label for="atsType">Unit Type</label>
+          <select id="atsType"><option value="ALL">All Unit Types</option></select>
+        </div>
+        <div class="ats-field">
+          <label for="atsBeds">Bedrooms</label>
+          <select id="atsBeds">
+            <option value="ALL">Any Beds</option>
+            <option value="1">1 Bedroom</option>
+            <option value="2">2 Bedrooms</option>
+            <option value="3">3 Bedrooms</option>
+            <option value="4">4 Bedrooms</option>
+            <option value="5">5 Bedrooms</option>
+          </select>
+        </div>
+        <div class="ats-field">
+          <label for="atsStatus">Status</label>
+          <select id="atsStatus">
+            <option value="ALL">All Statuses</option>
+            <option value="Available" selected>Available Only</option>
+            <option value="Hold">Hold</option>
+            <option value="Ready for Reservation">Ready for Reservation</option>
+            <option value="Requested Ready for Reservation">Requested Ready</option>
+          </select>
+        </div>
+        <div class="ats-field">
+          <label for="atsSort">Sort By</label>
+          <select id="atsSort">
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="bua-asc">BUA: Small to Large</option>
+            <option value="bua-desc">BUA: Large to Small</option>
+            <option value="psqm-asc">Lowest Price / SQM</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Dynamic Payment & Cash Simulator Bar -->
+      <div class="cash-sim-bar">
+        <div class="cash-sim-left">
+          <strong>Payment Lens:</strong>
+          <select id="atsPaymentMode" style="padding: 6px 10px; border: 1px solid var(--border-strong); background: #fff;">
+            <option value="installment-8y">8-Year Plan (5% Down + 5% M3 · 32 Quarters)</option>
+            <option value="installment-7y">7-Year Plan (5% Down + 5% M3 · 28 Quarters)</option>
+            <option value="cash-sim">Cash Price Mode (Discount Simulator / Official Sheet)</option>
+          </select>
+          <span id="cashSliderWrap" style="display: none; align-items: center; gap: 8px;">
+            <label for="cashDiscountSlider">Est. Cash Discount: <strong id="cashDiscountLabel" class="tabular">28%</strong></label>
+            <input type="range" id="cashDiscountSlider" min="0" max="40" step="1" value="28" />
+          </span>
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-secondary);" id="atsResultMeta"></div>
+      </div>
+
+      <!-- Inventory Table -->
+      <div class="ats-table-wrap">
+        <table class="ats-table" aria-label="NEWKAIRO Primary ATS Unit Inventory">
+          <thead>
+            <tr>
+              <th>Unit Code &amp; Zone</th>
+              <th>Phase &amp; Type</th>
+              <th>Beds / Floor</th>
+              <th>BUA &amp; Land</th>
+              <th>Finishing</th>
+              <th>Total Unit Price</th>
+              <th id="atsDynamicColHeader">5% Down &amp; Quarterly</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="atsTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="ats-pagination">
+        <span id="atsPageSummary"></span>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button type="button" class="btn btn-outline btn-sm" id="atsPrevBtn">Previous</button>
+          <button type="button" class="btn btn-outline btn-sm" id="atsNextBtn">Next</button>
+          <button type="button" class="btn btn-outline btn-sm" id="atsShowAllBtn">Show All</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FULL PORTFOLIO SHOWCASE ==================== -->
+  <section class="page-section ivory-surface" id="projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="meta-tag">Master Portfolio · East · West · North Coast · Sokhna</span>
+        <h2>All G Developments Destinations</h2>
+        <p>
+          Explore every community across Egypt's four premier corridors. Click any project to inspect sub-phases, unit types, payment schedules, amenities, and downloadable brochures—or add new projects anytime via Broker Studio.
+        </p>
+      </div>
+
+      <div class="portfolio-toolbar">
+        <div class="filter-tabs" id="regionTabs" role="tablist" aria-label="Filter by region"></div>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+          <select id="projectStatusFilter" aria-label="Filter by project status" style="padding: 8px 12px; border: 1px solid var(--border-strong); background: #fff; font-size: 0.82rem;">
+            <option value="ALL">All Statuses</option>
+            <option value="New Launch">New Launches</option>
+            <option value="Available">Available</option>
+            <option value="Ready to Move">Ready to Move</option>
+            <option value="Sold Out / Resale">Sold Out / Resale</option>
+          </select>
+          <button type="button" class="btn btn-outline btn-sm" id="addProjectShortcutBtn">+ Add Project</button>
+        </div>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ==================== COMPANY PROFILE SECTION ==================== -->
+  <section class="page-section" id="company-profile">
+    <div class="container">
+      <div class="section-header">
+        <span class="meta-tag">Corporate Profile · Founded by Mahmoud El-Gamal</span>
+        <h2>About G Developments</h2>
+        <p>
+          Originally established in 2006 as NEWGIZA Real Estate &amp; Development and evolved into G Developments—built on over 45 years of cumulative Egyptian urban planning, hospitality, and luxury destination creation.
+        </p>
+      </div>
+
+      <div class="profile-grid">
+        <div>
+          <p class="profile-lead" id="cpSummary"></p>
+          <p class="profile-body" id="cpContext"></p>
+
+          <div class="chairman-card">
+            <span class="meta-tag">Founder &amp; Chairman</span>
+            <h3 id="cpLeaderName"></h3>
+            <div class="chairman-role" id="cpLeaderRole"></div>
+            <p id="cpLeaderBio"></p>
+            <p class="chairman-quote">“True real estate legacy is measured in integrated cities that elevate how generations live, learn, work, and gather—not isolated buildings.”</p>
+          </div>
+
+          <div class="vision-mission-grid">
+            <div class="vm-box">
+              <h4>Corporate Vision</h4>
+              <p id="cpVision"></p>
+            </div>
+            <div class="vm-box">
+              <h4>Development Mission</h4>
+              <p id="cpMission"></p>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px;">
+            <button type="button" class="btn btn-gold" id="printCompanyProfileBtn">Download Company Profile (PDF / Print)</button>
+            <a href="#contact" class="btn btn-outline">Schedule Private Briefing</a>
+          </div>
+        </div>
+
+        <div class="timeline-card">
+          <h3>Heritage &amp; Expansion Milestones</h3>
+          <ul class="timeline-list" id="cpTimeline"></ul>
+        </div>
+      </div>
+
+      <!-- 4 Core Pillars -->
+      <div class="pillars-grid" id="cpPillars"></div>
+
+      <!-- Independent Broker Advisory Value Strip -->
+      <div class="broker-strip">
+        <div>
+          <span class="meta-tag">Private Brokerage Advantage</span>
+          <h3>Why Reserve Through Our Advisory Desk</h3>
+          <p>Official developer contracts and zero buyer commission—paired with unbiased cross-project comparison and live Primary ATS inventory transparency.</p>
+        </div>
+        <div class="broker-adv-grid" id="brokerAdvGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MULTI-OPTION BROCHURE DOWNLOAD CENTER ==================== -->
+  <section class="page-section ivory-surface" id="brochures">
+    <div class="container">
+      <div class="ats-top-bar">
+        <div class="section-header" style="margin-bottom: 0;">
+          <span class="meta-tag">Official Dossiers, Floor Plans &amp; Masterplans</span>
+          <h2>Brochure Download Center</h2>
+          <p>
+            Download instant printable project dossiers, request gated VIP floor-plan books, send live sheets directly to WhatsApp, or bundle multiple brochures into one custom pack.
+          </p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <button type="button" class="btn btn-gold btn-sm" id="brochureCompanyProfileBtn">Download Company Profile</button>
+          <button type="button" class="btn btn-outline btn-sm" id="addBrochureShortcutBtn">+ Add Brochure</button>
+        </div>
+      </div>
+
+      <div class="brochure-controls">
+        <div class="filter-tabs" id="brochureProjectTabs"></div>
+        <select id="brochureTypeFilter" aria-label="Filter brochure type" style="padding: 8px 12px; border: 1px solid var(--border-strong); background: #fff; font-size: 0.82rem;">
+          <option value="ALL">All Document Types</option>
+          <option value="Master Brochure">Master Brochures</option>
+          <option value="Phase Brochure">Phase Brochures</option>
+          <option value="Floor Plans Book">Floor Plans Books</option>
+          <option value="Masterplan Map">Masterplan Maps</option>
+          <option value="Availability & Cash Sheet">Availability &amp; Cash Sheets</option>
+          <option value="Commercial Brief">Commercial Briefs</option>
+        </select>
+      </div>
+
+      <!-- Multi-Brochure Bundle Bar -->
+      <div class="brochure-bundle-bar" id="brochureBundleBar" style="display: none;">
+        <div>
+          <strong id="bundleCountLabel">0 brochures selected</strong>
+          <span style="display: block; font-size: 0.82rem; color: var(--text-on-dark-muted);">Get all selected brochures &amp; latest price sheets delivered together.</span>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-gold btn-sm" id="requestBundleBtn">Request Selected Pack</button>
+          <button type="button" class="btn btn-ghost-light btn-sm" id="clearBundleBtn">Clear</button>
+        </div>
+      </div>
+
+      <div class="brochure-grid" id="brochureGrid"></div>
+    </div>
+  </section>
+
+  <!-- ==================== NEWKAIRO VS NEWGIZA COMPARISON ==================== -->
+  <section class="page-section" id="compare">
+    <div class="container">
+      <div class="section-header centered">
+        <span class="meta-tag">Buyer &amp; Investor Decision Matrix · 2026</span>
+        <h2>NEWKAIRO vs NEWGIZA</h2>
+        <p>
+          Weighing East Cairo's newest master-planned city against West Cairo's fully operational flagship? Compare every core metric side by side.
+        </p>
+      </div>
+
+      <div class="compare-table-wrap">
+        <table class="compare-table" aria-label="Comparison between NEWGIZA and NEWKAIRO">
+          <thead>
+            <tr>
+              <th>Evaluation Factor</th>
+              <th>NEWGIZA · West Cairo</th>
+              <th>NEWKAIRO · East Cairo</th>
+            </tr>
+          </thead>
+          <tbody id="compareTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== KRYPTON SPOTLIGHT + QUALIFIED LEAD FORM ==================== -->
+  <section class="page-section dark-surface" id="contact">
+    <div class="container">
+      <div class="lead-section-grid">
+        <div>
+          <div class="krypton-spotlight">
+            <span class="meta-tag">Priority Allocation · NEWKAIRO</span>
+            <h3>krypton Serviced Residences</h3>
+            <p style="margin: 0; color: var(--text-on-dark-muted); font-size: 0.94rem;">
+              Fully finished serviced apartments with A/Cs above NEWKAIRO's Grand Boulevard. Expressions of Interest (EOIs) open at 5% with equal 8-year installments.
+            </p>
+            <div class="krypton-tiers">
+              <div class="krypton-tier">
+                <span>1 Bedroom · 75–87 SQM</span>
+                <strong class="tabular">7.9M EGP</strong>
+                <span>5% Down: 394K EGP</span>
+              </div>
+              <div class="krypton-tier">
+                <span>2 Bedrooms · 108–131 SQM</span>
+                <strong class="tabular">11.3M EGP</strong>
+                <span>5% Down: 564K EGP</span>
+              </div>
+              <div class="krypton-tier">
+                <span>3 Bedrooms · 141–194 SQM</span>
+                <strong class="tabular">14.8M EGP</strong>
+                <span>5% Down: 741K EGP</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+              <a href="#newkairo-inventory" class="btn btn-gold btn-sm">Inspect 262 Live Units</a>
+              <button type="button" class="btn btn-whatsapp btn-sm" id="kryptonWhatsappBtn">WhatsApp Advisory Desk</button>
+            </div>
+          </div>
+
+          <div class="offices-mini-grid" id="officesGrid"></div>
+        </div>
+
+        <div class="lead-form-card">
+          <span class="meta-tag">Zero Commission · Official Developer Pricing</span>
+          <h3>Request Private Consultation &amp; Unit Sheet</h3>
+          <p class="lead-form-sub" data-bind="contact.responsePromise">Dedicated advisor response within 15 minutes during business hours</p>
+
+          <form id="leadQualificationForm">
+            <input type="hidden" id="leadUnitRef" name="unitRef" value="" />
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="leadName">Full Name *</label>
+                <input type="text" id="leadName" name="name" required placeholder="Your full name" />
+              </div>
+              <div class="form-group">
+                <label for="leadPhone">WhatsApp / Mobile (with country code) *</label>
+                <input type="tel" id="leadPhone" name="phone" required placeholder="+20 10... or +971..." />
+              </div>
+              <div class="form-group">
+                <label for="leadEmail">Email Address *</label>
+                <input type="email" id="leadEmail" name="email" required placeholder="name@example.com" />
+              </div>
+              <div class="form-group">
+                <label for="leadProject">Project of Interest *</label>
+                <select id="leadProject" name="project" required></select>
+              </div>
+              <div class="form-group">
+                <label for="leadUnitType">Preferred Unit Category</label>
+                <select id="leadUnitType" name="unitType">
+                  <option value="Not sure yet - advise me">Not sure yet — advise me</option>
+                  <option value="Krypton Serviced Apartment (7.9M - 20.4M)">krypton Serviced Apartment (7.9M+)</option>
+                  <option value="Urban Living Finished Apartment (12.7M - 30M)">Urban Living Apartment (12.7M+)</option>
+                  <option value="Neon Views Townhouse / Semi-Attached (19.2M - 28.5M)">Neon Views Townhouse / Semi-Attached</option>
+                  <option value="Neon Views Standalone Villa (33.4M+)">Neon Views Standalone Villa</option>
+                  <option value="Golf Views Fairway Villa (37.8M - 72.5M+)">Golf Views Fairway Villa (37.8M+)</option>
+                  <option value="NEWGIZA Cypher / Twilight / Meditown">NEWGIZA (Cypher / Twilight / Meditown)</option>
+                  <option value="North Coast Chalet / Lagoon Unit">North Coast Chalet / Lagoon Unit</option>
+                  <option value="North Coast Beachfront / RTM Villa">North Coast Beachfront / RTM Villa</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="leadBudget">Target Budget Tier (EGP)</label>
+                <select id="leadBudget" name="budget">
+                  <option value="Under 15M EGP">Under 15M EGP</option>
+                  <option value="15M – 25M EGP">15M – 25M EGP</option>
+                  <option value="25M – 45M EGP">25M – 45M EGP</option>
+                  <option value="45M – 75M EGP">45M – 75M EGP</option>
+                  <option value="75M+ EGP">75M+ EGP</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="leadPurpose">Purchase Goal</label>
+                <select id="leadPurpose" name="purpose">
+                  <option value="Primary Residence">Primary Residence</option>
+                  <option value="Investment / Capital Growth">Investment / Capital Growth</option>
+                  <option value="Coastal Holiday Home">Coastal Holiday Home</option>
+                  <option value="Cash Discount Opportunity">Cash Discount Opportunity</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="leadChannel">Preferred Follow-Up</label>
+                <select id="leadChannel" name="channel">
+                  <option value="WhatsApp + PDF Brochures">WhatsApp + PDF Brochures</option>
+                  <option value="Direct Phone Call">Direct Phone Call</option>
+                  <option value="Private Site Visit / Office Meeting">Private Site Visit / Office Meeting</option>
+                </select>
+              </div>
+              <div class="form-group full">
+                <label for="leadNotes">Specific Unit Number or Questions (Optional)</label>
+                <textarea id="leadNotes" name="notes" rows="2" placeholder="e.g. Interested in AR-02-FS/2046, cash price sheet, or Krypton 2BR EOI..."></textarea>
+              </div>
+              <div class="form-group full">
+                <button type="submit" class="btn btn-gold" style="width: 100%; padding: 14px;">Submit Qualified Inquiry</button>
+              </div>
+            </div>
+            <div class="form-feedback" id="leadFormFeedback" role="status"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand-lockup" style="margin-bottom: 14px;">
+            <div class="brand-mark" style="background: var(--bg-ink-soft); color: var(--gold-light);">G</div>
+            <div class="brand-text">
+              <span class="brand-name" style="color: #FFFFFF;" data-bind="brand.displayName">G Developments</span>
+              <span class="brand-sub" data-bind="brand.brokerFirmName">Hemaly Real Estate Advisory</span>
+            </div>
+          </div>
+          <p style="font-size: 0.85rem; margin: 0 0 12px;" data-bind="brand.tagline"></p>
+          <button type="button" class="btn btn-ghost-light btn-sm" id="openStudioFooterBtn">Open Broker Studio (Manage Projects &amp; Sheets)</button>
+        </div>
+
+        <div class="footer-col">
+          <h4>Flagship Projects</h4>
+          <ul id="footerProjectsList"></ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Portal Tools</h4>
+          <ul>
+            <li><a href="#newkairo-hub">NEWKAIRO &amp; krypton Hub</a></li>
+            <li><a href="#newkairo-inventory">Live Primary ATS Explorer</a></li>
+            <li><a href="#company-profile">G Developments Company Profile</a></li>
+            <li><a href="#brochures">Brochure Download Center</a></li>
+            <li><a href="#compare">NEWKAIRO vs NEWGIZA Guide</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Advisory Desk</h4>
+          <ul>
+            <li><strong style="color: #fff;" data-bind="brand.advisorName">Omar Sherif</strong></li>
+            <li data-bind="brand.advisorTitle">Senior G Developments Property Advisor</li>
+            <li><a href="tel:+201000000000" data-bind-phone>+20 100 000 0000</a></li>
+            <li><a href="mailto:advisory@gdevelopments-broker.com" data-bind-email>advisory@gdevelopments-broker.com</a></li>
+            <li data-bind="contact.workingHours">Daily · 10:00 AM – 10:00 PM EET</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="disclaimer-text" data-bind="disclaimer"></p>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 <span data-bind="brand.brokerFirmName">Hemaly Real Estate Advisory</span> · Independent G Developments Brokerage Portal</span>
+        <button type="button" id="footerPrintProfileBtn" style="background:none;border:none;color:var(--gold-light);font-size:0.8rem;">Print / Save Company Profile PDF</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== STICKY QUICK ACTION BAR ==================== -->
+  <div class="sticky-lead-bar" role="region" aria-label="Quick Contact Actions">
+    <a href="tel:+201000000000" class="btn btn-ghost-light btn-sm" data-bind-phone-href>Call</a>
+    <button type="button" class="btn btn-whatsapp btn-sm" id="stickyWhatsappBtn">WhatsApp</button>
+    <a href="#brochures" class="btn btn-ghost-light btn-sm">Brochures</a>
+    <a href="#contact" class="btn btn-gold btn-sm">Register</a>
+  </div>
+
+  <!-- ==================== PROJECT DETAIL MODAL ==================== -->
+  <div class="modal-backdrop" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <div>
+          <span class="meta-tag" id="pmRegion"></span>
+          <h3 class="display-serif" id="pmTitle" style="font-size: 1.9rem; margin: 2px 0 0;"></h3>
+        </div>
+        <button type="button" class="modal-close" data-close-modal="projectModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body" id="pmBody"></div>
+    </div>
+  </div>
+
+  <!-- ==================== UNIT DOSSIER MODAL ==================== -->
+  <div class="modal-backdrop" id="unitModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-panel narrow">
+      <div class="modal-header">
+        <div>
+          <span class="meta-tag" id="umPhase"></span>
+          <h3 class="display-serif" id="umCode" style="font-size: 1.75rem; margin: 2px 0 0;"></h3>
+        </div>
+        <button type="button" class="modal-close" data-close-modal="unitModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body" id="umBody"></div>
+    </div>
+  </div>
+
+  <!-- ==================== GATED BROCHURE LEAD MODAL ==================== -->
+  <div class="modal-backdrop" id="brochureGateModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-panel narrow">
+      <div class="modal-header">
+        <div>
+          <span class="meta-tag">Instant Brochure Unlock</span>
+          <h3 class="display-serif" id="bgTitle" style="font-size: 1.65rem; margin: 2px 0 0;">Download Brochure Pack</h3>
+        </div>
+        <button type="button" class="modal-close" data-close-modal="brochureGateModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="bgDesc" style="margin: 0 0 18px; color: var(--text-secondary); font-size: 0.9rem;"></p>
+        <form id="brochureGateForm">
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="bgName">Full Name *</label>
+              <input type="text" id="bgName" required placeholder="Your full name" />
+            </div>
+            <div class="form-group">
+              <label for="bgPhone">WhatsApp Number *</label>
+              <input type="tel" id="bgPhone" required placeholder="+20 10..." />
+            </div>
+            <div class="form-group">
+              <label for="bgEmail">Email *</label>
+              <input type="email" id="bgEmail" required placeholder="name@example.com" />
+            </div>
+            <div class="form-group full">
+              <button type="submit" class="btn btn-gold" style="width: 100%;">Unlock &amp; Open Brochure Now</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== BROKER STUDIO MODAL ==================== -->
+  <div class="modal-backdrop" id="studioModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <div>
+          <span class="meta-tag">Broker Self-Service CMS</span>
+          <h3 class="display-serif" style="font-size: 1.8rem; margin: 2px 0 0;">Broker Studio — Projects, Brochures, Sheets &amp; Leads</h3>
+        </div>
+        <button type="button" class="modal-close" data-close-modal="studioModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="studio-tabs" role="tablist">
+          <button type="button" class="filter-tab active" data-studio-tab="pane-add-project">+ Add Project</button>
+          <button type="button" class="filter-tab" data-studio-tab="pane-add-brochure">+ Add Brochure</button>
+          <button type="button" class="filter-tab" data-studio-tab="pane-upload-sheet">Upload ATS / Cash CSV</button>
+          <button type="button" class="filter-tab" data-studio-tab="pane-leads">Captured Leads CRM</button>
+          <button type="button" class="filter-tab" data-studio-tab="pane-config">Broker Contact &amp; Export</button>
+        </div>
+
+        <!-- Pane 1: Add Project -->
+        <div class="studio-pane active" id="pane-add-project">
+          <form id="studioAddProjectForm" class="form-grid">
+            <div class="form-group">
+              <label for="spName">Project Name *</label>
+              <input type="text" id="spName" required placeholder="e.g. NEWKAIRO Park Residences" />
+            </div>
+            <div class="form-group">
+              <label for="spRegion">Region *</label>
+              <select id="spRegion">
+                <option value="East Cairo">East Cairo</option>
+                <option value="West Cairo">West Cairo</option>
+                <option value="North Coast">North Coast</option>
+                <option value="Ain Sokhna">Ain Sokhna</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="spLocation">Location Line *</label>
+              <input type="text" id="spLocation" required placeholder="e.g. New Heliopolis · Cairo–Suez Road" />
+            </div>
+            <div class="form-group">
+              <label for="spStatus">Status *</label>
+              <select id="spStatus">
+                <option value="New Launch">New Launch</option>
+                <option value="Available">Available</option>
+                <option value="Ready to Move">Ready to Move</option>
+                <option value="Sold Out / Resale">Sold Out / Resale</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="spPrice">Starting Price Label *</label>
+              <input type="text" id="spPrice" required placeholder="e.g. 9.5M EGP" />
+            </div>
+            <div class="form-group">
+              <label for="spPayment">Payment Summary *</label>
+              <input type="text" id="spPayment" required placeholder="e.g. 5% Down · 8 Years" />
+            </div>
+            <div class="form-group">
+              <label for="spImage">Image Preset or URL</label>
+              <select id="spImage">
+                <option value="assets/images/hero-krypton-newkairo.jpg">NEWKAIRO Boulevard Aerial</option>
+                <option value="assets/images/newkairo-golf-villas.jpg">NEWKAIRO Golf Villas</option>
+                <option value="assets/images/newkairo-neon-views.jpg">Neon Views Reflection Lakes</option>
+                <option value="assets/images/newgiza-flagship.jpg">NEWGIZA Plateau Golf</option>
+                <option value="assets/images/seashell-ras-el-hekma.jpg">Seashell Lagoons &amp; Beach</option>
+                <option value="assets/images/playa-ras-el-hekma.jpg">Playa Mediterranean Arches</option>
+                <option value="assets/images/playa-ghazala.jpg">Playa Ghazala Beachfront</option>
+                <option value="assets/images/ivy-new-zayed.jpg">IVY Lakeside Residences</option>
+                <option value="assets/images/ein-bay-sokhna.jpg">Ein Bay Red Sea Golf</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="spBrochureUrl">Initial Brochure PDF Link (Optional)</label>
+              <input type="text" id="spBrochureUrl" placeholder="assets/brochures/my-project.pdf or Drive link" />
+            </div>
+            <div class="form-group full">
+              <label for="spDesc">Overview Description *</label>
+              <textarea id="spDesc" rows="3" required placeholder="Highlight key architecture, masterplan, unit types, and buyer value..."></textarea>
+            </div>
+            <div class="form-group full">
+              <button type="submit" class="btn btn-gold">Add Project to Live Site</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Pane 2: Add Brochure -->
+        <div class="studio-pane" id="pane-add-brochure">
+          <form id="studioAddBrochureForm" class="form-grid">
+            <div class="form-group">
+              <label for="sbProject">Select Project *</label>
+              <select id="sbProject" required></select>
+            </div>
+            <div class="form-group">
+              <label for="sbTitle">Brochure Title *</label>
+              <input type="text" id="sbTitle" required placeholder="e.g. NEWKAIRO Standard Payment Terms PDF" />
+            </div>
+            <div class="form-group">
+              <label for="sbType">Document Category</label>
+              <select id="sbType">
+                <option value="Master Brochure">Master Brochure</option>
+                <option value="Phase Brochure">Phase Brochure</option>
+                <option value="Floor Plans Book">Floor Plans Book</option>
+                <option value="Masterplan Map">Masterplan Map</option>
+                <option value="Availability & Cash Sheet">Availability &amp; Cash Sheet</option>
+                <option value="Commercial Brief">Commercial Brief</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="sbMode">Download Mode</label>
+              <select id="sbMode">
+                <option value="direct">Direct Instant Download / Dossier</option>
+                <option value="gated">Lead-Gated (Collect Phone &amp; Email First)</option>
+                <option value="whatsapp">Send via WhatsApp Request</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="sbUrl">PDF Path or Public URL (Leave blank to auto-generate branded printable brochure)</label>
+              <input type="text" id="sbUrl" placeholder="assets/brochures/krypton-payment-terms.pdf or https://..." />
+            </div>
+            <div class="form-group full">
+              <label for="sbDesc">Short Description</label>
+              <input type="text" id="sbDesc" placeholder="What buyers will find inside this brochure..." />
+            </div>
+            <div class="form-group full">
+              <button type="submit" class="btn btn-gold">Add Brochure Option</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Pane 3: Upload Sheet -->
+        <div class="studio-pane" id="pane-upload-sheet">
+          <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.9rem;">
+            Import any updated <strong>Primary ATS NEWKAIRO</strong> CSV (including sheets with an optional <code>Cash Price</code> column). The live table updates immediately in your browser, and you can download the converted <code>newkairo_inventory.json</code> to commit to GitHub.
+          </p>
+          <div style="border: 1px dashed var(--gold); padding: 28px; text-align: center; background: var(--bg-ivory); margin-bottom: 16px;">
+            <input type="file" id="studioCsvInput" accept=".csv" />
+            <p style="margin: 10px 0 0; font-size: 0.82rem; color: var(--text-muted);">Supports Salesforce Primary ATS grouped phase/unit-type CSV exports.</p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-ink btn-sm" id="downloadInventoryJsonBtn">Download Updated newkairo_inventory.json</button>
+            <button type="button" class="btn btn-outline btn-sm" id="resetInventoryBtn">Reset to Default Nov 2026 Sheet</button>
+          </div>
+        </div>
+
+        <!-- Pane 4: Captured Leads -->
+        <div class="studio-pane" id="pane-leads">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+            <strong id="leadsCountHeading">0 Captured Leads</strong>
+            <div style="display: flex; gap: 8px;">
+              <button type="button" class="btn btn-gold btn-sm" id="exportLeadsCsvBtn">Export Leads CSV</button>
+              <button type="button" class="btn btn-outline btn-sm" id="clearLeadsBtn">Clear Local Leads</button>
+            </div>
+          </div>
+          <div class="ats-table-wrap">
+            <table class="ats-table" style="min-width: 640px;">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Lead Name</th>
+                  <th>Phone / Email</th>
+                  <th>Project &amp; Interest</th>
+                  <th>Budget / Goal</th>
+                </tr>
+              </thead>
+              <tbody id="studioLeadsBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pane 5: Contact & JSON Export -->
+        <div class="studio-pane" id="pane-config">
+          <form id="studioConfigForm" class="form-grid">
+            <div class="form-group">
+              <label for="scFirm">Brokerage Firm Name</label>
+              <input type="text" id="scFirm" />
+            </div>
+            <div class="form-group">
+              <label for="scAdvisor">Advisor Name</label>
+              <input type="text" id="scAdvisor" />
+            </div>
+            <div class="form-group">
+              <label for="scPhone">Display Phone Number</label>
+              <input type="text" id="scPhone" placeholder="+20 100 000 0000" />
+            </div>
+            <div class="form-group">
+              <label for="scWhatsapp">WhatsApp Digits (No + or spaces)</label>
+              <input type="text" id="scWhatsapp" placeholder="201000000000" />
+            </div>
+            <div class="form-group">
+              <label for="scEmail">Advisory Email</label>
+              <input type="email" id="scEmail" />
+            </div>
+            <div class="form-group">
+              <label for="scWebhook">CRM Webhook URL (Formspree / Make / HubSpot)</label>
+              <input type="url" id="scWebhook" placeholder="https://formspree.io/f/..." />
+            </div>
+            <div class="form-group full" style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button type="submit" class="btn btn-gold btn-sm">Save Broker Settings</button>
+              <button type="button" class="btn btn-ink btn-sm" id="exportProjectsJsonBtn">Download Updated projects.json</button>
+              <button type="button" class="btn btn-outline btn-sm" id="exportConfigJsonBtn">Download site_config.json</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

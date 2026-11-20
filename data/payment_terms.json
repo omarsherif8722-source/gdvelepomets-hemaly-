@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0",
+  "lastUpdated": "2026-11-20",
+  "sourceStatus": "verified_developer_release_plus_ats",
+  "note": "Drop updated payment milestones, cash discounts, maintenance fees, or delivery dates from the Standard Payment PDF here to update every calculator and project card dynamically.",
+  "newkairo": {
+    "krypton": {
+      "phaseName": "krypton at NEWKAIRO",
+      "category": "Fully Finished Serviced Residences with A/Cs",
+      "eoiPct": 5,
+      "downPaymentPct": 5,
+      "after3MonthsPct": 5,
+      "years": 8,
+      "quarterlyInstallments": 32,
+      "finishing": "Fully Finished with A/Cs",
+      "deliveryDate": "Phased · Target Q4 2028 / Early 2029 (Confirm on Standard Payment PDF)",
+      "cashDiscountPct": null,
+      "maintenancePct": null,
+      "plans": [
+        { "id": "standard-8y", "label": "Standard 8-Year Plan", "downPaymentPct": 5, "after3MonthsPct": 5, "years": 8, "cashDiscountPct": 0 }
+      ]
+    },
+    "neonViews": {
+      "phaseName": "Neon Views (Phases 01 & 02)",
+      "category": "Fully Finished Townhouses, Twinhouses & Standalone Villas",
+      "downPaymentPct": 5,
+      "after3MonthsPct": 5,
+      "years": 8,
+      "quarterlyInstallments": 32,
+      "finishing": "Fully Finished (without A/Cs)",
+      "deliveryDate": "Phased from Q4 2028 (Confirm on Standard Payment PDF)",
+      "cashDiscountPct": null,
+      "maintenancePct": null
+    },
+    "golfViews": {
+      "phaseName": "NEWKAIRO Golf Views (Argon & Cerium Views)",
+      "category": "Golf-Front Twin Villas, Tee View, Fairscapes & Golf Estates",
+      "downPaymentPct": 5,
+      "after3MonthsPct": 5,
+      "years": 8,
+      "quarterlyInstallments": 32,
+      "finishing": "Basic Finishing (Per Primary ATS Nov 2026)",
+      "deliveryDate": "Phased Delivery (Confirm on Standard Payment PDF)",
+      "cashDiscountPct": null,
+      "maintenancePct": null
+    },
+    "urbanLiving": {
+      "phaseName": "NEWKAIRO Urban Living & Park",
+      "category": "Fully Finished 1–4 Bedroom Apartments",
+      "downPaymentPct": 5,
+      "after3MonthsPct": 5,
+      "years": 8,
+      "quarterlyInstallments": 32,
+      "finishing": "Fully Finished",
+      "deliveryDate": "Phased Delivery (Confirm on Standard Payment PDF)",
+      "cashDiscountPct": null,
+      "maintenancePct": null
+    }
+  }
+}

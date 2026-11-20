@@ -1,0 +1,76 @@
+{
+  "corporateName": "G Developments",
+  "formerName": "NEWGIZA Real Estate & Development",
+  "founderAndChairman": "Mahmoud El-Gamal",
+  "coFounderContext": "Founded in 2006 as NEWGIZA Development alongside co-founder Salah Diab, building on more than 45–50 years of cumulative Egyptian real estate, hospitality, and master-planning leadership.",
+  "executiveSummary": "G Developments (formerly NEWGIZA Real Estate & Development) is one of Egypt's most influential luxury master-developers. Originating with the landmark 1,550-acre NEWGIZA integrated city in West Cairo, the group expanded its unified corporate platform across East Cairo (NEWKAIRO), West Cairo (NEWGIZA, IVY New Zayed, City View), Egypt's North Coast (Seashell Sidi Abdelrahman, Seashell Ras El Hekma, Playa Ghazala, Playa Ras El Hekma, Hacienda Red), and the Red Sea (Ein Bay & Ein Resort in Ain Sokhna).",
+  "kpis": [
+    { "value": "45+", "label": "Years of Cumulative Heritage", "note": "Leadership & master-planning track record" },
+    { "value": "10+", "label": "Landmark Destinations", "note": "East Cairo · West Cairo · Sahel · Sokhna" },
+    { "value": "1,550+", "label": "Acres at Flagship NEWGIZA", "note": "Nearly 90% open green & golf landscapes" },
+    { "value": "4", "label": "Strategic Egyptian Corridors", "note": "Residential, Golf, Coastal & Hospitality" }
+  ],
+  "leadership": {
+    "name": "Mahmoud El-Gamal",
+    "role": "Founder & Chairman, G Developments · CEO, G Hotels",
+    "bio": "A veteran Egyptian entrepreneur and real estate pioneer with over five decades shaping landmark urban and coastal destinations. El-Gamal spearheaded the transition from standalone residential compounds to fully self-sustaining integrated cities—uniting world-class architecture, 18-hole championship golf, accredited university and British K–12 education, tertiary medical hubs, and 5-star hospitality under a single master-planned vision."
+  },
+  "vision": "To craft Egypt's premier integrated living and coastal destinations across West Cairo, East Cairo, the North Coast, and Ain Sokhna—communities that elevate daily life, long-term capital value, and architectural permanence.",
+  "mission": "Master-plan low-density, human-scale ecosystems built around the 'Live · Learn · Work · Play' philosophy, combining iconic international design partners, enduring infrastructure, and year-round hospitality operations.",
+  "pillars": [
+    {
+      "code": "01",
+      "title": "The NEWGIZA Blueprint",
+      "summary": "Proven multi-decade execution on a 1,550-acre plateau in West Cairo—home to 10 walkable neighborhoods, an 18-hole championship golf course, New Giza University (NGU), New Giza Sporting Club (NGSC), and New Giza Health Park."
+    },
+    {
+      "code": "02",
+      "title": "Ultra-Low Footprint Urbanism",
+      "summary": "Masterplans dedicate 87% to 90% of land area to golf fairways, swimmable crystal lagoons, botanical gardens, reflection lakes, and pedestrian boulevards—protecting privacy and resale liquidity."
+    },
+    {
+      "code": "03",
+      "title": "Hospitality & Branded Living",
+      "summary": "Powered by G Hotel operations and global alliances such as Autograph Collection by Marriott (Cypher at NEWGIZA) and hotel-managed serviced residences at Playa Ras El Hekma and Krypton at NEWKAIRO."
+    },
+    {
+      "code": "04",
+      "title": "Institutional Education & Healthcare",
+      "summary": "Anchor institutions including New Giza University, The King's School Canterbury Cairo (at IVY), and Meditown / New Giza Health Park drive sustained end-user demand and superior rental yields."
+    }
+  ],
+  "milestones": [
+    { "period": "Pre-2006", "title": "Pioneering Hillside & Red Sea Communities", "detail": "Foundational track record across City View (West Cairo) and Ein Bay / Ein Resort (Ain Sokhna), introducing elevated master-planned resort and golf living." },
+    { "period": "2006", "title": "Launch of NEWGIZA Flagship City", "detail": "Mahmoud El-Gamal and partners launch NEWGIZA on 1,550+ acres overlooking the Giza plateau—redefining integrated luxury urbanism in Egypt." },
+    { "period": "2010s", "title": "North Coast Expansion — Seashell & Playa", "detail": "Establishment of Seashell Sidi Abdelrahman (KM 135) and Playa Ghazala (KM 141), becoming benchmark summer destinations on Egypt's Mediterranean coastline." },
+    { "period": "2020–2024", "title": "Corporate Evolution to G Developments & Ras El Hekma", "detail": "Unified rebrand to G Developments alongside blockbuster expansions: Seashell Ras El Hekma (KM 194), Playa Ras El Hekma (KM 204), and IVY New Zayed designed with Alchemy Architecture." },
+    { "period": "2025–2026", "title": "East Cairo Era — NEWKAIRO & Global Branded Residences", "detail": "Launch of NEWKAIRO in New Heliopolis (Golf Views, Neon Views, Urban Living, and Krypton Serviced Residences), Cypher operated by Autograph Collection by Marriott at NEWGIZA, Seashell Waterfront, and Playa Ghazala G Village." }
+  ],
+  "brokerAdvantages": [
+    {
+      "title": "Side-by-Side Unbiased Comparison",
+      "detail": "Compare NEWKAIRO, NEWGIZA, IVY, Seashell, and Playa objectively across price per SQM, delivery horizon, finishing specs, and appreciation curves."
+    },
+    {
+      "title": "Live Primary ATS Unit Access",
+      "detail": "Inspect exact unit numbers, golf rows, land areas, floor levels, and current availability status before stepping into a sales office."
+    },
+    {
+      "title": "Zero Buyer Commission",
+      "detail": "100% official developer contract prices and payment plans—no markups, no hidden brokerage fees, plus priority EOI and reservation handling."
+    },
+    {
+      "title": "Dedicated Post-Reservation Advisory",
+      "detail": "From brochure packs and cash-discount modeling to contract review, site tours, and future resale or rental positioning."
+    }
+  ],
+  "newkairoVsNewgiza": [
+    { "factor": "Location Corridor", "newgiza": "West Cairo · KM 23 Cairo–Alex Desert Road", "newkairo": "East Cairo · New Heliopolis · Cairo–Suez Road" },
+    { "factor": "Community Maturity", "newgiza": "Fully operational flagship city (1,550+ acres)", "newkairo": "High-growth master-planned city (early phases)" },
+    { "factor": "Starting Entry Price", "newgiza": "From 14.4M EGP (Meditown) · 14.7M (Cypher)", "newkairo": "From 7.9M EGP (Krypton) · 12.7M (Urban Living)" },
+    { "factor": "Villa Starting Price", "newgiza": "Resale & select phases on request", "newkairo": "From 19.2M EGP (Neon Views) · 37.8M (Golf Views)" },
+    { "factor": "Standard Payment Plan", "newgiza": "10% down · up to 6 years (Cypher / Meditown)", "newkairo": "5% down + 5% after 3 months · up to 8 years" },
+    { "factor": "Signature Anchor", "newgiza": "Active 18-hole Golf, NGU, NGSC, Health Park", "newkairo": "18-hole Golf, Grand Boulevard, 3 Schools & University" },
+    { "factor": "Investment Profile", "newgiza": "Capital preservation · immediate rental yield", "newkairo": "Early-mover appreciation · flexible 8-year leverage" }
+  ]
+}
