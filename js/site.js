@@ -632,10 +632,10 @@
       const uInfo = UPSELL_COPY[b] || UPSELL_COPY[1];
       const bedWord = ["", "One bedroom", "Two bedrooms", "Three bedrooms"][b];
 
-      band.innerHTML = `<strong>${pb.label}</strong> · ${pb.sqm} m² · From <strong>${egp(pb.min)} EGP</strong>`;
+      band.innerHTML = `<strong>${pb.label}</strong> · From <strong>${egp(pb.min)} EGP</strong>`;
 
       const keyFigures = [
-        { label: "Starting price", num: short(pb.min), unit: "EGP", note: `${pb.label} · ${pb.sqm} m²` },
+        { label: "Starting price", num: short(pb.min), unit: "EGP", note: pb.label },
         { label: "Down payment", num: "5%", note: "at signing, then 5% three months later. Call us for the exact amount" },
         { label: "Pay over", num: "8", unit: "years", note: "equal quarterly instalments" },
         { label: "Paying in cash", text: "Terms on request", note: "no published discount yet: ask a salesperson" },
@@ -656,7 +656,7 @@
       planEl.innerHTML = `
         <article class="plan-card">
           <div class="plan-card__head">
-            <h3 class="plan-card__title">${bedWord} Collection <span>/</span> ${pb.sqm} m²</h3>
+            <h3 class="plan-card__title">${bedWord} Collection</h3>
             <p class="plan-card__meta">${esc(uInfo.scarcity)}</p>
           </div>
           <div class="plan-card__body">
@@ -671,7 +671,7 @@
           </div>
           <div class="plan-card__actions">
             <a class="btn btn--red btn--small" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
-            <a class="btn btn--dark btn--small" href="${wa(`Hello Mahmoud, I'm looking at a Krypton ${bedWord.toLowerCase()} (${pb.sqm} m²). Please send me the available unit numbers, cash price, and upgrade options.`)}" target="_blank" rel="noopener">${WA_ICON} Unlock Units on WhatsApp</a>
+            <a class="btn btn--dark btn--small" href="${wa(`Hello Mahmoud, I'm looking at a Krypton ${bedWord.toLowerCase()}. Please send me the available unit numbers, cash price, and upgrade options.`)}" target="_blank" rel="noopener">${WA_ICON} Unlock Units on WhatsApp</a>
           </div>
         </article>`;
     }
@@ -802,33 +802,25 @@
   // The residence type a buyer would choose by: bedrooms for apartments, otherwise the kind of home
   function homeGroup(u) {
     const t = u.type || "";
-    if (/apartment/i.test(t)) return u.beds ? `Apartment, ${u.beds} bedroom${u.beds > 1 ? "s" : ""}` : "Apartments";
+    if (/apartment/i.test(t)) return u.beds ? `${u.beds}-bed apartment` : "Apartments";
     if (/cabana|cabin/i.test(t)) return "Cabanas & cabins";
     if (/beach house/i.test(t)) return "Beach houses";
     if (/chalet/i.test(t)) return "Chalets";
-    if (/twin|semi|attached|town ?(house|home)/i.test(t)) return "Townhouses & twin homes";
+    if (/twin|semi|attached|town ?(house|home)/i.test(t)) return "Townhouses & twins";
     if (/villa|stand ?alone|estate|fairscape/i.test(t)) return "Villas";
     if (/loft|duplex|penthouse/i.test(t)) return "Lofts & duplexes";
     if (/office/i.test(t)) return "Offices";
     if (/clinic/i.test(t)) return "Clinics";
     return t;
   }
-  // One entry per residence type: its starting price and size range, cheapest first
+  // One entry per residence type with its starting price, cheapest first
   function homeGroups(us) {
     const by = new Map();
     us.forEach((u) => {
       const k = homeGroup(u);
-      const g = by.get(k) || { name: k, from: Infinity, bmin: Infinity, bmax: 0 };
-      g.from = Math.min(g.from, u.price);
-      if (u.bua) { g.bmin = Math.min(g.bmin, u.bua); g.bmax = Math.max(g.bmax, u.bua); }
-      by.set(k, g);
+      by.set(k, Math.min(by.get(k) ?? Infinity, u.price));
     });
-    const m2 = (n) => nf.format(Math.round(n));
-    return [...by.values()].sort((a, b) => a.from - b.from).map((g) => ({
-      name: g.name,
-      from: g.from,
-      size: g.bmin < Infinity ? (Math.round(g.bmin) === Math.round(g.bmax) ? `${m2(g.bmin)} m²` : `${m2(g.bmin)} – ${m2(g.bmax)} m²`) : "",
-    }));
+    return [...by].sort((a, b) => a[1] - b[1]).map(([name, from]) => ({ name, from }));
   }
 
 
@@ -875,7 +867,6 @@
     const homeCard = (r) => `
       <dl class="facts facts--dark facts--key">${[
         { label: "Starting price", num: short(r.from), unit: "EGP", note: r.name },
-        ...(r.size ? factItems("Size", r.size) : []),
         { label: "Amount to reserve", text: "On a call", note: "a salesperson gives you the exact figure" },
       ].map(factHtml).join("")}</dl>
       <div class="p-homes__actions">
@@ -883,12 +874,12 @@
         <a class="btn btn--ghost-light" href="${wa(`Hello Mahmoud, I'm interested in ${r.name} at ${p.parent ? `${p.parent} ${p.name}` : p.name}. Please send me the available units, exact prices and the amount to reserve.`)}" target="_blank" rel="noopener">${WA_ICON} Ask about this home</a>
       </div>`;
     const rows = [
-      ...(p.homes || []).map((x) => ({ name: x.name, size: x.size, from: x.from })),
+      ...(p.homes || []).map((x) => ({ name: x.name, from: x.from })),
       ...homeGroups(us),
     ];
     homesEl.innerHTML = rows.length
-      ? `<p class="p-homes__note">Choose a home to see where it starts. Exact unit numbers, plot positions and released holds are shared by phone or WhatsApp.</p>
-         <div class="chips p-homes__switch" role="radiogroup" aria-label="Home type">${rows.map((r, i) => `<button type="button" role="radio" aria-checked="${i === 0}" data-home="${i}">${esc(r.name)}</button>`).join("")}</div>
+      ? `<p class="p-homes__note">Switch between home types to see where each starts. Exact units and released holds are shared by phone or WhatsApp.</p>
+         <div class="seg-scroll"><div class="seg p-homes__switch" role="radiogroup" aria-label="Home type">${rows.map((r, i) => `<button type="button" role="radio" aria-checked="${i === 0}" data-home="${i}">${esc(r.name)}</button>`).join("")}</div></div>
          <div class="p-homes__pick" data-home-pick>${homeCard(rows[0])}</div>`
       : `<p class="p-homes__note">Priority unit allocations and released holds for ${esc(p.name)} are shared directly on a quick advisory call.</p>
          <div style="display:flex;gap:12px;flex-wrap:wrap;">
