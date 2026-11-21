@@ -558,8 +558,8 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 .timeline__projects a:hover, .timeline__projects a:focus-visible { background: var(--ink); border-color: var(--ink); color: #fff; }
 .timeline__projects span { color: var(--stone); }
 .timeline__track { position: absolute; inset: 0; pointer-events: none; }
-.timeline__fill { position: absolute; z-index: 1; min-width: 2px; min-height: 2px; margin: -1px 0 0 -1px; background: var(--vermilion); transition: width 1.1s cubic-bezier(0.65, 0, 0.35, 1), height 1.1s cubic-bezier(0.65, 0, 0.35, 1); }
-.timeline__marker { position: absolute; left: 0; top: 0; z-index: 3; width: 23px; height: 23px; margin: -11.5px 0 0 -11.5px; border-radius: 50%; background: var(--vermilion); box-shadow: 0 0 0 6px rgba(206, 57, 39, 0.16); pointer-events: auto; cursor: grab; touch-action: none; transition: transform 1.1s cubic-bezier(0.65, 0, 0.35, 1), scale 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+.timeline__fill { position: absolute; z-index: 1; min-width: 2px; min-height: 2px; margin: -1px 0 0 -1px; background: var(--vermilion); transition: width 1.4s cubic-bezier(0.65, 0, 0.35, 1), height 1.4s cubic-bezier(0.65, 0, 0.35, 1); }
+.timeline__marker { position: absolute; left: 0; top: 0; z-index: 3; width: 23px; height: 23px; margin: -11.5px 0 0 -11.5px; border-radius: 50%; background: var(--vermilion); box-shadow: 0 0 0 6px rgba(206, 57, 39, 0.16); pointer-events: auto; cursor: grab; touch-action: none; transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1), scale 0.25s var(--ease), box-shadow 0.25s var(--ease); }
 .timeline__marker:hover { scale: 1.15; box-shadow: 0 0 0 9px rgba(206, 57, 39, 0.22); }
 .timeline-wrap.is-dragging .timeline__marker { cursor: grabbing; scale: 1.15; transition: scale 0.25s var(--ease), box-shadow 0.25s var(--ease); }
 .timeline-wrap.is-dragging .timeline__fill { transition: none; }
@@ -572,6 +572,11 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 .timeline-wrap.is-live .timeline > li { cursor: pointer; opacity: 0.42; transition: opacity 0.6s var(--ease); }
 .timeline-wrap.is-live .timeline > li.is-past { opacity: 0.7; }
 .timeline-wrap.is-live .timeline > li.is-active { opacity: 1; }
+/* Opening sweep: a slow glide of about 2.4s, then a rest, about 5s per period */
+.timeline-wrap.is-sweeping .timeline__marker { transition: transform 2.4s cubic-bezier(0.65, 0, 0.35, 1), scale 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+.timeline-wrap.is-sweeping .timeline__fill { transition: width 2.4s cubic-bezier(0.65, 0, 0.35, 1), height 2.4s cubic-bezier(0.65, 0, 0.35, 1); }
+.timeline-wrap.is-sweeping .timeline > li { transition: opacity 1.6s var(--ease); }
+.timeline-wrap.is-sweeping .timeline__year { transition: transform 1.6s var(--ease); }
 .timeline > li.is-past::before { background: var(--vermilion); border-color: var(--vermilion); }
 .timeline > li.is-active .timeline__year { transform: scale(1.18); }
 .timeline > li.is-active p { color: var(--ink); }

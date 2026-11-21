@@ -286,7 +286,7 @@
     const fill = $(".timeline__fill", rail);
     const marker = $(".timeline__marker", rail);
     const wide = window.matchMedia("(min-width: 961px)");
-    const STEP_MS = 1700; // time the point rests on each period during the opening sweep
+    const STEP_MS = 5000; // time the point spends on each period during the opening sweep
     let active = 0;
     let chosen = last; // where the point settles after a hover preview: today, or the period clicked
     let sweepTimer = 0;
@@ -330,10 +330,13 @@
       mark(i);
       place(centre(steps[i]));
     }
-    const stopSweep = () => { clearTimeout(sweepTimer); clearTimeout(homeTimer); };
+    const stopSweep = () => { clearTimeout(sweepTimer); clearTimeout(homeTimer); timeline.classList.remove("is-sweeping"); };
+    // The sweep glides slowly; clicks, hovers and drags keep the quicker movement
     function sweep(i) {
+      timeline.classList.add("is-sweeping");
       show(i);
       if (i < last) sweepTimer = setTimeout(() => sweep(i + 1), STEP_MS);
+      else sweepTimer = setTimeout(() => timeline.classList.remove("is-sweeping"), 2600);
     }
     function choose(i) {
       stopSweep();
