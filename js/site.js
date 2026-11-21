@@ -635,7 +635,7 @@
       band.innerHTML = `<strong>${pb.label}</strong> · ${pb.sqm} m² · From <strong>${egp(pb.min)} EGP</strong>`;
 
       const keyFigures = [
-        ...krypton.priceBands.map((x) => ({ label: x.label, num: short(x.min), unit: "EGP", note: `starting price · ${x.sqm} m²` })),
+        { label: "Starting price", num: short(pb.min), unit: "EGP", note: `${pb.label} · ${pb.sqm} m²` },
         { label: "Down payment", num: "5%", note: "at signing, then 5% three months later. Call us for the exact amount" },
         { label: "Pay over", num: "8", unit: "years", note: "equal quarterly instalments" },
         { label: "Paying in cash", text: "Terms on request", note: "no published discount yet: ask a salesperson" },
@@ -799,16 +799,36 @@
     showRegion(portfolio.regions[0].id);
   }
 
-  function typesSummary(us) {
+  // The residence type a buyer would choose by: bedrooms for apartments, otherwise the kind of home
+  function homeGroup(u) {
+    const t = u.type || "";
+    if (/apartment/i.test(t)) return u.beds ? `Apartment, ${u.beds} bedroom${u.beds > 1 ? "s" : ""}` : "Apartments";
+    if (/cabana|cabin/i.test(t)) return "Cabanas & cabins";
+    if (/beach house/i.test(t)) return "Beach houses";
+    if (/chalet/i.test(t)) return "Chalets";
+    if (/twin|semi|attached|town ?(house|home)/i.test(t)) return "Townhouses & twin homes";
+    if (/villa|stand ?alone|estate|fairscape/i.test(t)) return "Villas";
+    if (/loft|duplex|penthouse/i.test(t)) return "Lofts & duplexes";
+    if (/office/i.test(t)) return "Offices";
+    if (/clinic/i.test(t)) return "Clinics";
+    return t;
+  }
+  // One entry per residence type: its starting price and size range, cheapest first
+  function homeGroups(us) {
     const by = new Map();
     us.forEach((u) => {
-      const k = /apartment/i.test(u.type) && u.beds ? `${u.type}, ${u.beds} bedroom${u.beds > 1 ? "s" : ""}` : u.type;
-      const g = by.get(k) || { type: k, n: 0, min: Infinity, bmin: Infinity, bmax: 0 };
-      g.n++; g.min = Math.min(g.min, u.price);
+      const k = homeGroup(u);
+      const g = by.get(k) || { name: k, from: Infinity, bmin: Infinity, bmax: 0 };
+      g.from = Math.min(g.from, u.price);
       if (u.bua) { g.bmin = Math.min(g.bmin, u.bua); g.bmax = Math.max(g.bmax, u.bua); }
       by.set(k, g);
     });
-    return [...by.values()].sort((a, b) => a.min - b.min);
+    const m2 = (n) => nf.format(Math.round(n));
+    return [...by.values()].sort((a, b) => a.from - b.from).map((g) => ({
+      name: g.name,
+      from: g.from,
+      size: g.bmin < Infinity ? (Math.round(g.bmin) === Math.round(g.bmax) ? `${m2(g.bmin)} m²` : `${m2(g.bmin)} – ${m2(g.bmax)} m²`) : "",
+    }));
   }
 
 
@@ -852,30 +872,35 @@
     // Homes: high-urgency 5% entry hooks + call-to-unlock (no full price dump)
     const homesEl = $("[data-p-homes]");
     const us = unitsFor(ctx, p);
-    const types = typesSummary(us);
-    const ask = (what) => `
-      <span style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
-        <a class="ats__ask ats__ask--light" href="tel:+201227275122">Call Now</a>
-        <a class="ats__ask ats__ask--light" href="${wa(`Hello Mahmoud, I'm interested in ${what} at ${p.parent ? `${p.parent} ${p.name}` : p.name}. Please send me the available units, exact prices, and upgrade options.`)}" target="_blank" rel="noopener">${WA_ICON}Unlock Price</a>
-      </span>`;
+    const homeCard = (r) => `
+      <dl class="facts facts--dark facts--key">${[
+        { label: "Starting price", num: short(r.from), unit: "EGP", note: r.name },
+        ...(r.size ? factItems("Size", r.size) : []),
+        { label: "Amount to reserve", text: "On a call", note: "a salesperson gives you the exact figure" },
+      ].map(factHtml).join("")}</dl>
+      <div class="p-homes__actions">
+        <a class="btn btn--red" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
+        <a class="btn btn--ghost-light" href="${wa(`Hello Mahmoud, I'm interested in ${r.name} at ${p.parent ? `${p.parent} ${p.name}` : p.name}. Please send me the available units, exact prices and the amount to reserve.`)}" target="_blank" rel="noopener">${WA_ICON} Ask about this home</a>
+      </div>`;
     const rows = [
       ...(p.homes || []).map((x) => ({ name: x.name, size: x.size, from: x.from })),
-      ...types.map((t) => ({ name: t.type, size: t.bmin < Infinity ? (t.bmin === t.bmax ? `${nf.format(t.bmin)} m²` : `${nf.format(t.bmin)} – ${nf.format(t.bmax)} m²`) : "", from: t.min })),
+      ...homeGroups(us),
     ];
     homesEl.innerHTML = rows.length
-      ? `<p class="p-homes__note">Exact unit numbers, plot positions and released holds are shared directly by phone or WhatsApp so we can match—or upgrade—your brief.</p>
-         <ul class="p-homes__list">${rows.map((r) => `
-           <li class="p-homes__row">
-             <span class="p-homes__name">${esc(r.name)}</span>
-             <span class="p-homes__size">${esc(r.size)}</span>
-             <span class="p-homes__from"><small>Starting price</small>${short(r.from)} EGP<small>Call for the amount to reserve</small></span>
-             ${ask(r.name)}
-           </li>`).join("")}</ul>`
+      ? `<p class="p-homes__note">Choose a home to see where it starts. Exact unit numbers, plot positions and released holds are shared by phone or WhatsApp.</p>
+         <div class="chips p-homes__switch" role="radiogroup" aria-label="Home type">${rows.map((r, i) => `<button type="button" role="radio" aria-checked="${i === 0}" data-home="${i}">${esc(r.name)}</button>`).join("")}</div>
+         <div class="p-homes__pick" data-home-pick>${homeCard(rows[0])}</div>`
       : `<p class="p-homes__note">Priority unit allocations and released holds for ${esc(p.name)} are shared directly on a quick advisory call.</p>
          <div style="display:flex;gap:12px;flex-wrap:wrap;">
            <a class="btn btn--light" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
            <a class="btn btn--ghost-light" href="${wa(`Hello Mahmoud, please send me the available units and cash discount at ${p.name}.`)}" target="_blank" rel="noopener">${WA_ICON} Ask on WhatsApp</a>
          </div>`;
+
+    const homeSwitch = $(".p-homes__switch", homesEl);
+    if (homeSwitch) {
+      const pick = $("[data-home-pick]", homesEl);
+      initSeg(homeSwitch, (b) => { pick.innerHTML = homeCard(rows[Number(b.dataset.home)]); });
+    }
 
     // Payment, scoped to this project's phases
     const payRoot = $("#project [data-pay-root]");

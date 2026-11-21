@@ -473,7 +473,7 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chips button { min-height: 40px; padding: 0 16px; border: 1px solid var(--on-dark-3); border-radius: 999px; font-size: 14.5px; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
 .chips button:hover { border-color: #fff; }
-.chips button[aria-pressed="true"] { background: #fff; border-color: #fff; color: var(--charcoal); }
+.chips button[aria-pressed="true"], .chips button[aria-checked="true"] { background: #fff; border-color: #fff; color: var(--charcoal); }
 .price-input { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--on-dark-3); padding-bottom: 6px; }
 .price-input input { flex: 1; min-width: 0; background: transparent; border: 0; font-family: var(--display); font-size: clamp(30px, 3vw, 42px); line-height: 1.15; color: #fff; font-variant-numeric: lining-nums; padding: 0; }
 .price-input input:focus { outline: none; }
@@ -839,6 +839,10 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 .place__tag { position: absolute; left: 12px; bottom: 10px; font-size: 12.5px; color: #fff; background: rgba(0,0,0,0.45); padding: 3px 10px; border-radius: 999px; }
 
 .p-homes__note { color: var(--on-dark-2); font-size: 15px; margin-bottom: 14px; }
+/* Home switch: choose rooms or home type, see where it starts */
+.p-homes__switch { margin: 4px 0 18px; }
+.p-homes__pick .facts { margin-top: 0; animation: area-in 0.3s var(--ease); }
+.p-homes__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
 .p-homes__list { border-top: 1px solid var(--on-dark-3); }
 .p-homes__row { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.1fr) auto; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--on-dark-3); }
 .p-homes__name { font-family: var(--display); font-size: 21px; }
