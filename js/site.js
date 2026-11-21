@@ -18,15 +18,74 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ------------------------------------------------------------------ */
-  /* Stats (Umami). Events queue until the tracker has loaded.           */
+  /* Stats (Umami + Meta Pixel + Media Buying Command Center Webhook)    */
   /* ------------------------------------------------------------------ */
   const statQueue = [];
+  let mediaWebhookUrl = "";
+  const urlParams = new URLSearchParams(location.search);
+  const utmCtx = {
+    utm_source: urlParams.get("utm_source") || "",
+    utm_medium: urlParams.get("utm_medium") || "",
+    utm_campaign: urlParams.get("utm_campaign") || "",
+    utm_content: urlParams.get("utm_content") || "",
+    ref: urlParams.get("ref") || "",
+  };
+  const FBQ_MAP = {
+    "WhatsApp click": ["Contact", { channel: "whatsapp" }],
+    "Call click": ["Contact", { channel: "phone" }],
+    "Brief sent": ["Lead", {}],
+    "Brochure download": ["Schedule", {}],
+    "Payment plan opened": ["CustomizeProduct", {}],
+    "Project opened": ["ViewContent", {}],
+    "Krypton layout viewed": ["ViewContent", {}],
+    "Film play": ["ViewContent", { content_type: "video" }],
+  };
   function track(name, data) {
     const send = () => window.umami && typeof window.umami.track === "function" && (data ? window.umami.track(name, data) : window.umami.track(name));
     if (!send()) statQueue.push([name, data]);
+    if (typeof window.fbq === "function") {
+      const m = FBQ_MAP[name];
+      if (m) window.fbq("track", m[0], { ...m[1], ...(data || {}), project: document.body.dataset.project || "home" });
+      else window.fbq("trackCustom", name, data || {});
+    }
+    try {
+      const evts = JSON.parse(localStorage.getItem("gmb.webEvents") || "[]");
+      evts.unshift({
+        at: new Date().toISOString(),
+        event: name,
+        project: document.body.dataset.project || (data && data.project) || null,
+        page: location.pathname,
+        place: (data && data.place) || null,
+        ...utmCtx,
+      });
+      if (evts.length > 250) evts.length = 250;
+      localStorage.setItem("gmb.webEvents", JSON.stringify(evts));
+    } catch {}
+    if (mediaWebhookUrl) {
+      fetch(mediaWebhookUrl, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ event: name, project: document.body.dataset.project || null, page: location.pathname, ...(data || {}), ...utmCtx }),
+      }).catch(() => {});
+    }
   }
   function initAnalytics(cfg) {
     const a = cfg && cfg.analytics;
+    if (a && a.mediaDashboardWebhook) mediaWebhookUrl = a.mediaDashboardWebhook;
+    if (a && a.metaPixelId && !window.fbq) {
+      /* Standard Meta Pixel bootstrap */
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+        if (!f._fbq) f._fbq = n;
+        n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = [];
+        t = b.createElement(e); t.async = !0; t.src = v;
+        s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+      window.fbq("init", a.metaPixelId);
+      window.fbq("track", "PageView");
+    }
     if (!a || !a.umamiWebsiteId || !a.umamiScript) return;
     const sc = document.createElement("script");
     sc.defer = true;
