@@ -612,17 +612,14 @@
 
     const UPSELL_COPY = {
       1: {
-        hookDown: "393,750 EGP",
         scarcity: "High demand · Limited Block 1 & Block 2 park-view quotas",
         upsell: "Advisory upgrade note: For a modest step-up in quarterly payment, compare our 2-bedroom corner layouts with double the rental yield and wider park frontage.",
       },
       2: {
-        hookDown: "564,375 EGP",
         scarcity: "Most requested tier · Released holds update daily",
         upsell: "Advisory upgrade note: At a 2-bedroom budget, ask us on your call to compare a 3-bedroom terrace home or an Urban Living ground-garden apartment at nearly the same entry.",
       },
       3: {
-        hookDown: "740,500 EGP",
         scarcity: "Corner & terrace allocations · Priority call list",
         upsell: "Advisory upgrade note: Qualifying for a 3-bedroom apartment means you can also step into a Fully Finished Private-Garden Townhouse in Neon Views with 5% down. Ask Mahmoud to compare both live.",
       },
@@ -635,11 +632,11 @@
       const uInfo = UPSELL_COPY[b] || UPSELL_COPY[1];
       const bedWord = ["", "One bedroom", "Two bedrooms", "Three bedrooms"][b];
 
-      band.innerHTML = `<strong>${pb.label}</strong> · ${pb.sqm} m² · Start with <strong>${uInfo.hookDown} (5% to reserve)</strong>`;
+      band.innerHTML = `<strong>${pb.label}</strong> · ${pb.sqm} m² · From <strong>${egp(pb.min)} EGP</strong>`;
 
       const keyFigures = [
-        { label: "Reserve with", num: uInfo.hookDown.replace(/ EGP$/, ""), unit: "EGP", note: "5% at signing" },
-        { label: "Three months later", num: "5%", note: "the second part of the down payment" },
+        ...krypton.priceBands.map((x) => ({ label: x.label, num: short(x.min), unit: "EGP", note: `starting price · ${x.sqm} m²` })),
+        { label: "Down payment", num: "5%", note: "at signing, then 5% three months later. Call us for the exact amount" },
         { label: "Pay over", num: "8", unit: "years", note: "equal quarterly instalments" },
         { label: "Paying in cash", text: "Terms on request", note: "no published discount yet: ask a salesperson" },
       ];
@@ -667,7 +664,7 @@
               <img src="${esc(u(sample.plan))}" alt="Representative floor plan of Krypton ${bedWord}" loading="lazy">
             </button>
             <div>
-              <p style="font-family:var(--display);font-size:24px;line-height:1.2;margin-bottom:12px;">Reserve with ${uInfo.hookDown} (5% down) and up to 8 years to pay.</p>
+              <p style="font-family:var(--display);font-size:24px;line-height:1.2;margin-bottom:12px;">From ${egp(pb.min)} EGP, with 5% down and up to 8 years to pay. Call us for the exact amount to reserve.</p>
               <p class="plan-card__variants" style="margin-top:0;">We hold the complete ${ls.length}-layout floor-plan book, sun orientations, and live Block 1 &amp; Block 2 availability sheet at our advisory desk.</p>
               <p class="plan-card__variants"><strong>Call or message now</strong> to receive the exact available unit numbers, net cash price, and a side-by-side upgrade comparison.</p>
             </div>
@@ -786,7 +783,7 @@
             : { label: "Starting price", text: "On request", note: "ask a salesperson" },
           ...p.facts.filter(([k]) => k.toLowerCase() !== "from").flatMap(([k, v]) => factItems(k, v)),
         ].map(factHtml).join("")}</dl>
-        ${min ? `<p class="muted">Entry from <strong>${short(min * 0.05)} EGP (5% down)</strong> · Exact unit prices shared on call.</p>` : ""}
+        <p class="muted">Call a salesperson for the exact amount to reserve and today's available units.</p>
         <div class="atlas__actions">
           <a class="btn btn--red" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
           <a class="btn btn--dark" href="${wa(`Hello Mahmoud, which ${p.parent ? `${p.parent} ${p.name}` : p.name} units and released holds are available right now?`)}" target="_blank" rel="noopener">${WA_ICON} Ask what's available</a>
@@ -826,7 +823,7 @@
     $$("[data-from]").forEach((el) => {
       const p = ctx.portfolio.projects.find((x) => x.id === el.dataset.from);
       const min = p && fromPrice(ctx, p);
-      el.textContent = min ? `5% down · From ${short(min * 0.05)} EGP at signing` : p ? p.status : "";
+      el.textContent = min ? `From ${short(min)} EGP · 5% down` : p ? p.status : "";
     });
   }
 
@@ -871,7 +868,7 @@
            <li class="p-homes__row">
              <span class="p-homes__name">${esc(r.name)}</span>
              <span class="p-homes__size">${esc(r.size)}</span>
-             <span class="p-homes__from"><small>5% Down Entry From</small>${short(r.from * 0.05)} EGP<small>Full sheet &amp; cash rate on call</small></span>
+             <span class="p-homes__from"><small>Starting price</small>${short(r.from)} EGP<small>Call for the amount to reserve</small></span>
              ${ask(r.name)}
            </li>`).join("")}</ul>`
       : `<p class="p-homes__note">Priority unit allocations and released holds for ${esc(p.name)} are shared directly on a quick advisory call.</p>

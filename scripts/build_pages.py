@@ -563,7 +563,7 @@ def krypton_page(p):
 {masthead("krypton")}
 
   <main id="main">
-{hero("krypton", "NEWKAIRO<span>/</span>Krypton", p["heroTitle"], "Fully finished one to three bedroom serviced homes. Start from 394K EGP (5% down) with 8 years to pay — call for released holds and cash discount.", "Hello, I'd like to hear about Krypton at NEWKAIRO.", p["video"], None, False, "Krypton", ("Krypton", "#krypton"))}
+{hero("krypton", "NEWKAIRO<span>/</span>Krypton", p["heroTitle"], "Fully finished one to three bedroom serviced homes from 7.88M EGP, with 5% down and 8 years to pay. Call us for the exact amount to reserve.", "Hello, I'd like to hear about Krypton at NEWKAIRO.", p["video"], None, False, "Krypton", ("Krypton", "#krypton"))}
 
 {src}
 
