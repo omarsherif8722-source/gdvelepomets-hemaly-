@@ -278,17 +278,26 @@
   if (timeline) {
     const steps = $$(".timeline > li", timeline);
     const last = steps.length - 1;
-    const track = document.createElement("div");
-    track.className = "timeline__track";
-    track.setAttribute("aria-hidden", "true");
-    track.innerHTML = '<span class="timeline__fill"></span><span class="timeline__marker"></span>';
-    timeline.appendChild(track);
-    const fill = $(".timeline__fill", track);
-    const marker = $(".timeline__marker", track);
+    const rail = document.createElement("div");
+    rail.className = "timeline__track";
+    rail.setAttribute("aria-hidden", "true");
+    rail.innerHTML = '<span class="timeline__fill"></span><span class="timeline__marker"></span>';
+    timeline.appendChild(rail);
+    const fill = $(".timeline__fill", rail);
+    const marker = $(".timeline__marker", rail);
     const wide = window.matchMedia("(min-width: 961px)");
+    const STEP_MS = 1700; // time the point rests on each period during the opening sweep
     let active = 0;
+    let chosen = last; // where the point settles after a hover preview: today, or the period clicked
     let sweepTimer = 0;
     let homeTimer = 0;
+    let drag = null;
+    let stillPointer = null; // after a replay starts, hover is ignored until the mouse really moves
+
+    const hint = document.createElement("p");
+    hint.className = "timeline__hint";
+    hint.textContent = window.matchMedia("(hover: hover)").matches ? "Click a year, or drag the red point along the line" : "Tap a year, or drag the red point";
+    timeline.insertBefore(hint, timeline.firstChild);
 
     // Centre of a step's dot, relative to the timeline
     const centre = (li) => {
@@ -300,40 +309,97 @@
         y: r.top - box.top + parseFloat(dot.top) + parseFloat(dot.height) / 2,
       };
     };
-    function show(i) {
+    function mark(i) {
       active = i;
       steps.forEach((li, k) => {
         li.classList.toggle("is-active", k === i);
         li.classList.toggle("is-past", k < i);
         if (k === i) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
       });
+    }
+    // Put the point (and the red line behind it) at p
+    function place(p) {
       const a = centre(steps[0]);
-      const b = centre(steps[i]);
       fill.style.left = `${a.x}px`;
       fill.style.top = `${a.y}px`;
-      fill.style.width = `${Math.max(0, b.x - a.x)}px`;
-      fill.style.height = `${Math.max(0, b.y - a.y)}px`;
-      marker.style.transform = `translate(${b.x}px, ${b.y}px)`;
+      fill.style.width = `${Math.max(0, p.x - a.x)}px`;
+      fill.style.height = `${Math.max(0, p.y - a.y)}px`;
+      marker.style.transform = `translate(${p.x}px, ${p.y}px)`;
+    }
+    function show(i) {
+      mark(i);
+      place(centre(steps[i]));
     }
     const stopSweep = () => { clearTimeout(sweepTimer); clearTimeout(homeTimer); };
     function sweep(i) {
       show(i);
-      if (i < last) sweepTimer = setTimeout(() => sweep(i + 1), 950);
+      if (i < last) sweepTimer = setTimeout(() => sweep(i + 1), STEP_MS);
+    }
+    function choose(i) {
+      stopSweep();
+      chosen = i;
+      show(i);
+      track("Timeline", { period: steps[i].querySelector(".timeline__year").textContent });
     }
 
     timeline.classList.add("is-live");
     show(0);
     steps.forEach((li, i) => {
-      li.addEventListener("mouseenter", () => { if (wide.matches) { stopSweep(); show(i); } });
-      li.addEventListener("focus", () => { stopSweep(); show(i); });
-      li.addEventListener("click", (e) => { if (!e.target.closest("a")) { stopSweep(); show(i); } });
+      // Hover previews a period; a click or tap chooses it and the point stays there
+      li.addEventListener("mouseenter", () => { if (wide.matches && !drag && !stillPointer) { stopSweep(); show(i); } });
+      li.addEventListener("click", (e) => { if (!e.target.closest("a")) choose(i); });
+      li.addEventListener("focus", () => { stopSweep(); chosen = i; show(i); });
+      li.addEventListener("keydown", (e) => {
+        const to = { ArrowRight: i + 1, ArrowDown: i + 1, ArrowLeft: i - 1, ArrowUp: i - 1, Home: 0, End: last }[e.key];
+        if (to === undefined || to < 0 || to > last) return;
+        e.preventDefault();
+        steps[to].focus();
+      });
     });
-    // When the pointer leaves, the point returns to the present
+    timeline.addEventListener("mousemove", (e) => {
+      if (stillPointer && Math.hypot(e.clientX - stillPointer.x, e.clientY - stillPointer.y) > 6) stillPointer = null;
+    });
     timeline.addEventListener("mouseleave", () => {
-      if (!wide.matches) return;
+      if (!wide.matches || drag) return;
       clearTimeout(homeTimer);
-      homeTimer = setTimeout(() => show(last), 1400);
+      homeTimer = setTimeout(() => show(chosen), 900);
     });
+
+    // The red point: drag it along the line to move through the years; click it to replay the journey
+    const nearest = (pos, ax) => {
+      const cs = steps.map(centre);
+      return cs.reduce((best, c, k) => (Math.abs(c[ax] - pos) < Math.abs(cs[best][ax] - pos) ? k : best), 0);
+    };
+    marker.addEventListener("pointerdown", (e) => {
+      stopSweep();
+      drag = { id: e.pointerId, x0: e.clientX, y0: e.clientY, moved: false, near: active };
+      marker.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+    marker.addEventListener("pointermove", (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 5) return;
+      drag.moved = true;
+      timeline.classList.add("is-dragging");
+      const box = timeline.getBoundingClientRect();
+      const ax = wide.matches ? "x" : "y";
+      const a = centre(steps[0]);
+      const b = centre(steps[last]);
+      const pos = Math.min(b[ax], Math.max(a[ax], ax === "x" ? e.clientX - box.left : e.clientY - box.top));
+      drag.near = nearest(pos, ax);
+      mark(drag.near);
+      place(ax === "x" ? { x: pos, y: a.y } : { x: a.x, y: pos });
+    });
+    const endDrag = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const { moved, near } = drag;
+      drag = null;
+      timeline.classList.remove("is-dragging");
+      if (moved) choose(near);
+      else { chosen = last; stillPointer = { x: e.clientX, y: e.clientY }; sweep(0); } // a plain click on the point replays from the start
+    };
+    marker.addEventListener("pointerup", endDrag);
+    marker.addEventListener("pointercancel", endDrag);
     // Wide screens: sweep from the first period to today once the timeline is in view
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(([en], obs) => {
@@ -343,8 +409,8 @@
       }, { threshold: 0.5 }).observe(timeline);
       // Phones: the point follows the period in the middle of the screen as you scroll
       const follow = new IntersectionObserver((entries) => {
-        if (wide.matches) return;
-        entries.forEach((en) => { if (en.isIntersecting) show(steps.indexOf(en.target)); });
+        if (wide.matches || drag) return;
+        entries.forEach((en) => { if (en.isIntersecting) { chosen = steps.indexOf(en.target); show(chosen); } });
       }, { rootMargin: "-40% 0px -50% 0px" });
       steps.forEach((li) => follow.observe(li));
     } else {
