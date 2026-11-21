@@ -352,6 +352,18 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius
 .rooms li span:first-child { color: var(--vermilion); }
 .rooms li span:last-child { color: var(--stone); }
 .plan-card__variants { margin-top: 14px; font-size: 13.5px; color: var(--stone); }
+.plan-card__offer { font-family: var(--display); font-size: 24px; line-height: 1.2; margin-bottom: 12px; }
+/* Project residences: the card shows a project photo instead of a floor plan */
+.plan-card__img--photo { position: relative; padding: 0; min-height: 0; aspect-ratio: 4 / 3; overflow: hidden; background: var(--mist); }
+.plan-card__img--photo img { width: 100%; height: 100%; max-height: none; object-fit: cover; }
+.plan-card__img--photo span { position: absolute; right: 10px; bottom: 10px; padding: 3px 9px; border-radius: 999px; font-size: 12px; color: #fff; background: rgba(0, 0, 0, 0.45); }
+/* Notes under the figures, shared by Krypton and every project */
+.homes__list--info { max-height: none; overflow: visible; }
+.homes__figures { padding: 0 0 8px; border-bottom: 1px solid var(--on-dark-3); }
+.homes__info { padding: 16px 0; border-bottom: 1px solid var(--on-dark-3); color: var(--on-dark-2); font-size: 15px; }
+.homes__info:last-child { border-bottom: 0; }
+.homes__info strong { display: block; margin-bottom: 4px; font-family: var(--display); font-size: 21px; font-weight: 400; color: #fff; }
+.homes__info--accent strong { color: var(--vermilion); }
 .plan-card__actions { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 26px 26px; }
 
 .floors { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(20px, 2.6vw, 36px); }
@@ -838,20 +850,11 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 .place__hero { position: relative; }
 .place__tag { position: absolute; left: 12px; bottom: 10px; font-size: 12.5px; color: #fff; background: rgba(0,0,0,0.45); padding: 3px 10px; border-radius: 999px; }
 
-.p-homes__note { color: var(--on-dark-2); font-size: 15px; margin-bottom: 14px; }
 /* Home switch: one connected switch between home types; scrolls sideways when the types do not fit */
 .seg-scroll { margin: 4px calc(var(--gutter) * -1) 20px; padding: 0 var(--gutter); overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; }
 .seg-scroll::-webkit-scrollbar { display: none; }
 .seg-scroll .seg { width: max-content; }
 .seg-scroll .seg button { padding: 0 13px; white-space: nowrap; }
-.p-homes__pick .facts { margin-top: 0; animation: area-in 0.3s var(--ease); }
-.p-homes__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
-.p-homes__list { border-top: 1px solid var(--on-dark-3); }
-.p-homes__row { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.1fr) auto; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--on-dark-3); }
-.p-homes__name { font-family: var(--display); font-size: 21px; }
-.p-homes__size { color: var(--on-dark-2); font-size: 15px; font-variant-numeric: tabular-nums; }
-.p-homes__from { font-family: var(--display); font-size: 21px; font-variant-numeric: lining-nums; }
-.p-homes__from small { display: block; font-family: var(--sans); font-size: 12.5px; color: var(--on-dark-2); }
 .ats__ask--light { border-color: rgba(255,255,255,0.6); color: #fff; }
 .ats__ask--light:hover { background: #fff; color: var(--oxblood); border-color: #fff; }
 .showcase .atelier__grid { margin-top: 4px; }
@@ -859,9 +862,5 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 
 @media (max-width: 760px) {
   .parcels { grid-template-columns: minmax(0, 1fr); }
-  .p-homes__row { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; }
-  .p-homes__size { grid-column: 1; }
-  .p-homes__from { grid-column: 1; }
-  .p-homes__row .ats__ask { grid-column: 2; grid-row: 1 / span 3; }
   .hero__tag { top: calc(var(--mast) + 10px); }
 }

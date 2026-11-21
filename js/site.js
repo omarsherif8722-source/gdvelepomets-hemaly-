@@ -641,17 +641,10 @@
         { label: "Paying in cash", text: "Terms on request", note: "no published discount yet: ask a salesperson" },
       ];
       list.innerHTML = `
-        <li style="padding:0 0 8px;border-bottom:1px solid var(--on-dark-3);">
-          <dl class="facts facts--dark facts--key">${keyFigures.map(factHtml).join("")}</dl>
-        </li>
-        <li style="padding:16px 0;border-bottom:1px solid var(--on-dark-3);color:var(--on-dark-2);font-size:15px;">
-          <strong style="display:block;color:#fff;font-family:var(--display);font-size:21px;margin-bottom:4px;">Unlisted Holds &amp; Cash Rate</strong>
-          Exact released unit codes, floor levels, and today's private cash discount are shared directly by phone or WhatsApp.
-        </li>
-        <li style="padding:16px 0;color:var(--on-dark-2);font-size:15px;">
-          <strong style="display:block;color:var(--vermilion);font-family:var(--display);font-size:21px;margin-bottom:4px;">Smart Upgrade Comparison</strong>
-          ${esc(uInfo.upsell)}
-        </li>`;
+        <li class="homes__figures"><dl class="facts facts--dark facts--key">${keyFigures.map(factHtml).join("")}</dl></li>
+        <li class="homes__info"><strong>Unlisted Holds &amp; Cash Rate</strong>
+          Exact released unit codes, floor levels, and today's private cash discount are shared directly by phone or WhatsApp.</li>
+        <li class="homes__info homes__info--accent"><strong>Smart Upgrade Comparison</strong>${esc(uInfo.upsell)}</li>`;
 
       planEl.innerHTML = `
         <article class="plan-card">
@@ -861,37 +854,78 @@
     if (!p) return;
     autoRotate($('#project [role="tablist"]'), initTabs($('#project [role="tablist"]')));
 
-    // Homes: high-urgency 5% entry hooks + call-to-unlock (no full price dump)
+    // Residences: the same layout as Krypton's "Residences & 5% Entry" tab, from this project's data
     const homesEl = $("[data-p-homes]");
-    const us = unitsFor(ctx, p);
-    const homeCard = (r) => `
-      <dl class="facts facts--dark facts--key">${[
-        { label: "Starting price", num: short(r.from), unit: "EGP", note: r.name },
-        { label: "Amount to reserve", text: "On a call", note: "a salesperson gives you the exact figure" },
-      ].map(factHtml).join("")}</dl>
-      <div class="p-homes__actions">
-        <a class="btn btn--red" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
-        <a class="btn btn--ghost-light" href="${wa(`Hello Mahmoud, I'm interested in ${r.name} at ${p.parent ? `${p.parent} ${p.name}` : p.name}. Please send me the available units, exact prices and the amount to reserve.`)}" target="_blank" rel="noopener">${WA_ICON} Ask about this home</a>
-      </div>`;
-    const rows = [
-      ...(p.homes || []).map((x) => ({ name: x.name, from: x.from })),
-      ...homeGroups(us),
-    ];
-    homesEl.innerHTML = rows.length
-      ? `<p class="p-homes__note">Switch between home types to see where each starts. Exact units and released holds are shared by phone or WhatsApp.</p>
-         <div class="seg-scroll"><div class="seg p-homes__switch" role="radiogroup" aria-label="Home type">${rows.map((r, i) => `<button type="button" role="radio" aria-checked="${i === 0}" data-home="${i}">${esc(r.name)}</button>`).join("")}</div></div>
-         <div class="p-homes__pick" data-home-pick>${homeCard(rows[0])}</div>`
-      : `<p class="p-homes__note">Priority unit allocations and released holds for ${esc(p.name)} are shared directly on a quick advisory call.</p>
-         <div style="display:flex;gap:12px;flex-wrap:wrap;">
-           <a class="btn btn--light" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
-           <a class="btn btn--ghost-light" href="${wa(`Hello Mahmoud, please send me the available units and cash discount at ${p.name}.`)}" target="_blank" rel="noopener">${WA_ICON} Ask on WhatsApp</a>
-         </div>`;
-
-    const homeSwitch = $(".p-homes__switch", homesEl);
-    if (homeSwitch) {
-      const pick = $("[data-home-pick]", homesEl);
-      initSeg(homeSwitch, (b) => { pick.innerHTML = homeCard(rows[Number(b.dataset.home)]); });
+    const rows = [...(p.homes || []).map((x) => ({ name: x.name, from: x.from })), ...homeGroups(unitsFor(ctx, p))];
+    const full = p.parent ? `${p.parent} ${p.name}` : p.name;
+    const pics = [p.heroImage, ...(p.gallery || [])].filter(Boolean);
+    // The project's official terms: its plan and cash facts, or the down payment from its first payment plan
+    const planFacts = p.facts.filter(([k, v]) => /^(plan|cash)$/i.test(k) || /^\d+(?:\.\d+)?%(?: \+ \d+(?:\.\d+)?%)?, \d+ years$/.test(v)).flatMap(([k, v]) => factItems(k, v));
+    if (!planFacts.some((x) => /Down payment$/.test(x.label))) {
+      const ph = p.payment && ctx.planById[p.payment.phases[0]];
+      const d = ph && ph.plans[0].down && ph.plans[0].down[0];
+      if (d && d < 100) planFacts.unshift({ label: "Down payment", num: `${d}%`, note: "at signing" });
     }
+    planFacts.forEach((x) => { if (/Down payment$/.test(x.label)) x.note = `${x.note}. Call us for the exact amount`; });
+    const terms = planFacts.length ? planFacts : p.facts.filter(([k]) => /^terms$/i.test(k)).flatMap(([k, v]) => factItems(k, v));
+    const down = (planFacts.find((x) => /Down payment$/.test(x.label)) || {}).num;
+    const years = (planFacts.find((x) => /Pay over$/.test(x.label)) || {}).num;
+
+    function showHome(i) {
+      const r = rows[i] || { name: full, from: null };
+      $("[data-ph-band]", homesEl).innerHTML = r.from
+        ? `<strong>${esc(r.name)}</strong> · From <strong>${egp(r.from)} EGP</strong>`
+        : `<strong>${esc(full)}</strong> · Units and prices on request`;
+      $("[data-ph-list]", homesEl).innerHTML = `
+        <li class="homes__figures"><dl class="facts facts--dark facts--key">${[
+          r.from ? { label: "Starting price", num: short(r.from), unit: "EGP", note: r.name } : { label: "Starting price", text: "On request", note: "ask a salesperson" },
+          ...terms,
+        ].map(factHtml).join("")}</dl></li>
+        <li class="homes__info"><strong>Released units &amp; holds</strong>
+          Exact unit numbers, positions and today's released holds are shared directly by phone or WhatsApp.</li>
+        <li class="homes__info homes__info--accent"><strong>Compare before you choose</strong>
+          Ask us to compare ${esc(r.name)} with the other homes at ${esc(full)} before you decide.</li>`;
+      const pic = pics.length ? pics[i % pics.length] : null;
+      const offer = r.from
+        ? `From ${egp(r.from)} EGP${down ? `, with ${down} down` : ""}${years ? ` and up to ${years} years to pay` : ""}. Call us for the exact amount to reserve.`
+        : `Call us for the available units, prices and payment plan.`;
+      $("[data-ph-plan]", homesEl).innerHTML = `
+        <article class="plan-card">
+          <div class="plan-card__head">
+            <h3 class="plan-card__title">${esc(r.name)} <span>/</span> ${esc(p.name)}</h3>
+            <p class="plan-card__meta">${esc(p.place)}</p>
+          </div>
+          <div class="plan-card__body">
+            ${pic ? `<button class="plan-card__img plan-card__img--photo" type="button" data-zoom="${esc(u(pic))}.jpg" aria-label="View a larger picture of ${esc(p.name)}">${picture(pic, `${p.name}, ${p.place}`, "(min-width: 960px) 30vw, 100vw")}${p.illustrative ? "<span>Illustrative image</span>" : ""}</button>` : ""}
+            <div>
+              <p class="plan-card__offer">${offer}</p>
+              <p class="plan-card__variants">We hold the full availability sheet for ${esc(full)}: exact units, positions and released holds.</p>
+              <p class="plan-card__variants"><strong>Call or message now</strong> to receive the exact available unit numbers, the net cash price and the payment schedule.</p>
+            </div>
+          </div>
+          <div class="plan-card__actions">
+            <a class="btn btn--red btn--small" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
+            <a class="btn btn--dark btn--small" href="${wa(`Hello Mahmoud, I'm looking at ${r.name} at ${full}. Please send me the available units, the price and the amount to reserve.`)}" target="_blank" rel="noopener">${WA_ICON} Unlock Units on WhatsApp</a>
+          </div>
+        </article>`;
+    }
+
+    homesEl.innerHTML = `
+      <div class="homes">
+        <div class="homes__pick">
+          ${rows.length > 1 ? `<div class="seg-scroll"><div class="seg" role="radiogroup" aria-label="Home type" data-ph-switch>${rows.map((r, i) => `<button type="button" role="radio" aria-checked="${i === 0}" data-home="${i}">${esc(r.name)}</button>`).join("")}</div></div>` : ""}
+          <p class="homes__band" data-ph-band></p>
+          <ul class="homes__list homes__list--info" data-ph-list></ul>
+        </div>
+        <div class="homes__plan" data-ph-plan aria-live="polite"></div>
+      </div>`;
+    const phSwitch = $("[data-ph-switch]", homesEl);
+    if (phSwitch) initSeg(phSwitch, (b) => showHome(Number(b.dataset.home)));
+    $("[data-ph-plan]", homesEl).addEventListener("click", (e) => {
+      const z = e.target.closest("[data-zoom]");
+      if (z) openLightbox([{ src: z.dataset.zoom, caption: `${full}${p.illustrative ? " (illustrative image)" : ""}` }]);
+    });
+    showHome(0);
 
     // Payment, scoped to this project's phases
     const payRoot = $("#project [data-pay-root]");

@@ -465,7 +465,9 @@ def project_page(p):
     has_gallery = bool(p.get("gallery"))
     has_pay = bool(p.get("payment"))
     books = p.get("brochures") or []
-    tabs = [("place", "The place"), ("homes", "Homes")]
+    first = PHASES.get(((p.get("payment") or {}).get("phases") or [None])[0])
+    entry = first["plans"][0]["down"][0] if first and first["plans"][0].get("down") else None
+    tabs = [("place", "The place"), ("homes", f"Residences &amp; {entry:g}% Entry" if entry and entry < 100 else "Residences")]
     if has_pay:
         tabs.append(("pay", "Payment"))
     if has_gallery:
