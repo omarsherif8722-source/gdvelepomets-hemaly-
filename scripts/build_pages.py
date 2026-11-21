@@ -128,6 +128,76 @@ def facts_html(p):
     return "".join(fact_html(x) for x in out)
 
 
+# ---------------------------------------------------------------- amenities
+# Line icons for amenities (24 x 24, drawn with the current text colour). Each project lists its amenities in
+# data/portfolio.json ("amenities"); NEWKAIRO and NEWGIZA parcels also show their town's ("townAmenities").
+def _waves(y):
+    return f'<path d="M2 {y}c1.7 0 1.7-1.3 3.3-1.3S7 {y} 8.7 {y}s1.6-1.3 3.3-1.3S13.7 {y} 15.3 {y}s1.7-1.3 3.4-1.3S20.3 {y} 22 {y}"/>'
+
+
+AMENITY_ICONS = {
+    "golf": ("Golf", '<path d="M8 20V3.5l8.5 4L8 11.5"/><path d="M4 20.5c3-1.2 9-1.2 12 0"/>'),
+    "pool": ("Pool", '<path d="M8 15V7a3 3 0 0 0-3-3M15 15V7a3 3 0 0 0-3-3M8 9h7M8 12h7"/>' + _waves(19.5)),
+    "beach": ("Beach", '<path d="M3.5 12a8.5 8.5 0 0 1 17 0z"/><path d="M12 12v8.5M3 20.5h18"/>'),
+    "lagoon": ("Lagoons", _waves(7.5) + _waves(12.5) + _waves(17.5)),
+    "lake": ("Lake", '<path d="M15.5 9.5v-5M18 9.5v-3M13 9.5V7"/>' + _waves(13.5) + _waves(18)),
+    "gym": ("Gym", '<rect x="5" y="6" width="3" height="12" rx="1"/><rect x="16" y="6" width="3" height="12" rx="1"/><path d="M2.5 9.5v5M21.5 9.5v5M8 12h8"/>'),
+    "dining": ("Restaurants", '<path d="M6 3v6a2 2 0 0 0 4 0V3M8 3v18"/><path d="M18 21V3c-2.2 1.4-3.2 4-3.2 7.5H18"/>'),
+    "retail": ("Shops", '<path d="M5 8h14l-1.2 12.5H6.2z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/>'),
+    "school": ("Schools", '<path d="M2 9.5 12 4.5l10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5M22 9.5V15"/>'),
+    "university": ("University", '<path d="M3 9.5 12 4l9 5.5"/><path d="M5.5 10.5v8M10 10.5v8M14 10.5v8M18.5 10.5v8M3 20.5h18"/>'),
+    "medical": ("Medical", '<rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><path d="M12 8v8M8 12h8"/>'),
+    "concierge": ("Concierge", '<path d="M4 17.5a8 8 0 0 1 16 0z"/><path d="M2.5 20.5h19M12 9.5v-2M10 7.5h4"/>'),
+    "housekeeping": ("Housekeeping", '<path d="m12 3.5 1.9 5.6 5.6 1.9-5.6 1.9-1.9 5.6-1.9-5.6L4.5 11l5.6-1.9z"/><path d="M19 17v4M17 19h4"/>'),
+    "hotel": ("Hotel", '<path d="M3 18.5V6M3 14.5h18v4"/><path d="M21 14.5V12a3 3 0 0 0-3-3h-7v5.5"/><circle cx="7" cy="11" r="1.8"/>'),
+    "park": ("Park", '<circle cx="12" cy="9" r="5.5"/><path d="M12 14.5V21M8.5 21h7"/>'),
+    "gardens": ("Gardens", '<path d="M12 21v-8"/><path d="M12 13c0-4 2.5-6.5 6.5-6.5 0 4-2.5 6.5-6.5 6.5zM12 15.5c0-3-2-5-5-5 0 3 2 5 5 5z"/>'),
+    "tram": ("Tram", '<rect x="5" y="5" width="14" height="12.5" rx="3"/><path d="M5 11h14M9.5 2.5 12 5l2.5-2.5M8 17.5 6 21M16 17.5l2 3.5"/>'),
+    "sports": ("Sports club", '<circle cx="12" cy="12" r="8.5"/><path d="M5.8 6.2c3.2 3.3 3.2 8.3 0 11.6M18.2 6.2c-3.2 3.3-3.2 8.3 0 11.6"/>'),
+    "security": ("Security", '<path d="M12 3.2 19.5 6v5.6c0 4.7-3.2 7.9-7.5 9.2-4.3-1.3-7.5-4.5-7.5-9.2V6z"/><path d="m9 12 2.2 2.2L15.5 10"/>'),
+    "clubhouse": ("Clubhouse", '<path d="M3 11 12 4l9 7"/><path d="M5.5 9.5V20h13V9.5M10 20v-5h4v5"/>'),
+    "offices": ("Offices", '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2M3 12.5h18"/>'),
+    "cablepark": ("Cable park", '<path d="M2.5 4l19 4.5M13.5 7l-3 7.5"/>' + _waves(19)),
+    "promenade": ("Promenade", '<circle cx="13.5" cy="4.5" r="1.8"/><path d="m11 21 1.8-5.5-2.8-3 1.4-4.5 3.6 3.2 3 .8M10 12.5 8 16"/>'),
+    "ac": ("Air conditioning", '<path d="M12 2.5v19M3.8 7.3l16.4 9.4M3.8 16.7l16.4-9.4M9.5 3.8 12 6l2.5-2.2M9.5 20.2 12 18l2.5 2.2"/>'),
+    "sea": ("Sea", '<circle cx="12" cy="9.5" r="3.8"/><path d="M12 2.5v1.3M5 9.5H3.7M20.3 9.5H19"/>' + _waves(18.5)),
+    "downtown": ("Downtown", '<path d="M3.5 21V10h6v11M9.5 21V4.5h8V21M17.5 21v-7.5h3V21M2 21h20M12.5 8h2.5M12.5 11h2.5M12.5 14h2.5"/>'),
+    "active": ("Active zones", '<circle cx="15" cy="4.5" r="1.8"/><path d="m5 20 4-1.5 1.8-3.5M8.5 10l3.5-2.5 3.5 2.5 2 3 3 .5M12 7.5 10.8 15l4 2.5V21"/>'),
+}
+
+
+def _amenity_items(items):
+    out = []
+    for it in items:
+        key, label = (it, None) if isinstance(it, str) else it
+        name, path = AMENITY_ICONS[key]
+        out.append(f'<li><span class="amenities__icon"><svg viewBox="0 0 24 24" aria-hidden="true">{path}</svg></span>{h(label or name)}</li>')
+    return "\n".join(f"                    {x}" for x in out)
+
+
+def amenities_html(p):
+    """The project's amenities as icons, then its town's (minus any it already lists)."""
+    own = p.get("amenities") or []
+    town = (P.get("townAmenities") or {}).get(p.get("parent") or "")
+    if not own and not town:
+        return ""
+    keys = {it if isinstance(it, str) else it[0] for it in own}
+    html_ = f"""
+                <div class="amenities">
+                  <h4 class="amenities__title">Amenities</h4>
+                  <ul class="amenities__grid">
+{_amenity_items(own)}
+                  </ul>"""
+    if town:
+        rest = [it for it in town["items"] if (it if isinstance(it, str) else it[0]) not in keys]
+        html_ += f"""
+                  <h4 class="amenities__title">{h(town["title"])}</h4>
+                  <ul class="amenities__grid">
+{_amenity_items(rest)}
+                  </ul>"""
+    return html_ + "\n                </div>"
+
+
 # ---------------------------------------------------------------- partials
 def head(title, desc, og_image, theme, poster=None):
     pre = f'\n  <link rel="preload" as="image" href="{u(poster)}">' if poster else ""
@@ -462,7 +532,7 @@ def project_page(p):
               <div class="place__text">
                 <h3>{h(p["name"])}</h3>
                 <p>{h(p["intro"])}</p>
-                <dl class="facts facts--dark">{facts}</dl>
+                <dl class="facts facts--dark">{facts}</dl>{amenities_html(p)}
                 <ul class="place__list place__list--ticks">{highlights}</ul>
               </div>
             </div>
@@ -487,7 +557,7 @@ def project_page(p):
 
 def krypton_page(p):
     t = p["theme"]
-    src = (ROOT / "scripts/krypton_section.html").read_text()
+    src = (ROOT / "scripts/krypton_section.html").read_text().replace("<!-- AMENITIES -->", amenities_html(p).strip())
     return f'''{head("Krypton, NEWKAIRO | G Developments", "Krypton at NEWKAIRO: fully finished serviced residences above The Boulevard, from 7.88M EGP with 5% down and 8 years to pay. Floor plans, released units and payment plans.", "assets/img/krypton/kr-dusk.jpg", t, p["video"]["poster"])}
 <body data-page="krypton" data-project="krypton">
 {masthead("krypton")}

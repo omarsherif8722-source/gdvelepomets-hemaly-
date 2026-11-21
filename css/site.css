@@ -309,6 +309,15 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius
 .place__list { margin: 20px 0 20px; border-top: 1px solid var(--on-dark-3); }
 .place__list li { padding: 14px 0; border-bottom: 1px solid var(--on-dark-3); color: var(--on-dark-2); font-size: 15.5px; }
 .place__list strong { display: block; color: #fff; font-weight: 500; }
+/* Amenities: icon tiles in the project's accent colour */
+.amenities { margin: 26px 0 8px; }
+.amenities__title { margin: 20px 0 12px; font-family: var(--sans); font-size: 12.5px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--on-dark-2); }
+.amenities__title:first-child { margin-top: 0; }
+.amenities__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.amenities__grid li { display: flex; align-items: center; gap: 11px; min-height: 52px; padding: 8px 12px 8px 8px; border: 1px solid var(--on-dark-3); border-radius: 14px; font-size: 14px; line-height: 1.25; color: #fff; transition: border-color 0.25s var(--ease), background-color 0.25s var(--ease), transform 0.25s var(--ease); }
+.amenities__grid li:hover { border-color: var(--vermilion); background: rgba(255, 255, 255, 0.05); transform: translateY(-2px); }
+.amenities__icon { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--vermilion); color: #fff; }
+.amenities__icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .place__side { grid-column: 8 / -1; margin: 0; }
 .place__side img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
 .place__side figcaption { margin-top: 10px; font-size: 13.5px; color: var(--on-dark-2); }
@@ -682,6 +691,11 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 @media (max-width: 760px) {
   body { font-size: 16px; }
   :root { --bar: 64px; --row: 44px; }
+  /* Amenities two to a row on phones */
+  .amenities__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+  .amenities__grid li { gap: 8px; min-height: 48px; padding: 7px 9px 7px 7px; font-size: 13px; }
+  .amenities__icon { width: 32px; height: 32px; }
+  .amenities__icon svg { width: 18px; height: 18px; }
   /* All four area tabs fit across a phone; the open tab keeps its underline */
   .areas { justify-content: space-between; gap: 12px; }
   .areas__tab { font-size: 13.5px; letter-spacing: 0.01em; }

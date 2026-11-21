@@ -112,7 +112,42 @@
     "loop": "assets/video/krypton-loop-hd.mp4",
     "film": "assets/video/krypton-film-hd.mp4",
     "poster": "assets/video/krypton-poster-hd.jpg"
-   }
+   },
+   "amenities": [
+    [
+     "concierge",
+     "Hotel-style concierge"
+    ],
+    "housekeeping",
+    [
+     "dining",
+     "Cafés on The Boulevard"
+    ],
+    [
+     "retail",
+     "Shops on The Boulevard"
+    ],
+    [
+     "tram",
+     "Tram stop at the door"
+    ],
+    [
+     "pool",
+     "Pools"
+    ],
+    [
+     "park",
+     "Park"
+    ],
+    [
+     "hotel",
+     "5-star hotel"
+    ],
+    [
+     "ac",
+     "Air conditioning installed"
+    ]
+   ]
   },
   {
    "id": "golf-views",
@@ -178,7 +213,23 @@
     "accent": "#d64e2c"
    },
    "heroImage": "assets/img/golf/golf-estate-2s",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "golf",
+     "Front-row golf"
+    ],
+    [
+     "hotel",
+     "Golf hotel"
+    ],
+    "clubhouse",
+    "lake",
+    [
+     "gardens",
+     "Landscaped buffers"
+    ]
+   ]
   },
   {
    "id": "neon-views",
@@ -245,7 +296,25 @@
     "accent": "#ee7a4f"
    },
    "heroImage": "assets/img/neon/neon-standalone",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "lake",
+     "Meditation lakes"
+    ],
+    [
+     "gardens",
+     "Garden ribbons"
+    ],
+    [
+     "active",
+     "Active zones"
+    ],
+    [
+     "golf",
+     "Golf a short walk away"
+    ]
+   ]
   },
   {
    "id": "urban-living",
@@ -308,7 +377,21 @@
     "accent": "#e2734f"
    },
    "heroImage": "assets/img/newkairo/nk-boulevard",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "gardens",
+     "Private gardens"
+    ],
+    [
+     "park",
+     "Park views"
+    ],
+    [
+     "downtown",
+     "Downtown next door"
+    ]
+   ]
   },
   {
    "id": "newgiza",
@@ -370,7 +453,29 @@
     "accent": "#c9a45c"
    },
    "heroImage": "assets/images/newgiza-flagship",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "golf",
+     "18-hole golf"
+    ],
+    [
+     "university",
+     "New Giza University"
+    ],
+    [
+     "school",
+     "International schools"
+    ],
+    [
+     "sports",
+     "New Giza Sporting Club"
+    ],
+    [
+     "medical",
+     "New Giza Health Park"
+    ]
+   ]
   },
   {
    "id": "artlife",
@@ -463,7 +568,21 @@
     "accent": "#d9a441"
    },
    "heroImage": "assets/images/hero-krypton-newkairo",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "hotel",
+     "Operated by Autograph Collection"
+    ],
+    [
+     "concierge",
+     "Hotel-serviced homes"
+    ],
+    [
+     "offices",
+     "Office floors"
+    ]
+   ]
   },
   {
    "id": "meditown",
@@ -525,7 +644,17 @@
     "accent": "#7cc1a8"
    },
    "heroImage": "assets/images/newgiza-flagship",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "medical",
+     "Beside New Giza Health Park"
+    ],
+    [
+     "offices",
+     "Fully finished clinics"
+    ]
+   ]
   },
   {
    "id": "ivy",
@@ -582,7 +711,25 @@
     "accent": "#a3c26a"
    },
    "heroImage": "assets/images/ivy-new-zayed",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "lake",
+     "17-acre lake"
+    ],
+    [
+     "sports",
+     "IVYPARK sports club"
+    ],
+    [
+     "school",
+     "The King's School Canterbury"
+    ],
+    [
+     "security",
+     "Six gated entries"
+    ]
+   ]
   },
   {
    "id": "seashell-rah",
@@ -643,7 +790,17 @@
     "accent": "#e4b98a"
    },
    "heroImage": "assets/images/seashell-ras-el-hekma",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "beach",
+     "1.6 km private beach"
+    ],
+    [
+     "lagoon",
+     "Swimmable lagoons"
+    ]
+   ]
   },
   {
    "id": "playa-rah",
@@ -718,7 +875,17 @@
     "accent": "#f08a5d"
    },
    "heroImage": "assets/images/playa-ras-el-hekma",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "lagoon",
+     "25+ swimmable lagoons"
+    ],
+    [
+     "hotel",
+     "Managed by G Hotel"
+    ]
+   ]
   },
   {
    "id": "playa",
@@ -780,7 +947,22 @@
     "accent": "#e8c08a"
    },
    "heroImage": "assets/images/playa-ghazala",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "beach",
+     "1.5 km on Ghazala Bay"
+    ],
+    [
+     "gym",
+     "LA7 fitness"
+    ],
+    [
+     "cablepark",
+     "Cable park"
+    ],
+    "promenade"
+   ]
   },
   {
    "id": "seashell",
@@ -833,7 +1015,21 @@
     "accent": "#e7c9a6"
    },
    "heroImage": "assets/images/seashell-ras-el-hekma",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "dining",
+     "Seashell Walk dining"
+    ],
+    [
+     "retail",
+     "Seashell Walk shops"
+    ],
+    [
+     "beach",
+     "Sidi Abdelrahman bay"
+    ]
+   ]
   },
   {
    "id": "ein-bay",
@@ -880,7 +1076,91 @@
     "accent": "#4fa3c7"
    },
    "heroImage": "assets/images/ein-bay-sokhna",
-   "video": null
+   "video": null,
+   "amenities": [
+    [
+     "golf",
+     "Einbay Golf Resort"
+    ],
+    [
+     "sea",
+     "Red Sea, warm all winter"
+    ]
+   ]
   }
- ]
+ ],
+ "townAmenities": {
+  "NEWKAIRO": {
+   "title": "In the NEWKAIRO masterplan",
+   "items": [
+    [
+     "golf",
+     "18-hole golf"
+    ],
+    [
+     "hotel",
+     "Golf hotel"
+    ],
+    "clubhouse",
+    "lake",
+    [
+     "school",
+     "Three international schools"
+    ],
+    [
+     "university",
+     "University campus"
+    ],
+    [
+     "dining",
+     "Restaurants on The Boulevard"
+    ],
+    [
+     "retail",
+     "Shops on The Boulevard"
+    ],
+    [
+     "offices",
+     "Offices on The Boulevard"
+    ],
+    [
+     "tram",
+     "Electric tram"
+    ],
+    [
+     "sports",
+     "Two sports clubs"
+    ],
+    [
+     "medical",
+     "Medical hub"
+    ]
+   ]
+  },
+  "NEWGIZA": {
+   "title": "Across NEWGIZA",
+   "items": [
+    [
+     "golf",
+     "18-hole golf"
+    ],
+    [
+     "university",
+     "New Giza University"
+    ],
+    [
+     "school",
+     "International schools"
+    ],
+    [
+     "sports",
+     "New Giza Sporting Club"
+    ],
+    [
+     "medical",
+     "New Giza Health Park"
+    ]
+   ]
+  }
+ }
 }

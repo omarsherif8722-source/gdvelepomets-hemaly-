@@ -780,7 +780,12 @@
         <p class="atlas__place">${esc(p.place)}</p>
         <h3 class="atlas__title">${esc(p.name)}</h3>
         <p class="atlas__intro">${esc(p.intro)}</p>
-        <dl class="facts">${p.facts.flatMap(([k, v]) => factItems(k, v)).map(factHtml).join("")}</dl>
+        <dl class="facts">${[
+          min
+            ? { label: "Starting price", num: short(min), unit: "EGP", note: `${p.name} starts from ${egp(min)} EGP` }
+            : { label: "Starting price", text: "On request", note: "ask a salesperson" },
+          ...p.facts.filter(([k]) => k.toLowerCase() !== "from").flatMap(([k, v]) => factItems(k, v)),
+        ].map(factHtml).join("")}</dl>
         ${min ? `<p class="muted">Entry from <strong>${short(min * 0.05)} EGP (5% down)</strong> · Exact unit prices shared on call.</p>` : ""}
         <div class="atlas__actions">
           <a class="btn btn--red" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
