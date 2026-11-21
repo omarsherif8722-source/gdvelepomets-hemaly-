@@ -579,10 +579,10 @@ def krypton_page(p):
 
 def home_page():
     src = (ROOT / "scripts/home_sections.html").read_text()
-    nk_video = {"loop": "assets/video/newkairo-loop.mp4", "film": "assets/video/newkairo-film.mp4", "poster": "assets/video/newkairo-poster.jpg"}
+    nk_video = {"loop": "assets/video/newkairo-loop-hd.mp4", "film": "assets/video/newkairo-film-hd.mp4", "poster": "assets/video/newkairo-poster-hd.jpg"}
     nk_cards = "\n".join(parcel_card(x) for x in PROJECTS if x.get("parent") == "NEWKAIRO")
     src = src.replace("{{PARCELS}}", nk_cards)
-    return f'''{head("NEWKAIRO, Krypton and the full portfolio | G Developments", "Private advisory for G Developments in Egypt: NEWKAIRO with Krypton, Golf Views, Neon Views and Urban Living, plus NEWGIZA, IVY, Seashell and Playa. Official payment plans and brochures.", "assets/video/newkairo-poster.jpg", NEWKAIRO_THEME, nk_video["poster"])}
+    return f'''{head("NEWKAIRO, Krypton and the full portfolio | G Developments", "Private advisory for G Developments in Egypt: NEWKAIRO with Krypton, Golf Views, Neon Views and Urban Living, plus NEWGIZA, IVY, Seashell and Playa. Official payment plans and brochures.", "assets/video/newkairo-poster-hd.jpg", NEWKAIRO_THEME, nk_video["poster"])}
 <body data-page="home">
 {masthead()}
 

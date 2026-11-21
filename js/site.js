@@ -1034,20 +1034,23 @@
       result.innerHTML = `
         <dl class="result__lead">
           <div class="is-key"><dt>Starting price</dt>${sp
-            ? `<dd>${short(sp)} EGP<small>${esc(phase.name)} starts from ${egp(sp)} EGP</small></dd>`
+            ? `<dd><b>${short(sp)}</b><span class="u">EGP</span><small>${esc(phase.name)} starts from ${egp(sp)} EGP</small></dd>`
             : `<dd class="is-text">Price on request<small>Ask a salesperson for ${esc(phase.name)}</small></dd>`}</div>
-          <div class="is-key"><dt>Contract entry</dt><dd>${downFirst}<small>${esc(secondNote)}</small></dd></div>
-          <div><dt>Installment horizon</dt><dd>${horizon}<small>${pl.cashOnly ? "Priority handover" : "Equal installments"}</small></dd></div>
+          <div class="is-key"><dt>Contract entry</dt><dd${pl.cashOnly ? ' class="is-text"' : ""}>${pl.cashOnly ? downFirst : `<b>${downFirst}</b>`}<small>${esc(secondNote)}</small></dd></div>
+          <div><dt>Installment horizon</dt>${pl.cashOnly
+            ? `<dd class="is-text">${horizon}<small>Priority handover</small></dd>`
+            : `<dd><span class="pre">Up to</span><b>${pl.years}</b><span class="u">years</span><small>Equal installments</small></dd>`}</div>
           <div><dt>Paying in cash</dt>${pl.cashOnly
             ? `<dd class="is-text">Cash sale<small>Paid in full at contract</small></dd>`
             : pl.cash
-              ? `<dd>${pl.cash}% off<small>Discount for paying in full</small></dd>`
+              ? `<dd><b>${pl.cash}%</b><span class="u">off</span><small>Discount for paying in full</small></dd>`
               : `<dd class="is-text">Terms on request<small>No published discount yet: ask a salesperson</small></dd>`}</div>
         </dl>
-        <div class="result__cash" style="margin-top:24px;">
-          <p><strong>Advisor Upgrade &amp; Cash Comparison:</strong> Before locking a unit from a standard price list, call our desk to check released "Hold" units, corner plots, and how stepping up to the next tier compares on a quarterly basis.</p>
+        <div class="result__cash">
+          <strong>Upgrade &amp; cash comparison</strong>
+          <p>Before locking a unit from a standard price list, call our desk to check released "Hold" units, corner plots, and how stepping up to the next tier compares on a quarterly basis.</p>
         </div>
-        <div class="result__actions" style="margin-top:24px;">
+        <div class="result__actions">
           <a class="btn btn--red" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
           <a class="btn btn--light" href="${wa(`Hello Mahmoud, please send me the exact payment sheet, cash discount, and best available units for ${dest.name} (${phase.name}).`)}" target="_blank" rel="noopener">${WA_ICON} Get Custom Sheet on WhatsApp</a>
         </div>`;

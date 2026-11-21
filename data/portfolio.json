@@ -109,9 +109,9 @@
    },
    "heroImage": "assets/img/krypton/kr-dusk",
    "video": {
-    "loop": "assets/video/krypton-loop-hd.mp4",
-    "film": "assets/video/krypton-film-hd.mp4",
-    "poster": "assets/video/krypton-poster-hd.jpg"
+    "loop": "assets/video/krypton-loop.mp4",
+    "film": "assets/video/krypton-film.mp4",
+    "poster": "assets/video/krypton-poster.jpg"
    },
    "amenities": [
     [
