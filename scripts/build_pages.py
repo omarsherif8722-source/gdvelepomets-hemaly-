@@ -12,6 +12,7 @@ and run this again. To give a project a hero film, add to its entry:
               "film": "assets/video/NAME-film.mp4",
               "poster": "assets/video/NAME-poster.jpg"}
 """
+import hashlib
 import json
 import re
 from html import escape as h
@@ -24,6 +25,11 @@ BY_ID = {p["id"]: p for p in PROJECTS}
 REGIONS = {r["id"]: r for r in P["regions"]}
 TERMS = json.loads((ROOT / "data/payment_terms.json").read_text())
 PHASES = {ph["id"]: ph for d in TERMS["destinations"] for ph in d["phases"]}
+# Content versions for the stylesheet and script, so a browser never pairs a new page with an old cached file
+def version(path):
+    return hashlib.sha1((ROOT / path).read_bytes()).hexdigest()[:10]
+CSS_V = version("css/site.css")
+JS_V = version("js/site.js")
 
 PHONE_TEL = "+201227275122"
 PHONE = "+20 122 727 5122"
@@ -137,11 +143,11 @@ def head(title, desc, og_image, theme, poster=None):
   <meta property="og:title" content="{h(title)}">
   <meta property="og:description" content="{h(desc)}">
   <meta property="og:image" content="{u(og_image)}">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23421115'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' fill='%23fff' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23421115'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' fill='%23fff' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">{pre}
-  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/site.css?v={CSS_V}">
 </head>'''
 
 
@@ -192,9 +198,9 @@ def masthead(slug=None):
     return f'''  <a class="skip" href="#main">Skip to content</a>
 
   <header class="masthead" data-masthead>
-    <a class="masthead__mark" href="/" aria-label="Mahmoud Elhemaly, home">
-      <span class="masthead__name">Mahmoud Elhemaly</span>
-      <span class="masthead__role">Private advisory, G Developments</span>
+    <a class="masthead__mark" href="/" aria-label="G Developments, home">
+      <span class="masthead__name">G Developments</span>
+      <span class="masthead__role">Private sales advisory</span>
     </a>
     <nav class="masthead__nav" aria-label="Sections">
 {links}
@@ -335,7 +341,7 @@ def tail(film=None):
     <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   </dialog>
 
-  <script src="/js/site.js" defer></script>
+  <script src="/js/site.js?v={JS_V}" defer></script>
 </body>
 </html>
 '''

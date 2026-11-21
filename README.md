@@ -11,6 +11,8 @@ Plain HTML, CSS and JavaScript, so any static host serves it as-is (Render, GitH
 
 All pages are generated from shared parts by `python3 scripts/build_pages.py`. Each project's text, colours (`theme`), wordmark, images and video live in `data/portfolio.json`.
 
+Run the build again after editing `css/site.css` or `js/site.js` as well: the pages link to them with a content version (`site.css?v=…`), so visitors get the new files straight away instead of a cached copy.
+
 **Adding a project film.** Put three files in `assets/video/` (a short muted loop, the full film, a poster frame), add them to the project in `data/portfolio.json`:
 
 ```json

@@ -923,10 +923,24 @@
       return { "nk-krypton": 11287500, "md-b12": 14400000, "md-b34": 14400000, "al-cypher": 19829000, "pr-all": 15300000, "ng-utilities": 1500000 }[ph.id] || 20000000;
     };
 
+    // Starting price of a plan: the lowest-priced home on file for it. Counts the plan's homes in the
+    // inventory and the project's published "from" prices; a project's home types count for the plan
+    // they are named after (Cypher ...), or for all its plans when they name none (Meditown clinics).
+    const startPrice = (ph) => {
+      const ps = units.filter((u) => u.plan === ph.id && u.price).map((u) => u.price);
+      ctx.portfolio.projects.forEach((p) => {
+        if (!p.payment || !p.payment.phases.includes(ph.id) || !p.homes) return;
+        const starts = (h, name) => h.name.toLowerCase().startsWith(name.toLowerCase());
+        const named = p.homes.filter((h) => p.payment.phases.some((id) => ctx.planById[id] && starts(h, ctx.planById[id].name)));
+        (named.length ? named.filter((h) => starts(h, ph.name)) : p.homes).forEach((h) => { if (h.from) ps.push(h.from); });
+      });
+      return ps.length ? Math.min(...ps) : null;
+    };
+
     function setDest(id, phaseId, keepPrice) {
       dest = terms.destinations.find((d) => d.id === id);
       const phases = dest.phases.filter((ph) => !allowed || allowed.includes(ph.id));
-      phasesEl.innerHTML = `<legend>Phase</legend>${phases.map((ph) => `<button type="button" aria-pressed="false" data-phase="${ph.id}">${esc(ph.name)}</button>`).join("")}`;
+      phasesEl.innerHTML = `<legend>Phase</legend>${phases.map((ph) => { const sp = startPrice(ph); return `<button type="button" aria-pressed="false" data-phase="${ph.id}">${esc(ph.name)}${sp ? ` <small>from ${short(sp)}</small>` : ""}</button>`; }).join("")}`;
       setPhase(phaseId || phases[0].id, keepPrice);
     }
     function setPhase(id, keepPrice) {
@@ -961,15 +975,19 @@
       const downFirst = pl.cashOnly ? "Cash" : `${pl.down[0] || 5}%`;
       const secondNote = !pl.cashOnly && pl.down[1] ? `Then ${pl.down[1]}% after 3 months` : "Flexible contract entry";
       const horizon = pl.cashOnly ? "Immediate cash contract" : `Up to ${pl.years} years`;
+      const sp = startPrice(phase);
 
       note.innerHTML = `Exact unit pricing and quarterly instalment schedules for <strong>${esc(dest.name)} (${esc(phase.name)})</strong> are calculated per unit. Speak directly with Mahmoud Elhemaly to unlock today's released holds and compare upgrade options.`;
 
       result.innerHTML = `
         <dl class="result__lead">
+          <div class="is-key"><dt>Starting price</dt>${sp
+            ? `<dd>${short(sp)} EGP<small>Lowest-priced home in ${esc(phase.name)}: ${egp(sp)} EGP</small></dd>`
+            : `<dd class="is-text">Price on request<small>Ask a salesperson for ${esc(phase.name)}</small></dd>`}</div>
           <div class="is-key"><dt>Contract entry</dt><dd>${downFirst}<small>${esc(secondNote)}</small></dd></div>
           <div><dt>Installment horizon</dt><dd>${horizon}<small>${pl.cashOnly ? "Priority handover" : "Equal installments"}</small></dd></div>
           <div><dt>Paying in cash</dt>${pl.cashOnly
-            ? `<dd class="is-text">Cash sale<small>Ask a salesperson for the price</small></dd>`
+            ? `<dd class="is-text">Cash sale<small>Paid in full at contract</small></dd>`
             : pl.cash
               ? `<dd>${pl.cash}% off<small>Discount for paying in full</small></dd>`
               : `<dd class="is-text">Terms on request<small>No published discount yet: ask a salesperson</small></dd>`}</div>
