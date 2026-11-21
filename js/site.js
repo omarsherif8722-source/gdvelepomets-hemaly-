@@ -545,6 +545,7 @@
       if ($("[data-nk-gallery]")) renderNewkairo(ctx);
       if ($("[data-region-tabs]")) renderAtlas(ctx);
       if ($("[data-pay-tabs]")) renderAtelier(ctx);
+      if ($("[data-finder]")) renderFinder(ctx);
       if (PAGE === "project") renderProject(ctx);
       renderBooks();
       renderContact(ctx);
@@ -949,12 +950,192 @@
     tabList.innerHTML = ctx.terms.destinations.map((d, i) => `<button role="tab" aria-selected="${i === 0}" ${i ? 'tabindex="-1"' : ""} data-dest="${d.id}">${esc(d.name)}</button>`).join("");
     const calc = mountPayment($("[data-pay-root]", $("#payments")), ctx, { dest: first.id });
     const tabs = initTabs(tabList, (t) => { calc.setDest(t.dataset.dest); track("Payment plan opened", { destination: t.textContent.trim() }); });
-    ctx.showPlan = (p) => {
+    ctx.showPlan = (p, phaseId) => {
       if (!p.payment) return;
+      const phase = p.payment.phases.includes(phaseId) ? phaseId : p.payment.phases[0];
       tabs.select($(`[data-dest="${p.payment.destination}"]`, tabList), true);
-      calc.setDest(p.payment.destination, p.payment.phases[0]);
-      document.getElementById("payments").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+      calc.setDest(p.payment.destination, phase);
+      (document.getElementById("payment-plan") || document.getElementById("payments")).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
     };
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Your future home: find homes by bedrooms or by kind                 */
+  /* ------------------------------------------------------------------ */
+  const waves = (y) => `<path d="M2 ${y}c1.7 0 1.7-1.3 3.3-1.3S7 ${y} 8.7 ${y}s1.6-1.3 3.3-1.3S13.7 ${y} 15.3 ${y}s1.7-1.3 3.4-1.3S20.3 ${y} 22 ${y}"/>`;
+  // The kinds of home a buyer chooses between, in the order they are offered. `test` reads the home's own name.
+  const KINDS = [
+    { id: "work", label: "Clinics & offices", one: "clinic or office", test: /clinic|office/i,
+      icon: '<rect x="3.5" y="6.5" width="17" height="13.5" rx="2"/><path d="M9 6.5V4h6v2.5M12 10v6M9 13h6"/>' },
+    { id: "cabana", label: "Cabanas & cabins", one: "cabana or cabin", test: /cabana|cabin/i,
+      icon: '<path d="M3 11.5 12 4l9 7.5z"/><path d="M6 11.5v9M18 11.5v9M3 20.5h18"/>' },
+    { id: "beach", label: "Beach houses", one: "beach house", test: /beach house/i,
+      icon: '<path d="M3.5 12 10 6.5l6.5 5.5"/><path d="M5.5 10.5V16h9v-5.5"/><circle cx="19" cy="5.5" r="1.8"/>' + waves(20) },
+    { id: "chalet", label: "Chalets", one: "chalet", test: /chalet/i,
+      icon: '<path d="M12 3.5 4 15.5h16z"/><path d="M10 15.5v-4h4v4"/>' + waves(20) },
+    { id: "loft", label: "Duplexes & lofts", one: "duplex or loft", test: /duplex|loft/i,
+      icon: '<rect x="3" y="3.5" width="18" height="17" rx="2"/><path d="M6.5 17h3.5v-3.5h3.5V10h3.5V6.5"/>' },
+    { id: "villa", label: "Villas", one: "villa", test: /villa|stand ?alone|twin ?house|fairscape|single storey|attached/i,
+      icon: '<path d="M2.5 11 9 5.5l6.5 5.5"/><path d="M4.5 9.5V20h9V9.5M8 20v-4h2.5v4"/><path d="M18.5 20v-4.5"/><circle cx="18.5" cy="12" r="3"/><path d="M1.5 20h21"/>' },
+    { id: "apartment", label: "Apartments", one: "apartment", test: /apartment/i,
+      icon: '<path d="M5 21V4.5h10V21M15 9.5h4V21M3 21h18M8.5 8h3M8.5 11.5h3M8.5 15h3"/>' },
+    { id: "town", label: "Townhouses", one: "townhouse", test: /town ?(house|home)|quay house/i,
+      icon: '<path d="M2.5 20.5v-10l4-4 4 4v10M10.5 20.5v-10l4-4 4 4v10M1.5 20.5h21M5.5 20.5v-3h2v3M13.5 20.5v-3h2v3"/>' },
+    { id: "penthouse", label: "Penthouses", one: "penthouse", test: /penthouse/i,
+      icon: '<path d="M5 21V9.5h14V21M3 21h18M8 9.5V6.5h8v3M9 13h2M13 13h2M9 16.5h2M13 16.5h2M12 2v2.5M10.75 3.25h2.5"/>' },
+  ];
+  const ORDER = ["apartment", "chalet", "villa", "town", "beach", "loft", "penthouse", "cabana", "work"];
+  const BEDS = [
+    { n: 1, label: "One bedroom", one: "one-bedroom home", many: "one-bedroom homes" },
+    { n: 2, label: "Two bedrooms", one: "two-bedroom home", many: "two-bedroom homes" },
+    { n: 3, label: "Three bedrooms", one: "three-bedroom home", many: "three-bedroom homes" },
+    { n: 4, label: "Four bedrooms", one: "four-bedroom home", many: "four-bedroom homes" },
+    { n: 5, label: "Five or more", one: "home with five bedrooms or more", many: "homes with five bedrooms or more" },
+  ];
+  const NUM_WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
+  const COUNT_WORDS = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
+  const kindOf = (name) => (KINDS.find((k) => k.test.test(name)) || {}).id || null;
+  // A home's own name, without the price-list codes (Lagoon Chalet 01A, Grand Beach House 03 - G)
+  const tidyName = (t) => t
+    .replace(/^Fully Finished\s+/i, "").replace(/^Dwellings\s+\d+\s+/i, "")
+    .replace(/\s+\d+[A-Z]?(?:\s*-\s*[A-Z])?$/i, "").replace(/-[a-z]$/i, "")
+    .replace(/\bWith\b/g, "with").replace(/\s+/g, " ").trim();
+
+  // Every home on file for a project: its inventory units, then its published "from" prices
+  function homesOf(ctx, p) {
+    const list = unitsFor(ctx, p).filter((x) => x.price).map((x) => ({
+      name: tidyName(x.type || ""), kind: kindOf(x.type || ""), beds: x.beds || null, price: x.price, plan: x.plan,
+    }));
+    (p.homes || []).forEach((hm) => {
+      if (!hm.from) return;
+      const m = hm.name.match(/,?\s*\b(one|two|three|four|five|six)\s+bedrooms?\b/i);
+      let name = hm.name.replace(/,?\s*\b(one|two|three|four|five|six)\s+bedrooms?\b/i, "").trim();
+      if (!name || /^cypher$/i.test(name)) name = `${name} apartment`.trim();
+      name = name.charAt(0).toUpperCase() + name.slice(1);
+      const phases = (p.payment && p.payment.phases) || [];
+      const plan = phases.find((id) => ctx.planById[id] && hm.name.toLowerCase().startsWith(ctx.planById[id].name.toLowerCase())) || phases[0];
+      list.push({ name, kind: kindOf(name), beds: m ? NUM_WORDS[m[1].toLowerCase()] : null, price: hm.from, plan });
+    });
+    return list;
+  }
+
+  function renderFinder(ctx) {
+    const root = $("[data-finder]");
+    const picksEl = $("[data-finder-picks]", root);
+    const summary = $("[data-finder-summary]", root);
+    const rail = $("[data-finder-rail]", root);
+    const nav = $("[data-finder-nav]", root);
+    const bespoke = $("[data-finder-bespoke]", root);
+    const regionName = Object.fromEntries(ctx.portfolio.regions.map((r) => [r.id, r.name]));
+    const all = ctx.portfolio.projects.map((p) => ({ p, homes: homesOf(ctx, p) })).filter((x) => x.homes.length);
+
+    const choices = {
+      beds: BEDS.map((b) => ({ key: `b${b.n}`, label: b.label, one: b.one, many: b.many, num: b.n === 5 ? "5+" : String(b.n), match: (x) => (b.n === 5 ? x.beds >= 5 : x.beds === b.n) })),
+      kind: ORDER.map((id) => KINDS.find((k) => k.id === id)).map((k) => ({ key: k.id, label: k.label, one: k.one, many: k.label.toLowerCase(), icon: k.icon, match: (x) => x.kind === k.id })),
+    };
+    // The projects offering a choice: their matching homes by name, cheapest first
+    const resultsFor = (c) => all.map(({ p, homes }) => {
+      const hs = homes.filter(c.match);
+      if (!hs.length) return null;
+      const by = new Map();
+      hs.forEach((x) => { if (!by.has(x.name) || by.get(x.name).price > x.price) by.set(x.name, x); });
+      const names = [...by.values()].sort((a, b) => a.price - b.price);
+      return { p, from: names[0].price, plan: names[0].plan, names: names.map((x) => x.name) };
+    }).filter(Boolean).sort((a, b) => a.from - b.from);
+
+    const termsOf = (r) => {
+      const ph = ctx.planById[r.plan] || (r.p.payment && ctx.planById[r.p.payment.phases[0]]);
+      const pl = ph && ph.plans[0];
+      if (!pl) return [];
+      if (pl.cashOnly) return ["Cash contract"];
+      return [`${pl.down[0]}% down`, `${pl.years} years`, pl.cash ? `${pl.cash}% off for cash` : null].filter(Boolean);
+    };
+
+    let mode = "beds";
+    let current = null;
+    const seg = initSeg(picksEl, (btn) => choose(btn.dataset.pick, true));
+
+    function drawPicks() {
+      const list = choices[mode].map((c) => ({ c, rs: resultsFor(c) })).filter((x) => x.rs.length);
+      picksEl.setAttribute("aria-label", mode === "beds" ? "Bedrooms" : "Home type");
+      picksEl.className = `finder__picks finder__picks--${mode}`;
+      picksEl.innerHTML = list.map(({ c, rs }) => `
+        <button type="button" role="radio" aria-checked="false" class="pick" data-pick="${c.key}">
+          <span class="pick__mark">${c.icon ? `<svg viewBox="0 0 24 24" aria-hidden="true">${c.icon}</svg>` : `<span class="pick__num">${c.num}</span>`}</span>
+          <span class="pick__text">
+            <span class="pick__label">${esc(c.label)}</span>
+            <span class="pick__meta"><span>From ${short(rs[0].from)} EGP</span><span>${rs.length} ${rs.length === 1 ? "address" : "addresses"}</span></span>
+          </span>
+        </button>`).join("");
+      const keep = list.find((x) => x.c.key === (current && current.key));
+      const first = keep || list.find((x) => x.c.key === "b2") || list[0];
+      seg.set($(`[data-pick="${first.c.key}"]`, picksEl), true);
+      choose(first.c.key);
+    }
+
+    function choose(key, byUser) {
+      const c = choices[mode].find((x) => x.key === key);
+      current = c;
+      const rs = resultsFor(c);
+      const count = COUNT_WORDS[rs.length] || String(rs.length);
+      summary.innerHTML = `
+        <p class="finder__count">${count} ${rs.length === 1 ? "address offers" : "addresses offer"} ${esc(c.many)}</p>
+        <p class="finder__from">Starting from <b>${short(rs[0].from)}</b> EGP, the most accessible first</p>`;
+      rail.innerHTML = rs.map((r, i) => {
+        const p = r.p;
+        const full = p.parent ? `${p.parent} ${p.name}` : p.name;
+        const img = p.image || p.heroImage;
+        const shown = r.names.slice(0, 3);
+        const more = r.names.length - shown.length;
+        return `
+        <article class="home-card" style="--i:${i}">
+          <a class="home-card__img" href="/${p.slug}/" tabindex="-1" aria-hidden="true">${img ? picture(img, "", "(min-width: 960px) 30vw, 85vw") : `<span class="typo-panel"><span>${esc(p.name)}</span></span>`}
+            ${p.illustrative && img ? "<small>Illustrative image</small>" : ""}</a>
+          <div class="home-card__body">
+            <p class="home-card__place">${esc(regionName[p.region] || "")}${p.parent ? ` · ${esc(p.parent)}` : ""}</p>
+            <h3 class="home-card__name"><a href="/${p.slug}/">${esc(p.name)}</a></h3>
+            <p class="home-card__types">${shown.map(esc).join('<span aria-hidden="true"> · </span>')}${more > 0 ? ` <em>+${more} more</em>` : ""}</p>
+            <p class="home-card__price"><span class="pre">From</span><b>${short(r.from)}</b><span class="u">EGP</span></p>
+            <ul class="home-card__terms">${termsOf(r).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+          </div>
+          <div class="home-card__actions">
+            ${p.payment ? `<button type="button" class="btn btn--light btn--small" data-finder-plan="${p.id}" data-phase="${esc(r.plan || "")}">See the payment plan</button>` : ""}
+            <a class="home-card__wa" href="${wa(`Hello Mahmoud, I'm interested in a ${c.one} at ${full}. Please send me the available units, the price and the amount to reserve.`)}" target="_blank" rel="noopener" aria-label="Ask about ${esc(full)} on WhatsApp">${WA_ICON}</a>
+          </div>
+        </article>`;
+      }).join("");
+      rail.scrollLeft = 0;
+      bespoke.innerHTML = `
+        <p><strong>Particular about the view, the floor or the handover date?</strong> Tell us what matters to you and we will prepare a private shortlist of ${esc(c.many)}, with today's released holds.</p>
+        <div class="finder__bespoke-actions">
+          <a class="btn btn--red btn--small" href="${wa(`Hello Mahmoud, I'm looking for a ${c.one}. Could you prepare a private shortlist for me with prices, payment plans and released holds?`)}" target="_blank" rel="noopener">${WA_ICON} Request a private shortlist</a>
+          <a class="btn btn--line-light btn--small" href="tel:+201227275122">${PHONE_ICON} Speak with an advisor</a>
+        </div>`;
+      requestAnimationFrame(updateNav);
+      if (byUser) track("Home finder", { choice: c.label });
+    }
+
+    // Arrows when the homes run past the edge
+    const step = () => { const card = $(".home-card", rail); return card ? card.offsetWidth + 20 : rail.clientWidth * 0.8; };
+    function updateNav() {
+      const over = rail.scrollWidth > rail.clientWidth + 4;
+      nav.hidden = !over;
+      if (!over) return;
+      $("[data-finder-prev]", nav).disabled = rail.scrollLeft <= 4;
+      $("[data-finder-next]", nav).disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4;
+    }
+    $("[data-finder-prev]", nav).addEventListener("click", () => rail.scrollBy({ left: -step(), behavior: reduceMotion ? "auto" : "smooth" }));
+    $("[data-finder-next]", nav).addEventListener("click", () => rail.scrollBy({ left: step(), behavior: reduceMotion ? "auto" : "smooth" }));
+    rail.addEventListener("scroll", updateNav, { passive: true });
+    new ResizeObserver(updateNav).observe(rail);
+
+    rail.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-finder-plan]");
+      if (!b || !ctx.showPlan) return;
+      ctx.showPlan(ctx.portfolio.projects.find((x) => x.id === b.dataset.finderPlan), b.dataset.phase);
+    });
+    initSeg($("[data-finder-mode]", root), (btn) => { mode = btn.dataset.mode; current = null; drawPicks(); track("Home finder", { by: btn.textContent.trim() }); });
+    drawPicks();
   }
 
   function mountPayment(root, ctx, opts) {

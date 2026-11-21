@@ -223,7 +223,7 @@ def head(title, desc, og_image, theme, poster=None):
 
 NAV = [
     ("/#portfolio", "Portfolio"),
-    ("/#payments", "Payment plans"),
+    ("/#payments", "Your future home"),
     ("/#brochures", "Brochures"),
     ("#contact", "Contact"),
 ]
@@ -231,7 +231,7 @@ MENU = [
     ("/#newkairo", "NEWKAIRO"),
     ("/krypton/", "Krypton"),
     ("/#portfolio", "Portfolio"),
-    ("/#payments", "Payment plans"),
+    ("/#payments", "Your future home"),
     ("/#brochures", "Brochures"),
     ("#contact", "Contact"),
 ]

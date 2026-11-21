@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="/assets/video/newkairo-poster-hd.jpg">
-  <link rel="stylesheet" href="/css/site.css?v=a5a5406fa4">
+  <link rel="stylesheet" href="/css/site.css?v=b5d3557799">
 </head>
 <body data-page="home">
   <a class="skip" href="#main">Skip to content</a>
@@ -27,7 +27,7 @@
     </a>
     <nav class="masthead__nav" aria-label="Sections">
       <a href="/#portfolio">Portfolio</a>
-      <a href="/#payments">Payment plans</a>
+      <a href="/#payments">Your future home</a>
       <a href="/#brochures">Brochures</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -87,7 +87,7 @@
     <a href="/#newkairo">NEWKAIRO</a>
     <a href="/krypton/">Krypton</a>
     <a href="/#portfolio">Portfolio</a>
-    <a href="/#payments">Payment plans</a>
+    <a href="/#payments">Your future home</a>
     <a href="/#brochures">Brochures</a>
     <a href="#contact">Contact</a>
     <a class="mobile-nav__call" href="tel:+201227275122">Contact a salesperson</a>
@@ -266,13 +266,45 @@
       </div>
     </section>
 
-    <!-- Payment atelier -->
+    <!-- Your future home: find the homes that suit you, then shape the payment plan -->
     <section class="atelier" id="payments">
       <div class="wrap">
-        <div class="sec-head">
-          <p class="brandline brandline--light">Payment plans<span>/</span>Private advisory</p>
-          <h2 class="sec-title">5% down. Up to 8 years. Up to 35% off for cash.</h2>
-          <p class="sec-lede">Choose a destination below to see the entry structure. Exact unit prices, quarterly figures and unreleased hold-list drops are shared directly on a two-minute call so we can match—or upgrade—your brief.</p>
+        <div class="sec-head sec-head--split">
+          <div>
+            <p class="brandline brandline--light">Your future home<span>/</span>Private advisory</p>
+            <h2 class="sec-title">Choose your future home.</h2>
+            <p class="sec-lede">Begin with what suits you: the number of bedrooms, or the kind of home you have in mind. We show every G Developments address that offers it and where it starts, then shape the payment plan around you.</p>
+          </div>
+          <ul class="terms-strip" aria-label="Payment terms">
+            <li><b>5%</b><span>down at signing</span></li>
+            <li><b>8</b><span>years, at most, to pay</span></li>
+            <li><b>35%</b><span>off, at most, for cash</span></li>
+          </ul>
+        </div>
+
+        <div class="finder" data-finder>
+          <div class="finder__ask">
+            <p class="finder__step"><span>01</span>What suits you</p>
+            <div class="seg" role="radiogroup" aria-label="Choose by" data-finder-mode>
+              <button type="button" role="radio" aria-checked="true" data-mode="beds">Bedrooms</button>
+              <button type="button" role="radio" aria-checked="false" data-mode="kind">Home type</button>
+            </div>
+          </div>
+          <div class="finder__picks" role="radiogroup" data-finder-picks></div>
+          <div class="finder__head">
+            <div class="finder__summary" data-finder-summary aria-live="polite"></div>
+            <div class="finder__nav" data-finder-nav hidden>
+              <button type="button" aria-label="Previous homes" data-finder-prev><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+              <button type="button" aria-label="More homes" data-finder-next><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+            </div>
+          </div>
+          <div class="finder__rail" data-finder-rail></div>
+          <div class="finder__bespoke" data-finder-bespoke></div>
+        </div>
+
+        <div class="finder__planhead" id="payment-plan">
+          <p class="finder__step"><span>02</span>Shape your payment plan</p>
+          <p class="finder__steplede">Choose a destination and phase to see the entry, the horizon and the cash discount. Exact unit prices and released holds are shared on a two-minute call.</p>
         </div>
         <div class="tabs tabs--light tabs--scroll" role="tablist" aria-label="Destination" data-pay-tabs></div>
         <div class="atelier__grid" data-pay-root>
@@ -396,6 +428,6 @@
     <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   </dialog>
 
-  <script src="/js/site.js?v=7fba68f702" defer></script>
+  <script src="/js/site.js?v=493fe48d61" defer></script>
 </body>
 </html>
