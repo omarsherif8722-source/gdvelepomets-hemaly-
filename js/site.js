@@ -940,7 +940,7 @@
     function setDest(id, phaseId, keepPrice) {
       dest = terms.destinations.find((d) => d.id === id);
       const phases = dest.phases.filter((ph) => !allowed || allowed.includes(ph.id));
-      phasesEl.innerHTML = `<legend>Phase</legend>${phases.map((ph) => { const sp = startPrice(ph); return `<button type="button" aria-pressed="false" data-phase="${ph.id}">${esc(ph.name)}${sp ? ` <small>from ${short(sp)}</small>` : ""}</button>`; }).join("")}`;
+      phasesEl.innerHTML = `<legend>Phase</legend>${phases.map((ph) => `<button type="button" aria-pressed="false" data-phase="${ph.id}">${esc(ph.name)}</button>`).join("")}`;
       setPhase(phaseId || phases[0].id, keepPrice);
     }
     function setPhase(id, keepPrice) {
@@ -982,7 +982,7 @@
       result.innerHTML = `
         <dl class="result__lead">
           <div class="is-key"><dt>Starting price</dt>${sp
-            ? `<dd>${short(sp)} EGP<small>Lowest-priced home in ${esc(phase.name)}: ${egp(sp)} EGP</small></dd>`
+            ? `<dd>${short(sp)} EGP<small>${esc(phase.name)} starts from ${egp(sp)} EGP</small></dd>`
             : `<dd class="is-text">Price on request<small>Ask a salesperson for ${esc(phase.name)}</small></dd>`}</div>
           <div class="is-key"><dt>Contract entry</dt><dd>${downFirst}<small>${esc(secondNote)}</small></dd></div>
           <div><dt>Installment horizon</dt><dd>${horizon}<small>${pl.cashOnly ? "Priority handover" : "Equal installments"}</small></dd></div>
