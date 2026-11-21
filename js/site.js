@@ -272,6 +272,91 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* Company timeline: a red point travels from period to period          */
+  /* ------------------------------------------------------------------ */
+  const timeline = $("[data-timeline]");
+  if (timeline) {
+    const steps = $$(".timeline > li", timeline);
+    const last = steps.length - 1;
+    const track = document.createElement("div");
+    track.className = "timeline__track";
+    track.setAttribute("aria-hidden", "true");
+    track.innerHTML = '<span class="timeline__fill"></span><span class="timeline__marker"></span>';
+    timeline.appendChild(track);
+    const fill = $(".timeline__fill", track);
+    const marker = $(".timeline__marker", track);
+    const wide = window.matchMedia("(min-width: 961px)");
+    let active = 0;
+    let sweepTimer = 0;
+    let homeTimer = 0;
+
+    // Centre of a step's dot, relative to the timeline
+    const centre = (li) => {
+      const box = timeline.getBoundingClientRect();
+      const r = li.getBoundingClientRect();
+      const dot = getComputedStyle(li, "::before");
+      return {
+        x: r.left - box.left + parseFloat(dot.left) + parseFloat(dot.width) / 2,
+        y: r.top - box.top + parseFloat(dot.top) + parseFloat(dot.height) / 2,
+      };
+    };
+    function show(i) {
+      active = i;
+      steps.forEach((li, k) => {
+        li.classList.toggle("is-active", k === i);
+        li.classList.toggle("is-past", k < i);
+        if (k === i) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
+      });
+      const a = centre(steps[0]);
+      const b = centre(steps[i]);
+      fill.style.left = `${a.x}px`;
+      fill.style.top = `${a.y}px`;
+      fill.style.width = `${Math.max(0, b.x - a.x)}px`;
+      fill.style.height = `${Math.max(0, b.y - a.y)}px`;
+      marker.style.transform = `translate(${b.x}px, ${b.y}px)`;
+    }
+    const stopSweep = () => { clearTimeout(sweepTimer); clearTimeout(homeTimer); };
+    function sweep(i) {
+      show(i);
+      if (i < last) sweepTimer = setTimeout(() => sweep(i + 1), 950);
+    }
+
+    timeline.classList.add("is-live");
+    show(0);
+    steps.forEach((li, i) => {
+      li.addEventListener("mouseenter", () => { if (wide.matches) { stopSweep(); show(i); } });
+      li.addEventListener("focus", () => { stopSweep(); show(i); });
+      li.addEventListener("click", (e) => { if (!e.target.closest("a")) { stopSweep(); show(i); } });
+    });
+    // When the pointer leaves, the point returns to the present
+    timeline.addEventListener("mouseleave", () => {
+      if (!wide.matches) return;
+      clearTimeout(homeTimer);
+      homeTimer = setTimeout(() => show(last), 1400);
+    });
+    // Wide screens: sweep from the first period to today once the timeline is in view
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([en], obs) => {
+        if (!en.isIntersecting || !wide.matches) return;
+        obs.disconnect();
+        if (reduceMotion) show(last); else sweep(0);
+      }, { threshold: 0.5 }).observe(timeline);
+      // Phones: the point follows the period in the middle of the screen as you scroll
+      const follow = new IntersectionObserver((entries) => {
+        if (wide.matches) return;
+        entries.forEach((en) => { if (en.isIntersecting) show(steps.indexOf(en.target)); });
+      }, { rootMargin: "-40% 0px -50% 0px" });
+      steps.forEach((li) => follow.observe(li));
+    } else {
+      show(last);
+    }
+    const realign = () => show(active);
+    window.addEventListener("resize", realign);
+    if (wide.addEventListener) wide.addEventListener("change", realign);
+    document.fonts && document.fonts.ready.then(realign);
+  }
+
+  /* ------------------------------------------------------------------ */
   /* Film + lightbox                                                     */
   /* ------------------------------------------------------------------ */
   const film = $("[data-film]");
