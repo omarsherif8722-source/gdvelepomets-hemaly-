@@ -87,8 +87,11 @@ def fact_items(k, v):
         if m:
             return [{"label": "Pay over", "pre": "up to" if m[1] else "", "num": m[2], "unit": "years",
                      "note": "equal quarterly instalments"}]
-    if kl == "cash" and v.lower() == "on call":
-        return [{"label": "Paying in cash", "text": "Extra discount", "note": "ask a salesperson for today's rate"}]
+    if kl == "cash":
+        m = re.fullmatch(r"(Up to )?(\d+(?:\.\d+)?)% off", v)
+        if m:
+            return [{"label": "Paying in cash", "pre": "up to" if m[1] else "", "num": f"{m[2]}%", "unit": "off",
+                     "note": "discount for paying in full"}]
     m = NUM_RE.fullmatch(v)
     if m:
         return [{"label": k, "pre": (m[1] or "").strip().lower(), "num": re.sub(r"\s+to\s+", "–", m[2]), "unit": m[3]}]
@@ -105,11 +108,9 @@ def fact_html(item):
 
 
 def facts_html(p):
-    """The project's facts, prices kept off the page: a From price becomes the plan's real down payment."""
+    """The project's facts. A From price is kept off the page and becomes the plan's real down payment."""
     out = []
     for k, v in p["facts"]:
-        if k.lower() == "cash" and "off" in v.lower():
-            v = "On call"
         if k.lower() == "from":
             phase = PHASES.get(((p.get("payment") or {}).get("phases") or [None])[0])
             down = phase["plans"][0]["down"][0] if phase and phase["plans"][0].get("down") else None

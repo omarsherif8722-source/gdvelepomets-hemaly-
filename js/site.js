@@ -641,7 +641,7 @@
         { label: "Reserve with", num: uInfo.hookDown.replace(/ EGP$/, ""), unit: "EGP", note: "5% at signing" },
         { label: "Three months later", num: "5%", note: "the second part of the down payment" },
         { label: "Pay over", num: "8", unit: "years", note: "equal quarterly instalments" },
-        { label: "Paying in cash", text: "Extra discount", note: "ask a salesperson for today's rate" },
+        { label: "Paying in cash", text: "Terms on request", note: "no published discount yet: ask a salesperson" },
       ];
       list.innerHTML = `
         <li style="padding:0 0 8px;border-bottom:1px solid var(--on-dark-3);">
@@ -718,7 +718,9 @@
     if (kl === "plan" && (m = v.match(/^(Up to )?(\d+) years$/))) {
       return [{ label: "Pay over", pre: m[1] ? "up to" : "", num: m[2], unit: "years", note: "equal quarterly instalments" }];
     }
-    if (kl === "cash" && v.toLowerCase() === "on call") return [{ label: "Paying in cash", text: "Extra discount", note: "ask a salesperson for today's rate" }];
+    if (kl === "cash" && (m = v.match(/^(Up to )?(\d+(?:\.\d+)?)% off$/))) {
+      return [{ label: "Paying in cash", pre: m[1] ? "up to" : "", num: `${m[2]}%`, unit: "off", note: "discount for paying in full" }];
+    }
     m = v.match(/^(From |Up to )?(\d[\d.,]*\+?(?:\s*(?:–|-|to)\s*\d[\d.,]*)?(?:%|M|K)?)\s*(.*)$/);
     if (m) return [{ label: k, pre: (m[1] || "").trim().toLowerCase(), num: m[2].replace(/\s+to\s+/, "–"), unit: m[3] }];
     return [{ label: k, text: v }];
@@ -778,8 +780,8 @@
         <p class="atlas__place">${esc(p.place)}</p>
         <h3 class="atlas__title">${esc(p.name)}</h3>
         <p class="atlas__intro">${esc(p.intro)}</p>
-        <dl class="facts">${p.facts.filter(([k]) => !/cash/i.test(k)).flatMap(([k, v]) => factItems(k, v)).map(factHtml).join("")}</dl>
-        ${min ? `<p class="muted">Entry from <strong>${short(min * 0.05)} EGP (5% down)</strong> · Exact unit prices &amp; cash discounts shared on call.</p>` : ""}
+        <dl class="facts">${p.facts.flatMap(([k, v]) => factItems(k, v)).map(factHtml).join("")}</dl>
+        ${min ? `<p class="muted">Entry from <strong>${short(min * 0.05)} EGP (5% down)</strong> · Exact unit prices shared on call.</p>` : ""}
         <div class="atlas__actions">
           <a class="btn btn--red" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
           <a class="btn btn--dark" href="${wa(`Hello Mahmoud, which ${p.parent ? `${p.parent} ${p.name}` : p.name} units and released holds are available right now?`)}" target="_blank" rel="noopener">${WA_ICON} Ask what's available</a>
@@ -859,7 +861,7 @@
       ...types.map((t) => ({ name: t.type, size: t.bmin < Infinity ? (t.bmin === t.bmax ? `${nf.format(t.bmin)} m²` : `${nf.format(t.bmin)} – ${nf.format(t.bmax)} m²`) : "", from: t.min })),
     ];
     homesEl.innerHTML = rows.length
-      ? `<p class="p-homes__note">Exact unit numbers, plot positions, released holds, and today's private cash discount are shared directly by phone or WhatsApp so we can match—or upgrade—your brief.</p>
+      ? `<p class="p-homes__note">Exact unit numbers, plot positions and released holds are shared directly by phone or WhatsApp so we can match—or upgrade—your brief.</p>
          <ul class="p-homes__list">${rows.map((r) => `
            <li class="p-homes__row">
              <span class="p-homes__name">${esc(r.name)}</span>
@@ -960,13 +962,17 @@
       const secondNote = !pl.cashOnly && pl.down[1] ? `Then ${pl.down[1]}% after 3 months` : "Flexible contract entry";
       const horizon = pl.cashOnly ? "Immediate cash contract" : `Up to ${pl.years} years`;
 
-      note.innerHTML = `Exact unit pricing, quarterly installment schedules, and private cash discount rates for <strong>${esc(dest.name)} (${esc(phase.name)})</strong> are calculated per unit. Speak directly with Mahmoud Elhemaly to unlock today's released holds and compare upgrade options.`;
+      note.innerHTML = `Exact unit pricing and quarterly instalment schedules for <strong>${esc(dest.name)} (${esc(phase.name)})</strong> are calculated per unit. Speak directly with Mahmoud Elhemaly to unlock today's released holds and compare upgrade options.`;
 
       result.innerHTML = `
         <dl class="result__lead">
           <div class="is-key"><dt>Contract entry</dt><dd>${downFirst}<small>${esc(secondNote)}</small></dd></div>
           <div><dt>Installment horizon</dt><dd>${horizon}<small>${pl.cashOnly ? "Priority handover" : "Equal installments"}</small></dd></div>
-          <div><dt>Paying in cash</dt><dd class="is-text">Extra discount<small>Ask a salesperson for today's rate</small></dd></div>
+          <div><dt>Paying in cash</dt>${pl.cashOnly
+            ? `<dd class="is-text">Cash sale<small>Ask a salesperson for the price</small></dd>`
+            : pl.cash
+              ? `<dd>${pl.cash}% off<small>Discount for paying in full</small></dd>`
+              : `<dd class="is-text">Terms on request<small>No published discount yet: ask a salesperson</small></dd>`}</div>
         </dl>
         <div class="result__cash" style="margin-top:24px;">
           <p><strong>Advisor Upgrade &amp; Cash Comparison:</strong> Before locking a unit from a standard price list, call our desk to check released "Hold" units, corner plots, and how stepping up to the next tier compares on a quarterly basis.</p>
