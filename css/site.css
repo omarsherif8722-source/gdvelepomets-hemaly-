@@ -208,8 +208,10 @@ fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
 }
 .hero__copy {
   position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(28px, 7vh, 76px);
-  max-width: 820px; color: #fff;
+  color: #fff;
 }
+/* Explore <project>: on the right of the button row, kept clear of the floating WhatsApp button */
+.hero__explore { position: absolute; right: 150px; bottom: 0; }
 .hero__copy .brandline { margin-bottom: 14px; }
 .hero__copy .brandline, .hero__title, .hero__lede { --show: clamp(0, calc((var(--p) - 0.18) * 3.2), 1); opacity: var(--show); transform: translateY(calc((1 - var(--show)) * 28px)); }
 .hero__title {
@@ -260,6 +262,9 @@ fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
 .tabs button[role="tab"][aria-selected="true"] { color: var(--ink); }
 .tabs button[role="tab"] small { font-size: 13px; font-weight: 400; margin-left: 6px; opacity: 0.8; font-variant-numeric: tabular-nums; }
 .tabs__ink { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: var(--vermilion); transition: transform 0.45s var(--ease), width 0.45s var(--ease); }
+/* Auto-rotating project tabs: the line under the open tab fills until the next one opens */
+.tabs.is-auto .tabs__ink::after { content: ""; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.6); transform-origin: right; animation: tab-auto var(--auto-ms, 10s) linear forwards; }
+@keyframes tab-auto { from { transform: scaleX(1); } to { transform: scaleX(0); } }
 .tabs--light { border-bottom-color: var(--on-dark-3); }
 .tabs--light button[role="tab"] { color: rgba(255,255,255,0.5); }
 .tabs--light button[role="tab"]:hover, .tabs--light button[role="tab"][aria-selected="true"] { color: #fff; }
@@ -403,10 +408,19 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius
 .atlas__place { margin: 18px 0 4px; font-size: 14.5px; color: var(--stone); }
 .atlas__title { font-family: var(--display); font-size: clamp(26px, 2.4vw, 34px); line-height: 1.1; margin-bottom: 10px; }
 .atlas__intro { max-width: 58ch; }
-.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); margin: 20px 0 20px; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0 20px; border-top: 1px solid var(--ink); margin: 20px 0 20px; }
 .facts div { padding: 14px 14px 0 0; }
 .facts dt { font-size: 13px; color: var(--stone); }
 .facts dd { font-family: var(--display); font-size: 21px; line-height: 1.2; margin-top: 4px; }
+/* Key figures: the number large in the accent colour, a short plain line under it */
+.facts .fact { padding: 16px 0 6px; }
+.facts .fact:not(.fact--text) dt::before { content: ""; display: block; width: 22px; height: 2px; margin-bottom: 10px; background: var(--vermilion); }
+.facts .fig { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 7px; margin-top: 6px; }
+.facts .fig b { font-family: var(--display); font-weight: 500; font-size: clamp(34px, 3.2vw, 46px); line-height: 1; letter-spacing: -0.02em; color: var(--vermilion); font-variant-numeric: lining-nums; }
+.facts .fig span, .facts .fig small { font-family: var(--sans); font-size: 15px; font-weight: 500; }
+.facts .fig small { order: -1; flex-basis: 100%; font-size: 12.5px; font-weight: 400; color: var(--stone); }
+.facts dd em { display: block; margin-top: 7px; font-family: var(--sans); font-style: normal; font-size: 13px; line-height: 1.45; color: var(--stone); max-width: 24ch; }
+.facts .fact--text dd { margin-top: 8px; }
 .atlas__actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
 /* ---------- Dossier ---------- */
@@ -631,6 +645,7 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 /* ---------- Responsive ---------- */
 @media (max-width: 1180px) {
   .masthead__nav { display: none; }
+  .hero__explore { position: static; display: flex; width: max-content; margin: 0 0 14px auto; }
   .areas { gap: 26px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
   .areas::-webkit-scrollbar { display: none; }
   .areas__item { position: static; }
@@ -800,6 +815,8 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 
 .facts--dark { border-top-color: rgba(255,255,255,0.5); margin: 18px 0; }
 .facts--dark dt { color: var(--on-dark-2); }
+.facts--dark .fig b { color: #fff; }
+.facts--dark .fig small, .facts--dark dd em { color: var(--on-dark-2); }
 .place__list--ticks li { padding-left: 22px; position: relative; }
 .place__list--ticks li::before { content: ""; position: absolute; left: 0; top: 24px; width: 10px; height: 1px; background: var(--vermilion); }
 .place__hero { position: relative; }

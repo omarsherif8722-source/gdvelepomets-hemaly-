@@ -13,6 +13,7 @@ and run this again. To give a project a hero film, add to its entry:
               "poster": "assets/video/NAME-poster.jpg"}
 """
 import json
+import re
 from html import escape as h
 from pathlib import Path
 
@@ -21,6 +22,8 @@ P = json.loads((ROOT / "data/portfolio.json").read_text())
 PROJECTS = P["projects"]
 BY_ID = {p["id"]: p for p in PROJECTS}
 REGIONS = {r["id"]: r for r in P["regions"]}
+TERMS = json.loads((ROOT / "data/payment_terms.json").read_text())
+PHASES = {ph["id"]: ph for d in TERMS["destinations"] for ph in d["phases"]}
 
 PHONE_TEL = "+201227275122"
 PHONE = "+20 122 727 5122"
@@ -32,6 +35,7 @@ WA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0
 PLAY_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>'
 PHONE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.58 3.6a1 1 0 0 1-.25 1z"/></svg>'
 CONTACT = "Contact a salesperson"  # shown wherever the phone number used to appear
+DOWN_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4h2v12.2l4.6-4.6 1.4 1.4-7 7-7-7 1.4-1.4 4.6 4.6z"/></svg>'
 
 
 def wa(text):
@@ -57,6 +61,64 @@ def theme_style(t):
 
 def full_name(p):
     return f'{p["parent"]} {p["name"]}' if p.get("parent") else p["name"]
+
+
+# ---------------------------------------------------------------- key figures
+# The numbers a buyer reads first (down payment, years to pay, delivery...) are shown large,
+# with a short plain-English line under them. payment_terms.json: [5, 5] = 5% at signing, 5% three months later.
+PLAN_RE = re.compile(r"(\d+(?:\.\d+)?)%(?: \+ (\d+(?:\.\d+)?)%)?, (\d+) years")
+NUM_RE = re.compile(r"(From |Up to )?(\d[\d.,]*\+?(?:\s*(?:–|-|to)\s*\d[\d.,]*)?(?:%|M|K)?)\s*(.*)")
+
+
+def fact_items(k, v):
+    """One fact as figures: dicts with label, and either num (+ pre, unit) or text, plus an optional note."""
+    kl = k.lower()
+    m = PLAN_RE.fullmatch(v)
+    if m:
+        first, second, years = m.groups()
+        lead = "" if kl == "plan" else f"{k}: "
+        return [
+            {"label": f"{lead}Down payment", "num": f"{first}%",
+             "note": f"at signing, then {second}% three months later" if second else "at signing"},
+            {"label": f"{lead}Pay over", "num": years, "unit": "years", "note": "equal quarterly instalments"},
+        ]
+    if kl == "plan":
+        m = re.fullmatch(r"(Up to )?(\d+) years", v)
+        if m:
+            return [{"label": "Pay over", "pre": "up to" if m[1] else "", "num": m[2], "unit": "years",
+                     "note": "equal quarterly instalments"}]
+    if kl == "cash" and v.lower() == "on call":
+        return [{"label": "Paying in cash", "text": "Extra discount", "note": "ask a salesperson for today's rate"}]
+    m = NUM_RE.fullmatch(v)
+    if m:
+        return [{"label": k, "pre": (m[1] or "").strip().lower(), "num": re.sub(r"\s+to\s+", "–", m[2]), "unit": m[3]}]
+    return [{"label": k, "text": v}]
+
+
+def fact_html(item):
+    note = f'<em>{h(item["note"])}</em>' if item.get("note") else ""
+    if "num" in item:
+        pre = f'<small>{h(item["pre"])}</small>' if item.get("pre") else ""
+        unit = f' <span>{h(item["unit"])}</span>' if item.get("unit") else ""
+        return f'<div class="fact"><dt>{h(item["label"])}</dt><dd><span class="fig">{pre}<b>{h(item["num"])}</b>{unit}</span>{note}</dd></div>'
+    return f'<div class="fact fact--text"><dt>{h(item["label"])}</dt><dd>{h(item["text"])}{note}</dd></div>'
+
+
+def facts_html(p):
+    """The project's facts, prices kept off the page: a From price becomes the plan's real down payment."""
+    out = []
+    for k, v in p["facts"]:
+        if k.lower() == "cash" and "off" in v.lower():
+            v = "On call"
+        if k.lower() == "from":
+            phase = PHASES.get(((p.get("payment") or {}).get("phases") or [None])[0])
+            down = phase["plans"][0]["down"][0] if phase and phase["plans"][0].get("down") else None
+            if not down or down >= 100:
+                continue
+            out.append({"label": "Down payment", "num": f"{down:g}%", "note": "at signing"})
+            continue
+        out.extend(fact_items(k, v))
+    return "".join(fact_html(x) for x in out)
 
 
 # ---------------------------------------------------------------- partials
@@ -149,7 +211,8 @@ def masthead(slug=None):
   </nav>'''
 
 
-def hero(word, brand, title, lede, wa_text, video=None, image=None, illustrative=False, label="Hero"):
+def hero(word, brand, title, lede, wa_text, video=None, image=None, illustrative=False, label="Hero", explore=None):
+    """explore: (project name, section anchor) adds an "Explore <name>" button on the right that scrolls into the project."""
     if video:
         media = f'''<video class="hero__video" autoplay muted loop playsinline preload="auto" poster="{u(video["poster"])}" aria-hidden="true" data-hero-video>
           <source src="{u(video["loop"])}" type="video/mp4">
@@ -159,6 +222,9 @@ def hero(word, brand, title, lede, wa_text, video=None, image=None, illustrative
     else:
         media = f'<div class="hero__video hero__img" aria-hidden="true">{img(image, "", "100vw", eager=True)}</div>'
         film_btn = ""
+    explore_btn = (f'\n          <a class="btn btn--light hero__explore" href="{explore[1]}">Explore {h(explore[0])} {DOWN_SVG}</a>'
+                   if explore else "")
+    cue = "" if explore else '<p class="hero__cue" aria-hidden="true">Scroll</p>'
     tag = '<p class="hero__tag">Illustrative image</p>' if illustrative and not video else ""
     return f'''    <section class="hero" id="top" data-hero>
       <div class="hero__stage">
@@ -169,13 +235,13 @@ def hero(word, brand, title, lede, wa_text, video=None, image=None, illustrative
         <div class="hero__copy">
           <p class="brandline brandline--light">{brand}</p>
           <h1 class="hero__title">{h(title)}</h1>
-          <p class="hero__lede">{h(lede)}</p>
+          <p class="hero__lede">{h(lede)}</p>{explore_btn}
           <div class="hero__actions">
             <a class="btn btn--red" href="tel:{PHONE_TEL}" data-wa="{h(label)} hero call">{PHONE_SVG} {CONTACT}</a>
             {film_btn}<a class="btn btn--ghost-light" href="{wa(wa_text)}" target="_blank" rel="noopener" data-wa="{h(label)} hero">{WA_SVG} Message a salesperson</a>
           </div>
         </div>
-        <p class="hero__cue" aria-hidden="true">Scroll</p>
+        {cue}
       </div>
     </section>'''
 
@@ -333,13 +399,7 @@ def project_page(p):
     tab_html = "\n".join(
         f'          <button role="tab" id="pt-{k}" aria-controls="pp-{k}" aria-selected="{"true" if i == 0 else "false"}"{"" if i == 0 else rest}>{label}</button>'
         for i, (k, label) in enumerate(tabs))
-    def mask_fact(k, v):
-        if k.lower() == "cash" and "off" in v.lower():
-            return (k, "On call")
-        if k.lower() == "from":
-            return ("Entry", "5% down")
-        return (k, v)
-    facts = "".join(f'<div><dt>{h(k)}</dt><dd>{h(v)}</dd></div>' for k, v in (mask_fact(k, v) for k, v in p["facts"]))
+    facts = facts_html(p)
     highlights = "".join(f'<li>{h(x)}</li>' for x in p.get("highlights", []))
     place_img = img(p["heroImage"], f'{p["name"]}, {p["place"]}', "(min-width: 900px) 60vw, 100vw") if p.get("heroImage") else f'<div class="typo-panel"><span>{h(p["name"])}</span></div>'
     illus = '<figcaption class="place__tag">Illustrative image</figcaption>' if p.get("illustrative") else ""
@@ -374,7 +434,7 @@ def project_page(p):
 {masthead(p["slug"])}
 
   <main id="main">
-{hero(p["wordmark"], brand, p["heroTitle"], lede, f"Hello, I'd like to hear about {full_name(p)}.", p.get("video"), p.get("heroImage"), p.get("illustrative"), p["name"])}
+{hero(p["wordmark"], brand, p["heroTitle"], lede, f"Hello, I'd like to hear about {full_name(p)}.", p.get("video"), p.get("heroImage"), p.get("illustrative"), p["name"], (p["name"], "#project"))}
 
     <section class="showcase" id="project">
       <div class="wrap">
@@ -426,7 +486,7 @@ def krypton_page(p):
 {masthead("krypton")}
 
   <main id="main">
-{hero("krypton", "NEWKAIRO<span>/</span>Krypton", p["heroTitle"], "Fully finished one to three bedroom serviced homes. Start from 394K EGP (5% down) with 8 years to pay — call for released holds and cash discount.", "Hello, I'd like to hear about Krypton at NEWKAIRO.", p["video"], None, False, "Krypton")}
+{hero("krypton", "NEWKAIRO<span>/</span>Krypton", p["heroTitle"], "Fully finished one to three bedroom serviced homes. Start from 394K EGP (5% down) with 8 years to pay — call for released holds and cash discount.", "Hello, I'd like to hear about Krypton at NEWKAIRO.", p["video"], None, False, "Krypton", ("Krypton", "#krypton"))}
 
 {src}
 

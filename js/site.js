@@ -93,7 +93,7 @@
       });
       if (focus) tab.focus();
       moveInk(tab);
-      if (list.scrollWidth > list.clientWidth) tab.scrollIntoView({ block: "nearest", inline: "center", behavior: reduceMotion ? "auto" : "smooth" });
+      if (list.scrollWidth > list.clientWidth) list.scrollTo({ left: tab.offsetLeft - (list.clientWidth - tab.offsetWidth) / 2, behavior: reduceMotion ? "auto" : "smooth" });
       if (!silent && onChange) onChange(tab);
     };
     list.addEventListener("click", (e) => {
@@ -116,6 +116,50 @@
     document.fonts && document.fonts.ready.then(() => moveInk(current()));
     requestAnimationFrame(() => moveInk(current()));
     return { select: (tab, silent) => select(tab, false, silent), current, refresh: () => moveInk(current()) };
+  }
+
+  // A project's tabs turn on their own while they are on screen, until the visitor picks one.
+  // A filling line under the open tab shows when the next one comes; hovering pauses it.
+  function autoRotate(list, api, ms = 10000) {
+    if (!list || !api || reduceMotion || !("IntersectionObserver" in window)) return;
+    const all = () => $$('[role="tab"]', list);
+    const panels = all().map((t) => document.getElementById(t.getAttribute("aria-controls"))).filter(Boolean);
+    let timer = 0;
+    let onScreen = false;
+    let hovered = false;
+    let stopped = false;
+    list.style.setProperty("--auto-ms", `${ms}ms`);
+    function arm() {
+      clearTimeout(timer);
+      list.classList.remove("is-auto");
+      if (stopped || !onScreen || hovered || document.hidden) return;
+      void list.offsetWidth; // restart the filling line
+      list.classList.add("is-auto");
+      timer = setTimeout(() => {
+        const t = all();
+        api.select(t[(t.indexOf(api.current()) + 1) % t.length]);
+        arm();
+      }, ms);
+    }
+    function stop() {
+      stopped = true;
+      clearTimeout(timer);
+      list.classList.remove("is-auto");
+    }
+    // Choosing a tab, or using what is inside a panel, ends the rotation for good
+    list.addEventListener("click", stop);
+    list.addEventListener("keydown", stop);
+    panels.forEach((p) => { p.addEventListener("click", stop); p.addEventListener("keydown", stop); });
+    [list, ...panels].forEach((el) => {
+      el.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") { hovered = true; arm(); } });
+      el.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { hovered = false; arm(); } });
+    });
+    document.addEventListener("visibilitychange", arm);
+    // Only while the tab strip is fully in view below the top bar
+    new IntersectionObserver(([en]) => {
+      onScreen = en.intersectionRatio > 0.95;
+      arm();
+    }, { threshold: [0, 0.95, 1], rootMargin: `-${masthead.offsetHeight}px 0px 0px 0px` }).observe(list);
   }
 
   // Segmented radio groups
@@ -560,7 +604,7 @@
   /* Krypton (Focused Call-Now & Upsell Mode)                            */
   /* ------------------------------------------------------------------ */
   function renderKrypton({ krypton }) {
-    initTabs($("[data-kr-tabs]"));
+    autoRotate($("[data-kr-tabs]"), initTabs($("[data-kr-tabs]")));
 
     const band = $("[data-kr-band]");
     const list = $("[data-kr-list]");
@@ -591,12 +635,17 @@
       const uInfo = UPSELL_COPY[b] || UPSELL_COPY[1];
       const bedWord = ["", "One bedroom", "Two bedrooms", "Three bedrooms"][b];
 
-      band.innerHTML = `<strong>${pb.label}</strong> · ${pb.sqm} m² · Start with <strong>${uInfo.hookDown} (5% EOI)</strong>`;
+      band.innerHTML = `<strong>${pb.label}</strong> · ${pb.sqm} m² · Start with <strong>${uInfo.hookDown} (5% to reserve)</strong>`;
 
+      const keyFigures = [
+        { label: "Reserve with", num: uInfo.hookDown.replace(/ EGP$/, ""), unit: "EGP", note: "5% at signing" },
+        { label: "Three months later", num: "5%", note: "the second part of the down payment" },
+        { label: "Pay over", num: "8", unit: "years", note: "equal quarterly instalments" },
+        { label: "Paying in cash", text: "Extra discount", note: "ask a salesperson for today's rate" },
+      ];
       list.innerHTML = `
-        <li style="padding:16px 0;border-bottom:1px solid var(--on-dark-3);color:var(--on-dark-2);font-size:15px;">
-          <strong style="display:block;color:#fff;font-family:var(--display);font-size:21px;margin-bottom:4px;">5% Down Payment Entry</strong>
-          Start from ${uInfo.hookDown} at reservation, 5% after 3 months, and equal installments over 8 years.
+        <li style="padding:0 0 8px;border-bottom:1px solid var(--on-dark-3);">
+          <dl class="facts facts--dark facts--key">${keyFigures.map(factHtml).join("")}</dl>
         </li>
         <li style="padding:16px 0;border-bottom:1px solid var(--on-dark-3);color:var(--on-dark-2);font-size:15px;">
           <strong style="display:block;color:#fff;font-family:var(--display);font-size:21px;margin-bottom:4px;">Unlisted Holds &amp; Cash Rate</strong>
@@ -653,6 +702,36 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* Key figures: the numbers a buyer reads first, shown large            */
+  /* Mirrors fact_items() in scripts/build_pages.py.                      */
+  /* ------------------------------------------------------------------ */
+  function factItems(k, v) {
+    const kl = k.toLowerCase();
+    let m = v.match(/^(\d+(?:\.\d+)?)%(?: \+ (\d+(?:\.\d+)?)%)?, (\d+) years$/);
+    if (m) {
+      const lead = kl === "plan" ? "" : `${k}: `;
+      return [
+        { label: `${lead}Down payment`, num: `${m[1]}%`, note: m[2] ? `at signing, then ${m[2]}% three months later` : "at signing" },
+        { label: `${lead}Pay over`, num: m[3], unit: "years", note: "equal quarterly instalments" },
+      ];
+    }
+    if (kl === "plan" && (m = v.match(/^(Up to )?(\d+) years$/))) {
+      return [{ label: "Pay over", pre: m[1] ? "up to" : "", num: m[2], unit: "years", note: "equal quarterly instalments" }];
+    }
+    if (kl === "cash" && v.toLowerCase() === "on call") return [{ label: "Paying in cash", text: "Extra discount", note: "ask a salesperson for today's rate" }];
+    m = v.match(/^(From |Up to )?(\d[\d.,]*\+?(?:\s*(?:–|-|to)\s*\d[\d.,]*)?(?:%|M|K)?)\s*(.*)$/);
+    if (m) return [{ label: k, pre: (m[1] || "").trim().toLowerCase(), num: m[2].replace(/\s+to\s+/, "–"), unit: m[3] }];
+    return [{ label: k, text: v }];
+  }
+  const factHtml = (x) => {
+    const note = x.note ? `<em>${esc(x.note)}</em>` : "";
+    if (x.num !== undefined) {
+      return `<div class="fact"><dt>${esc(x.label)}</dt><dd><span class="fig">${x.pre ? `<small>${esc(x.pre)}</small>` : ""}<b>${esc(x.num)}</b>${x.unit ? ` <span>${esc(x.unit)}</span>` : ""}</span>${note}</dd></div>`;
+    }
+    return `<div class="fact fact--text"><dt>${esc(x.label)}</dt><dd>${esc(x.text)}${note}</dd></div>`;
+  };
+
+  /* ------------------------------------------------------------------ */
   /* Portfolio atlas + dossier                                           */
   /* ------------------------------------------------------------------ */
   const unitsFor = (ctx, p) => {
@@ -699,7 +778,7 @@
         <p class="atlas__place">${esc(p.place)}</p>
         <h3 class="atlas__title">${esc(p.name)}</h3>
         <p class="atlas__intro">${esc(p.intro)}</p>
-        <dl class="facts">${p.facts.filter(([k]) => !/cash/i.test(k)).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
+        <dl class="facts">${p.facts.filter(([k]) => !/cash/i.test(k)).flatMap(([k, v]) => factItems(k, v)).map(factHtml).join("")}</dl>
         ${min ? `<p class="muted">Entry from <strong>${short(min * 0.05)} EGP (5% down)</strong> · Exact unit prices &amp; cash discounts shared on call.</p>` : ""}
         <div class="atlas__actions">
           <a class="btn btn--red" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
@@ -764,7 +843,7 @@
   function renderProject(ctx) {
     const p = ctx.portfolio.projects.find((x) => x.id === document.body.dataset.project);
     if (!p) return;
-    initTabs($('#project [role="tablist"]'));
+    autoRotate($('#project [role="tablist"]'), initTabs($('#project [role="tablist"]')));
 
     // Homes: high-urgency 5% entry hooks + call-to-unlock (no full price dump)
     const homesEl = $("[data-p-homes]");
@@ -887,7 +966,7 @@
         <dl class="result__lead">
           <div class="is-key"><dt>Contract entry</dt><dd>${downFirst}<small>${esc(secondNote)}</small></dd></div>
           <div><dt>Installment horizon</dt><dd>${horizon}<small>${pl.cashOnly ? "Priority handover" : "Equal installments"}</small></dd></div>
-          <div><dt>Cash &amp; hold-list rate</dt><dd class="is-text">On Call<small>Private cash discount &amp; upgrades</small></dd></div>
+          <div><dt>Paying in cash</dt><dd class="is-text">Extra discount<small>Ask a salesperson for today's rate</small></dd></div>
         </dl>
         <div class="result__cash" style="margin-top:24px;">
           <p><strong>Advisor Upgrade &amp; Cash Comparison:</strong> Before locking a unit from a standard price list, call our desk to check released "Hold" units, corner plots, and how stepping up to the next tier compares on a quarterly basis.</p>
