@@ -511,7 +511,7 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 .atelier .seg { color: var(--on-dark-3); }
 .atelier .seg button { color: #fff; }
 .atelier .seg button[aria-checked="true"] { background: #fff; color: var(--charcoal); }
-.finder { margin-bottom: clamp(48px, 6vw, 80px); }
+.finder { margin-bottom: 0; }
 .finder__ask { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-bottom: 18px; }
 .finder__step { display: flex; align-items: baseline; gap: 12px; margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: #fff; }
 .finder__step span { font-family: var(--display); font-size: 20px; font-weight: 400; letter-spacing: 0; color: var(--vermilion); }

@@ -1158,7 +1158,7 @@
             <ul class="home-card__terms">${termsOf(r).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
           </div>
           <div class="home-card__actions">
-            ${p.payment ? `<button type="button" class="btn btn--light btn--small" data-finder-plan="${p.id}" data-phase="${esc(r.plan || "")}">See the payment plan</button>` : ""}
+            <a class="btn btn--light btn--small" href="/${p.slug}/">Explore ${esc(p.name)}</a>
             <a class="home-card__wa" href="${wa(`Hello Mahmoud, I'm interested in a ${c.one} at ${full}. Please send me the available units, the price and the amount to reserve.`)}" target="_blank" rel="noopener" aria-label="Ask about ${esc(full)} on WhatsApp">${WA_ICON}</a>
           </div>
         </article>`;
