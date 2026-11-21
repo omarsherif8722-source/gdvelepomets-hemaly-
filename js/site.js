@@ -59,6 +59,7 @@
     else if (href.startsWith("tel:")) track("Call click", { place: placeOf(a) });
     else if (a.hasAttribute("download")) track("Brochure download", { file: href.split("/").pop() });
   }, true);
+  const PHONE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.58 3.6a1 1 0 0 1-.25 1z"/></svg>';
   const WA_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>';
 
   const u = (path) => (!path ? "" : /^(\/|https?:)/.test(path) ? path : `/${path}`);
@@ -511,7 +512,7 @@
     .catch((err) => {
       console.error(err);
       $$("[data-pay-result], [data-atlas-view]").forEach((el) => {
-        el.innerHTML = `<p class="muted">Live data could not load. Message a salesperson on WhatsApp at +20 122 727 5122 for current prices and availability.</p>`;
+        el.innerHTML = `<p class="muted">Live data could not load. Message a salesperson on WhatsApp for current prices and availability.</p>`;
       });
     });
 
@@ -623,7 +624,7 @@
             </div>
           </div>
           <div class="plan-card__actions">
-            <a class="btn btn--red btn--small" href="tel:+201227275122">Call +20 122 727 5122 Now</a>
+            <a class="btn btn--red btn--small" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
             <a class="btn btn--dark btn--small" href="${wa(`Hello Mahmoud, I'm looking at a Krypton ${bedWord.toLowerCase()} (${pb.sqm} m²). Please send me the available unit numbers, cash price, and upgrade options.`)}" target="_blank" rel="noopener">${WA_ICON} Unlock Units on WhatsApp</a>
           </div>
         </article>`;
@@ -701,7 +702,7 @@
         <dl class="facts">${p.facts.filter(([k]) => !/cash/i.test(k)).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
         ${min ? `<p class="muted">Entry from <strong>${short(min * 0.05)} EGP (5% down)</strong> · Exact unit prices &amp; cash discounts shared on call.</p>` : ""}
         <div class="atlas__actions">
-          <a class="btn btn--red" href="tel:+201227275122">Call +20 122 727 5122</a>
+          <a class="btn btn--red" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
           <a class="btn btn--dark" href="${wa(`Hello Mahmoud, which ${p.parent ? `${p.parent} ${p.name}` : p.name} units and released holds are available right now?`)}" target="_blank" rel="noopener">${WA_ICON} Ask what's available</a>
           <a class="btn btn--line" href="/${p.slug}/">Explore ${esc(p.name)}</a>
         </div>`;
@@ -789,7 +790,7 @@
            </li>`).join("")}</ul>`
       : `<p class="p-homes__note">Priority unit allocations and released holds for ${esc(p.name)} are shared directly on a quick advisory call.</p>
          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-           <a class="btn btn--light" href="tel:+201227275122">Call +20 122 727 5122</a>
+           <a class="btn btn--light" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
            <a class="btn btn--ghost-light" href="${wa(`Hello Mahmoud, please send me the available units and cash discount at ${p.name}.`)}" target="_blank" rel="noopener">${WA_ICON} Ask on WhatsApp</a>
          </div>`;
 
@@ -892,7 +893,7 @@
           <p><strong>Advisor Upgrade &amp; Cash Comparison:</strong> Before locking a unit from a standard price list, call our desk to check released "Hold" units, corner plots, and how stepping up to the next tier compares on a quarterly basis.</p>
         </div>
         <div class="result__actions" style="margin-top:24px;">
-          <a class="btn btn--red" href="tel:+201227275122">Call +20 122 727 5122 Now</a>
+          <a class="btn btn--red" href="tel:+201227275122">${PHONE_ICON} Contact a salesperson</a>
           <a class="btn btn--light" href="${wa(`Hello Mahmoud, please send me the exact payment sheet, cash discount, and best available units for ${dest.name} (${phase.name}).`)}" target="_blank" rel="noopener">${WA_ICON} Get Custom Sheet on WhatsApp</a>
         </div>`;
     }

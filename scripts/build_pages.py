@@ -30,6 +30,8 @@ NEWKAIRO_THEME = {"dark": "#221f20", "dark2": "#36302f", "dark3": "#141213", "ac
 
 WA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>'
 PLAY_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>'
+PHONE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.58 3.6a1 1 0 0 1-.25 1z"/></svg>'
+CONTACT = "Contact a salesperson"  # shown wherever the phone number used to appear
 
 
 def wa(text):
@@ -134,7 +136,7 @@ def masthead(slug=None):
     <nav class="masthead__nav" aria-label="Sections">
 {links}
     </nav>
-    <a class="masthead__call" href="tel:{PHONE_TEL}" aria-label="Call a salesperson on {PHONE}">Call a salesperson</a>
+    <a class="masthead__call" href="tel:{PHONE_TEL}" >Call a salesperson</a>
     <button class="masthead__menu" type="button" aria-expanded="false" aria-controls="mobile-nav" data-menu>Menu</button>
     <nav class="areas" aria-label="Projects by area">
 {area_menus(slug)}
@@ -143,7 +145,7 @@ def masthead(slug=None):
 
   <nav class="mobile-nav" id="mobile-nav" hidden aria-label="Sections">
 {mlinks}
-    <a class="mobile-nav__call" href="tel:{PHONE_TEL}">Call a salesperson, {PHONE}</a>
+    <a class="mobile-nav__call" href="tel:{PHONE_TEL}">{CONTACT}</a>
   </nav>'''
 
 
@@ -169,7 +171,7 @@ def hero(word, brand, title, lede, wa_text, video=None, image=None, illustrative
           <h1 class="hero__title">{h(title)}</h1>
           <p class="hero__lede">{h(lede)}</p>
           <div class="hero__actions">
-            <a class="btn btn--red" href="tel:{PHONE_TEL}" data-wa="{h(label)} hero call">Call {PHONE}</a>
+            <a class="btn btn--red" href="tel:{PHONE_TEL}" data-wa="{h(label)} hero call">{PHONE_SVG} {CONTACT}</a>
             {film_btn}<a class="btn btn--ghost-light" href="{wa(wa_text)}" target="_blank" rel="noopener" data-wa="{h(label)} hero">{WA_SVG} Message a salesperson</a>
           </div>
         </div>
@@ -194,7 +196,7 @@ def contact(selected=None):
           <p class="brandline brandline--light">Private viewings<span>/</span>By appointment</p>
           <h2 class="sec-title">Speak with our sales team.</h2>
           <p>Tell us what you are looking for and a salesperson will come back with the units that fit, their current status, and a time to see them.</p>
-          <a class="contact__number" href="{view}" target="_blank" rel="noopener" data-wa="Contact number">{PHONE}</a>
+          <a class="contact__number" href="{view}" target="_blank" rel="noopener" data-wa="Contact number">{CONTACT}</a>
           <div class="contact__actions">
             <a class="btn btn--light" href="{view}" target="_blank" rel="noopener" data-wa="Contact button">{WA_SVG} Message on WhatsApp</a>
             <a class="btn btn--ghost-light" href="tel:{PHONE_TEL}">Call a salesperson</a>
@@ -254,9 +256,9 @@ def tail(film=None):
     </div>
   </footer>
 
-  <a class="wa-float" href="{wa("Hello, I'm interested in a G Developments property.")}" target="_blank" rel="noopener" data-wa="Floating button" aria-label="Message a salesperson on WhatsApp at {PHONE}">
+  <a class="wa-float" href="{wa("Hello, I'm interested in a G Developments property.")}" target="_blank" rel="noopener" data-wa="Floating button" aria-label="Message a salesperson on WhatsApp">
     <span class="wa-float__icon">{WA_SVG}</span>
-    <span class="wa-float__num">{PHONE}</span>
+    <span class="wa-float__num">{CONTACT}</span>
   </a>
 {film_dlg}
   <dialog class="lightbox" data-lightbox-dialog aria-label="Image viewer">
