@@ -511,31 +511,13 @@ export function dailyPerformance(tree, list) {
     });
   }
 
-  // Fallback when connected to live Meta without a daily breakdown array
-  const days = Object.keys(byDayLeads).sort();
-  const totalSpend = (tree?.campaigns || []).reduce((n, c) => n + (c.m?.spend || 0), 0);
-  const perDaySpend = days.length ? totalSpend / days.length : 0;
-  return days.map((date) => {
-    const l = byDayLeads[date];
-    return {
-      date,
-      spend: Math.round(perDaySpend),
-      impressions: 0,
-      linkClicks: 0,
-      landingViews: 0,
-      leads: l.logged,
-      logged: l.logged,
-      valid: l.valid,
-      meetings: l.meetings,
-      reserved: l.reserved,
-      cpvl: l.valid > 0 ? Math.round(perDaySpend / l.valid) : null,
-      cpl: l.logged > 0 ? Math.round(perDaySpend / l.logged) : null,
-    };
-  });
+  // Without Meta's day-by-day report there is no honest daily spend to show:
+  // never spread the total evenly across days. The chart shows its empty state.
+  return [];
 }
 
 // ---------------------------------------------------------------- Egypt & GCC Geo Intelligence
-export function geoBreakdown(tree, list, catalog) {
+export function geoBreakdown(tree, list, catalog, actual = null) {
   const { since, until } = treeDates(tree);
   const govs = {};
   const corridors = {};
@@ -640,6 +622,23 @@ export function geoBreakdown(tree, list, catalog) {
     }
   }
 
+  // 3. When Meta's own delivery report is loaded (spend by region and country),
+  // it replaces the estimate per governorate; the areas inside a governorate
+  // are scaled so they add up to Meta's figure.
+  if (actual) {
+    for (const name of Object.keys(actual)) ensureGov(name);
+    for (const g of Object.values(govs)) {
+      const a = actual[g.name] || { spend: 0, impressions: 0, clicks: 0, leads: 0 };
+      const est = { spend: g.spend, impressions: g.impressions, clicks: g.clicks, metaLeads: g.metaLeads };
+      const act = { spend: a.spend, impressions: a.impressions, clicks: a.clicks, metaLeads: a.leads };
+      for (const cr of Object.values(corridors)) {
+        if ((cr.gov || CITY_TO_GOV[cr.id]) !== g.name) continue;
+        for (const k of Object.keys(est)) cr[k] = est[k] > 0 ? (cr[k] * act[k]) / est[k] : 0;
+      }
+      Object.assign(g, act);
+    }
+  }
+
   const finalize = (obj) => {
     obj.spend = Math.round(obj.spend);
     obj.impressions = Math.round(obj.impressions);
@@ -657,11 +656,16 @@ export function geoBreakdown(tree, list, catalog) {
   return {
     govs,
     corridors: Object.values(corridors).sort((a, b) => b.spend - a.spend || b.valid - a.valid),
+    source: actual ? "meta" : "estimate",
   };
 }
 
 // ---------------------------------------------------------------- Website & Landing Page Funnel
-export function websiteFunnel(tree, list, catalog, liveEvents = []) {
+// Spend, clicks and landing page views come from Meta; on-site actions
+// (WhatsApp, calls, briefs, layouts…) from the website's own events, counted
+// only inside the period. `estimate` (demo mode only) fills the on-site
+// columns from landing page views instead, as made-up but plausible numbers.
+export function websiteFunnel(tree, list, catalog, liveEvents = [], { estimate = false } = {}) {
   const { since, until } = treeDates(tree);
   const byProject = {};
 
@@ -694,7 +698,7 @@ export function websiteFunnel(tree, list, catalog, liveEvents = []) {
     row.spend += c.m.spend || 0;
     row.impressions += c.m.impressions || 0;
     row.linkClicks += c.m.linkClicks || 0;
-    row.landingViews += c.m.landingViews || Math.round((c.m.linkClicks || 0) * 0.79);
+    row.landingViews += c.m.landingViews || (estimate ? Math.round((c.m.linkClicks || 0) * 0.79) : 0);
     row.metaLeads += (c.m.leads || 0) + (c.m.convos || 0);
   }
 
@@ -711,9 +715,14 @@ export function websiteFunnel(tree, list, catalog, liveEvents = []) {
     if (RESERVED_UP.has(l.stage)) row.reserved += 1;
   }
 
-  // Enrich with on-site micro-conversions (either from live webhook events or proportional to landingViews)
-  for (const evt of liveEvents) {
-    const pid = evt.project || catalog?.projects?.find((p) => String(evt.page || "").includes(p.slug))?.id || "krypton";
+  // On-site actions from the website's events, inside the period. Events on
+  // the home page (no project) are not given to any project.
+  for (const evt of estimate ? [] : liveEvents) {
+    const d = String(evt.at || "").slice(0, 10);
+    if (since && d < since) continue;
+    if (until && d > until) continue;
+    if (evt.test) continue;
+    const pid = evt.project || catalog?.projects?.find((p) => String(evt.page || "").includes(`/${p.slug}/`))?.id;
     const row = byProject[pid];
     if (!row) continue;
     if (/whatsapp/i.test(evt.event)) row.waClicks += 1;
@@ -727,8 +736,8 @@ export function websiteFunnel(tree, list, catalog, liveEvents = []) {
 
   const rows = Object.values(byProject).map((r) => {
     const lpv = r.landingViews;
-    // When running in demo mode or before Umami webhook events arrive, derive realistic on-site engagement from LPVs & project properties
-    if (lpv > 0 && !liveEvents.length) {
+    // Demo mode only: plausible on-site numbers from landing page views.
+    if (estimate && lpv > 0) {
       r.layoutViews = Math.round(lpv * (r.project.id === "krypton" ? 0.48 : 0.36));
       r.paymentViews = Math.round(lpv * 0.41);
       r.filmPlays = r.project.hasFilm ? Math.round(lpv * 0.29) : 0;
