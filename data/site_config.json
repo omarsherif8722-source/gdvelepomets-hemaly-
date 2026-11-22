@@ -33,11 +33,13 @@
  ],
  "disclaimer": "Independent advisory for G Developments projects in Egypt. This is not the official G Developments website. Prices, payment plans and availability come from developer releases (Standard Payment Plans of October 18, 2026 and Primary ATS sheets of November 2026) and are confirmed at reservation.",
  "analytics": {
-  "provider": "Umami Cloud (free Hobby plan)",
+  "provider": "Umami Cloud (free Hobby plan) for site stats; Meta Pixel and Conversions API for the ads",
   "umamiScript": "",
   "umamiWebsiteId": "",
   "umamiShareUrl": "",
   "domains": "mahmoud-elhemaly.onrender.com",
-  "note": "Paste the src and data-website-id from Umami's tracking code, and the share link from the website's Share URL settings. Stats switch on as soon as these are filled in."
+  "metaPixelId": "",
+  "collectUrl": "https://g-media-buying.onrender.com/collect",
+  "note": "Umami: paste the src and data-website-id from Umami's tracking code. Meta: put the Pixel (dataset) ID from Events Manager in metaPixelId, and the same ID in META_DATASET_ID on the dashboard's Render settings; collectUrl is the dashboard address that passes events to Meta's Conversions API. Nothing is sent from any host except the ones in domains, unless a page is opened with ?track=test."
  }
 }

@@ -38,6 +38,10 @@ then run `python3 scripts/build_pages.py` and push. The page switches from the s
 
 **Website stats.** The site sends visits and these events to Umami Cloud (free plan): WhatsApp click and Call click (with where on the page), Brochure download, Film play, Project opened, Krypton layout viewed, Payment plan opened and Brief sent. To switch it on, fill `analytics.umamiScript`, `analytics.umamiWebsiteId` and `analytics.umamiShareUrl` in `data/site_config.json` from your Umami account; the dashboard then shows the stats. Visits only count on `mahmoud-elhemaly.onrender.com` (set in `analytics.domains`), so local testing stays out of the numbers.
 
+**Meta Pixel and Conversions API.** The same actions go to Meta as `PageView`, `ViewContent` (project pages, layouts, the film), `CustomizeProduct` (payment plans), `Contact` (WhatsApp and call), `Lead` (brief sent) and `BrochureDownload`, each twice under one event id: from the browser (the Pixel, once `analytics.metaPixelId` is filled in) and from the media-buying dashboard's server (`analytics.collectUrl`), so Meta counts it once and still gets it when the Pixel is blocked. Put the same Pixel ID in the dashboard's `META_DATASET_ID` on Render. No names or phone numbers are sent. To test, open any page with `?track=test` (with `META_TEST_EVENT_CODE` set on the dashboard, the events show in Events Manager → Test events).
+
+**Ref codes.** A visit's source (`utm_*`, `ad_id`, `ref`, `fbclid` from the ad's link) is kept for 30 days, and every WhatsApp message the site opens ends with `(Ref W-…)` (the ad), a Tracked link's code, or `(Ref WEB)`. The dashboard turns the code back into the campaign, ad set and ad.
+
 The WhatsApp button with the number under it stays on screen everywhere.
 
 ## Updating

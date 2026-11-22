@@ -14,66 +14,136 @@
     if (n >= 1e3) return `${Math.round(n / 1e3)}K`;
     return String(Math.round(n));
   };
-  const wa = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+  // Every WhatsApp message ends with the visit's ref code (see Stats below).
+  const wa = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(withRef(text))}`;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ------------------------------------------------------------------ */
-  /* Stats (Umami + Meta Pixel + Media Buying Command Center Webhook)    */
+  /* Stats: Umami, the Meta Pixel and Meta's Conversions API             */
   /* ------------------------------------------------------------------ */
+  // Every visitor action goes to Umami (site stats), to the Meta Pixel in the
+  // browser, and to the media-buying dashboard, which passes it on to Meta's
+  // Conversions API from its server under the same event id. Meta counts it
+  // once, and still gets it when an ad blocker or iPhone privacy stops the Pixel.
+  // Nothing goes to Meta from anywhere but the real site (analytics.domains),
+  // unless the page was opened with ?track=test.
   const statQueue = [];
-  let mediaWebhookUrl = "";
   const urlParams = new URLSearchParams(location.search);
-  const utmCtx = {
-    utm_source: urlParams.get("utm_source") || "",
-    utm_medium: urlParams.get("utm_medium") || "",
-    utm_campaign: urlParams.get("utm_campaign") || "",
-    utm_content: urlParams.get("utm_content") || "",
-    ref: urlParams.get("ref") || "",
+  const PROJECT = document.body.dataset.project || "";
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* private mode */ } },
   };
-  const FBQ_MAP = {
+  const randomId = () => (window.crypto && crypto.randomUUID ? crypto.randomUUID().replace(/-/g, "") : `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}${Math.random().toString(36).slice(2)}`);
+
+  // Where this visitor came from. Ads carry utm_* tags and ad_id (the URL
+  // parameters from the dashboard's Tracked links); a Tracked link carries ref.
+  // Kept for 30 days, so someone who taps an ad today and messages next week
+  // still counts for that ad.
+  const ATTR_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "ad_id", "ref", "fbclid"];
+  const attr = (() => {
+    const now = {};
+    ATTR_KEYS.forEach((k) => { const v = (urlParams.get(k) || "").trim().slice(0, 200); if (v) now[k] = v; });
+    if (Object.keys(now).length) {
+      const a = { ...now, landing: location.pathname, at: Date.now() };
+      store.set("gme.attr", a);
+      return a;
+    }
+    const saved = store.get("gme.attr");
+    return saved && Date.now() - saved.at < 30 * 864e5 ? saved : {};
+  })();
+  // The code every WhatsApp message carries back to the sales team: a Tracked
+  // link's ref as it is, W- and the ad id in base 36 after an ad, WEB otherwise.
+  // The dashboard turns it back into the campaign, ad set and ad.
+  const REF = (() => {
+    if (/^[A-Za-z0-9-]{2,24}$/.test(attr.ref || "")) return attr.ref.toUpperCase();
+    try { if (/^\d{6,20}$/.test(attr.ad_id || "")) return `W-${BigInt(attr.ad_id).toString(36).toUpperCase()}`; } catch { /* very old browser */ }
+    return "WEB";
+  })();
+  const HAS_REF = /\(Ref [A-Z0-9-]+\)/;
+  const withRef = (text) => (HAS_REF.test(text) ? text : `${text}${text ? "\n\n" : ""}(Ref ${REF})`);
+  // WhatsApp links written into the page HTML get the code when they are tapped.
+  function addRef(a) {
+    try {
+      const link = new URL(a.href);
+      const text = link.searchParams.get("text") || "Hello";
+      if (!HAS_REF.test(text)) a.href = `${link.origin}${link.pathname}?text=${encodeURIComponent(withRef(text))}`;
+    } catch { /* leave the link as it is */ }
+  }
+  const VISITOR = (() => {
+    let v = store.get("gme.vid");
+    if (!v) { v = randomId(); store.set("gme.vid", v); }
+    return v;
+  })();
+
+  // Website event -> Meta event. Contact (WhatsApp or call), Lead (brief sent)
+  // and ViewContent are standard events Meta can optimise ads for.
+  const META_EVENT = {
+    "Page view": ["PageView"],
+    "Project page": ["ViewContent", { content_type: "project" }],
+    "Project opened": ["ViewContent", { content_type: "project" }],
+    "Krypton layout viewed": ["ViewContent", { content_type: "floor_plan" }],
+    "Film play": ["ViewContent", { content_type: "video" }],
+    "Payment plan opened": ["CustomizeProduct"],
     "WhatsApp click": ["Contact", { channel: "whatsapp" }],
     "Call click": ["Contact", { channel: "phone" }],
-    "Brief sent": ["Lead", {}],
-    "Brochure download": ["Schedule", {}],
-    "Payment plan opened": ["CustomizeProduct", {}],
-    "Project opened": ["ViewContent", {}],
-    "Krypton layout viewed": ["ViewContent", {}],
-    "Film play": ["ViewContent", { content_type: "video" }],
+    "Brief sent": ["Lead"],
+    "Brochure download": ["BrochureDownload", {}, true],
   };
+  let metaCfg = { live: false, test: false, pixel: false, collect: "" };
+  const cookie = (name) => (document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`)) || [])[1] || "";
+  // Meta's own browser ids, in Meta's format. The Pixel sets them too; setting
+  // them here means server events still match when the Pixel is blocked.
+  function metaCookies() {
+    const put = (name, value) => { document.cookie = `${name}=${value}; Max-Age=${90 * 86400}; Path=/; SameSite=Lax${location.protocol === "https:" ? "; Secure" : ""}`; };
+    if (!cookie("_fbp")) put("_fbp", `fb.1.${Date.now()}.${Math.floor(Math.random() * 1e10)}`);
+    const clid = urlParams.get("fbclid");
+    if (clid && !cookie("_fbc").endsWith(`.${clid}`)) put("_fbc", `fb.1.${Date.now()}.${clid}`);
+  }
+  function beacon(body) {
+    const text = JSON.stringify(body);
+    try {
+      if (navigator.sendBeacon && navigator.sendBeacon(metaCfg.collect, new Blob([text], { type: "text/plain" }))) return;
+    } catch { /* fall back to fetch */ }
+    fetch(metaCfg.collect, { method: "POST", mode: "cors", keepalive: true, headers: { "Content-Type": "text/plain" }, body: text }).catch(() => {});
+  }
+  function toMeta(name, data = {}) {
+    const m = META_EVENT[name];
+    if (!m || !metaCfg.live) return;
+    const [event, base = {}, isCustom = false] = m;
+    const custom_data = { ...base };
+    const project = data.project || PROJECT;
+    if (project && event !== "PageView") custom_data.content_name = String(project).slice(0, 60);
+    if (data.place) custom_data.place = String(data.place).slice(0, 60);
+    if (data.destination) custom_data.content_category = String(data.destination).slice(0, 60);
+    const eventID = `${event.toLowerCase()}.${randomId().slice(0, 20)}`;
+    if (metaCfg.pixel && typeof window.fbq === "function") window.fbq(isCustom ? "trackCustom" : "track", event, custom_data, { eventID });
+    if (!metaCfg.collect) return;
+    const a = {};
+    ATTR_KEYS.concat("landing").forEach((k) => { if (attr[k]) a[k] = attr[k]; });
+    beacon({
+      event_name: event, event_id: eventID, event_time: Math.floor(Date.now() / 1000), url: location.href,
+      site_event: name, page: location.pathname, project: project || null, custom_data, ref: REF, attr: a,
+      visitor: VISITOR, fbp: cookie("_fbp"), fbc: cookie("_fbc"), ...(metaCfg.test ? { test: true } : {}),
+    });
+  }
   function track(name, data) {
     const send = () => window.umami && typeof window.umami.track === "function" && (data ? window.umami.track(name, data) : window.umami.track(name));
-    if (!send()) statQueue.push([name, data]);
-    if (typeof window.fbq === "function") {
-      const m = FBQ_MAP[name];
-      if (m) window.fbq("track", m[0], { ...m[1], ...(data || {}), project: document.body.dataset.project || "home" });
-      else window.fbq("trackCustom", name, data || {});
-    }
-    try {
-      const evts = JSON.parse(localStorage.getItem("gmb.webEvents") || "[]");
-      evts.unshift({
-        at: new Date().toISOString(),
-        event: name,
-        project: document.body.dataset.project || (data && data.project) || null,
-        page: location.pathname,
-        place: (data && data.place) || null,
-        ...utmCtx,
-      });
-      if (evts.length > 250) evts.length = 250;
-      localStorage.setItem("gmb.webEvents", JSON.stringify(evts));
-    } catch {}
-    if (mediaWebhookUrl) {
-      fetch(mediaWebhookUrl, {
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ event: name, project: document.body.dataset.project || null, page: location.pathname, ...(data || {}), ...utmCtx }),
-      }).catch(() => {});
-    }
+    if (!send() && statQueue.length < 100) statQueue.push([name, data]);
+    toMeta(name, data);
   }
   function initAnalytics(cfg) {
-    const a = cfg && cfg.analytics;
-    if (a && a.mediaDashboardWebhook) mediaWebhookUrl = a.mediaDashboardWebhook;
-    if (a && a.metaPixelId && !window.fbq) {
+    const a = (cfg && cfg.analytics) || {};
+    const domains = String(a.domains || "").split(",").map((d) => d.trim()).filter(Boolean);
+    const onSite = !domains.length || domains.includes(location.hostname);
+    let test = false;
+    try {
+      if (urlParams.get("track") === "test") sessionStorage.setItem("gme.test", "1");
+      test = sessionStorage.getItem("gme.test") === "1";
+    } catch { /* private mode */ }
+    metaCfg = { live: onSite || test, test, pixel: Boolean(a.metaPixelId) && onSite, collect: String(a.collectUrl || "") };
+    if (metaCfg.live) metaCookies();
+    if (metaCfg.pixel && !window.fbq) {
       /* Standard Meta Pixel bootstrap */
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
@@ -83,10 +153,11 @@
         t = b.createElement(e); t.async = !0; t.src = v;
         s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
       })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-      window.fbq("init", a.metaPixelId);
-      window.fbq("track", "PageView");
+      window.fbq("init", String(a.metaPixelId), { external_id: VISITOR });
     }
-    if (!a || !a.umamiWebsiteId || !a.umamiScript) return;
+    toMeta("Page view");
+    if (PROJECT) toMeta("Project page", { project: PROJECT });
+    if (!a.umamiWebsiteId || !a.umamiScript) return;
     const sc = document.createElement("script");
     sc.defer = true;
     sc.src = a.umamiScript;
@@ -114,8 +185,10 @@
     const a = e.target.closest("a[href]");
     if (!a) return;
     const href = a.getAttribute("href");
-    if (href.includes("wa.me/")) track("WhatsApp click", { place: placeOf(a) });
-    else if (href.startsWith("tel:")) track("Call click", { place: placeOf(a) });
+    if (href.includes("wa.me/")) {
+      addRef(a);
+      track("WhatsApp click", { place: placeOf(a) });
+    } else if (href.startsWith("tel:")) track("Call click", { place: placeOf(a) });
     else if (a.hasAttribute("download")) track("Brochure download", { file: href.split("/").pop() });
   }, true);
   const PHONE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.58 3.6a1 1 0 0 1-.25 1z"/></svg>';
@@ -729,7 +802,10 @@
         </article>`;
     }
 
-    initSeg($("[data-kr-beds]"), (btn) => showBeds(Number(btn.dataset.beds)));
+    initSeg($("[data-kr-beds]"), (btn) => {
+      showBeds(Number(btn.dataset.beds));
+      track("Krypton layout viewed", { beds: btn.dataset.beds });
+    });
     planEl.addEventListener("click", (e) => {
       const z = e.target.closest("[data-zoom]");
       if (z) openLightbox([{ src: z.dataset.zoom, caption: "Representative Krypton residence layout — call for full layout book" }]);
@@ -844,7 +920,12 @@
         </div>`;
     }
     initTabs(tabList, (tab) => showRegion(tab.dataset.region));
-    listEl.addEventListener("click", (e) => { const b = e.target.closest("[data-project]"); if (b) showProject(b.dataset.project); });
+    listEl.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-project]");
+      if (!b) return;
+      showProject(b.dataset.project);
+      track("Project opened", { project: b.dataset.project });
+    });
     view.addEventListener("click", (e) => {
       const pl = e.target.closest("[data-see-plan]");
       if (pl) ctx.showPlan && ctx.showPlan(portfolio.projects.find((x) => x.id === pl.dataset.seePlan));
