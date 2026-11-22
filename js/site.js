@@ -26,7 +26,8 @@
   // Conversions API from its server under the same event id. Meta counts it
   // once, and still gets it when an ad blocker or iPhone privacy stops the Pixel.
   // Nothing goes to Meta from anywhere but the real site (analytics.domains),
-  // unless the page was opened with ?track=test.
+  // unless the page was opened with ?track=test, nor once the visitor turns
+  // measuring off (see Privacy below).
   const statQueue = [];
   const urlParams = new URLSearchParams(location.search);
   const PROJECT = document.body.dataset.project || "";
@@ -36,45 +37,62 @@
   };
   const randomId = () => (window.crypto && crypto.randomUUID ? crypto.randomUUID().replace(/-/g, "") : `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}${Math.random().toString(36).slice(2)}`);
 
+  // Privacy. A one-time notice says what is measured and lets the visitor turn
+  // it off (privacy.mode "notice", the default), or measuring waits for a yes
+  // (privacy.mode "ask"). The choice is kept in this browser. Turned off: no
+  // Pixel, nothing sent to the dashboard or Meta, no Meta cookies, no stored
+  // ad source and no ref code in WhatsApp messages.
+  const CHOICE_KEY = "gme.privacy"; // "ok" | "off"
+  const choice = () => store.get(CHOICE_KEY);
+  let privacyMode = "notice";
+  let measure = false;
+
   // Where this visitor came from. Ads carry utm_* tags and ad_id (the URL
   // parameters from the dashboard's Tracked links); a Tracked link carries ref.
   // Kept for 30 days, so someone who taps an ad today and messages next week
   // still counts for that ad.
   const ATTR_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "ad_id", "ref", "fbclid"];
-  const attr = (() => {
-    const now = {};
-    ATTR_KEYS.forEach((k) => { const v = (urlParams.get(k) || "").trim().slice(0, 200); if (v) now[k] = v; });
-    if (Object.keys(now).length) {
-      const a = { ...now, landing: location.pathname, at: Date.now() };
-      store.set("gme.attr", a);
-      return a;
+  const fromUrl = {};
+  ATTR_KEYS.forEach((k) => { const v = (urlParams.get(k) || "").trim().slice(0, 200); if (v) fromUrl[k] = v; });
+  let attr = {};
+  function loadAttr() {
+    if (!measure) { attr = {}; return; }
+    if (Object.keys(fromUrl).length) {
+      attr = { ...fromUrl, landing: location.pathname, at: Date.now() };
+      store.set("gme.attr", attr);
+      return;
     }
     const saved = store.get("gme.attr");
-    return saved && Date.now() - saved.at < 30 * 864e5 ? saved : {};
-  })();
+    attr = saved && Date.now() - saved.at < 30 * 864e5 ? saved : {};
+  }
   // The code every WhatsApp message carries back to the sales team: a Tracked
   // link's ref as it is, W- and the ad id in base 36 after an ad, WEB otherwise.
   // The dashboard turns it back into the campaign, ad set and ad.
-  const REF = (() => {
+  function refCode() {
     if (/^[A-Za-z0-9-]{2,24}$/.test(attr.ref || "")) return attr.ref.toUpperCase();
     try { if (/^\d{6,20}$/.test(attr.ad_id || "")) return `W-${BigInt(attr.ad_id).toString(36).toUpperCase()}`; } catch { /* very old browser */ }
     return "WEB";
-  })();
-  const HAS_REF = /\(Ref [A-Z0-9-]+\)/;
-  const withRef = (text) => (HAS_REF.test(text) ? text : `${text}${text ? "\n\n" : ""}(Ref ${REF})`);
-  // WhatsApp links written into the page HTML get the code when they are tapped.
-  function addRef(a) {
+  }
+  const REF_TAIL = /\s*\(Ref [A-Z0-9-]+\)\s*$/;
+  const withRef = (text) => {
+    const bare = String(text).replace(REF_TAIL, "");
+    return measure ? `${bare}${bare ? "\n\n" : ""}(Ref ${refCode()})` : bare;
+  };
+  // WhatsApp links get the current code when they are tapped (or lose it, if
+  // measuring was turned off after the page drew them).
+  function fixRef(a) {
     try {
       const link = new URL(a.href);
       const text = link.searchParams.get("text") || "Hello";
-      if (!HAS_REF.test(text)) a.href = `${link.origin}${link.pathname}?text=${encodeURIComponent(withRef(text))}`;
+      const next = withRef(text);
+      if (next !== text) a.href = `${link.origin}${link.pathname}?text=${encodeURIComponent(next)}`;
     } catch { /* leave the link as it is */ }
   }
-  const VISITOR = (() => {
+  function visitorId() {
     let v = store.get("gme.vid");
     if (!v) { v = randomId(); store.set("gme.vid", v); }
     return v;
-  })();
+  }
 
   // Website event -> Meta event. Contact (WhatsApp or call), Lead (brief sent)
   // and ViewContent are standard events Meta can optimise ads for.
@@ -109,7 +127,7 @@
   }
   function toMeta(name, data = {}) {
     const m = META_EVENT[name];
-    if (!m || !metaCfg.live) return;
+    if (!m || !metaCfg.live || !measure) return;
     const [event, base = {}, isCustom = false] = m;
     const custom_data = { ...base };
     const project = data.project || PROJECT;
@@ -123,14 +141,25 @@
     ATTR_KEYS.concat("landing").forEach((k) => { if (attr[k]) a[k] = attr[k]; });
     beacon({
       event_name: event, event_id: eventID, event_time: Math.floor(Date.now() / 1000), url: location.href,
-      site_event: name, page: location.pathname, project: project || null, custom_data, ref: REF, attr: a,
-      visitor: VISITOR, fbp: cookie("_fbp"), fbc: cookie("_fbc"), ...(metaCfg.test ? { test: true } : {}),
+      site_event: name, page: location.pathname, project: project || null, custom_data, ref: refCode(), attr: a,
+      visitor: visitorId(), fbp: cookie("_fbp"), fbc: cookie("_fbc"), ...(metaCfg.test ? { test: true } : {}),
     });
   }
   function track(name, data) {
     const send = () => window.umami && typeof window.umami.track === "function" && (data ? window.umami.track(name, data) : window.umami.track(name));
     if (!send() && statQueue.length < 100) statQueue.push([name, data]);
     toMeta(name, data);
+  }
+  let siteCfg = {};
+  let metaStarted = false;
+  // Decides whether this visit is measured. Runs before the page draws its
+  // WhatsApp links, so they carry the right code from the start.
+  function initPrivacy(cfg) {
+    siteCfg = cfg || {};
+    privacyMode = siteCfg.privacy && siteCfg.privacy.mode === "ask" ? "ask" : "notice";
+    const c = choice();
+    measure = c === "ok" || (c !== "off" && privacyMode === "notice");
+    loadAttr();
   }
   function initAnalytics(cfg) {
     const a = (cfg && cfg.analytics) || {};
@@ -141,22 +170,9 @@
       if (urlParams.get("track") === "test") sessionStorage.setItem("gme.test", "1");
       test = sessionStorage.getItem("gme.test") === "1";
     } catch { /* private mode */ }
-    metaCfg = { live: onSite || test, test, pixel: Boolean(a.metaPixelId) && onSite, collect: String(a.collectUrl || "") };
-    if (metaCfg.live) metaCookies();
-    if (metaCfg.pixel && !window.fbq) {
-      /* Standard Meta Pixel bootstrap */
-      !(function (f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
-        if (!f._fbq) f._fbq = n;
-        n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = [];
-        t = b.createElement(e); t.async = !0; t.src = v;
-        s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
-      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-      window.fbq("init", String(a.metaPixelId), { external_id: VISITOR });
-    }
-    toMeta("Page view");
-    if (PROJECT) toMeta("Project page", { project: PROJECT });
+    metaCfg = { live: onSite || test, test, pixel: Boolean(a.metaPixelId) && onSite, pixelId: String(a.metaPixelId || ""), collect: String(a.collectUrl || "") };
+    if (measure) startMeta();
+    if (!choice()) showPrivacyBar();
     if (!a.umamiWebsiteId || !a.umamiScript) return;
     const sc = document.createElement("script");
     sc.defer = true;
@@ -172,6 +188,105 @@
     };
     document.head.appendChild(sc);
   }
+  function startMeta() {
+    if (!metaCfg.live) return;
+    metaCookies();
+    if (metaCfg.pixel) {
+      if (!window.fbq) {
+        /* Standard Meta Pixel bootstrap */
+        !(function (f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+          if (!f._fbq) f._fbq = n;
+          n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = [];
+          t = b.createElement(e); t.async = !0; t.src = v;
+          s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+        })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+        window.fbq("init", metaCfg.pixelId, { external_id: visitorId() });
+      } else window.fbq("consent", "grant");
+    }
+    if (metaStarted) return;
+    metaStarted = true;
+    toMeta("Page view");
+    if (PROJECT) toMeta("Project page", { project: PROJECT });
+  }
+  function stopMeta() {
+    if (typeof window.fbq === "function") window.fbq("consent", "revoke");
+    ["_fbp", "_fbc"].forEach((n) => {
+      document.cookie = `${n}=; Max-Age=0; Path=/`;
+      document.cookie = `${n}=; Max-Age=0; Path=/; Domain=${location.hostname}`;
+    });
+    try { ["gme.attr", "gme.vid"].forEach((k) => localStorage.removeItem(k)); } catch { /* private mode */ }
+    attr = {};
+  }
+  function setPrivacy(value) {
+    store.set(CHOICE_KEY, value);
+    measure = value === "ok";
+    if (measure) { loadAttr(); startMeta(); } else stopMeta();
+    hidePrivacyBar();
+    const dlg = $("[data-privacy-dialog]");
+    if (dlg) fillPrivacy(dlg);
+  }
+
+  // The notice: once, at the bottom, until the visitor chooses.
+  function showPrivacyBar() {
+    if ($("[data-privacy-bar]")) return;
+    const ask = privacyMode === "ask";
+    const bar = document.createElement("div");
+    bar.className = "privacy-bar";
+    bar.dataset.privacyBar = "";
+    bar.setAttribute("role", "region");
+    bar.setAttribute("aria-label", "Privacy");
+    bar.innerHTML = `<p>${ask ? "May this site measure" : "This site measures"} visits and taps on its WhatsApp and call buttons, and share${ask ? "" : "s"} them with Meta to measure its ads on Facebook and Instagram${ask ? "?" : "."} Your name and phone number are never sent. <button type="button" class="privacy-bar__more" data-privacy-open>Details</button></p>
+      <div class="privacy-bar__actions"><button type="button" class="btn btn--small btn--line" data-privacy-set="off">${ask ? "No" : "Turn off"}</button><button type="button" class="btn btn--small btn--dark" data-privacy-set="ok">${ask ? "Allow" : "OK"}</button></div>`;
+    document.body.appendChild(bar);
+    // Phones: lift the WhatsApp button above the notice.
+    const fit = () => document.documentElement.style.setProperty("--privacy-h", `${bar.offsetHeight + 12}px`);
+    fit();
+    window.addEventListener("resize", fit);
+    bar.fit = fit;
+  }
+  function hidePrivacyBar() {
+    const bar = $("[data-privacy-bar]");
+    if (!bar) return;
+    window.removeEventListener("resize", bar.fit);
+    bar.remove();
+    document.documentElement.style.removeProperty("--privacy-h");
+  }
+  function openPrivacy() {
+    let dlg = $("[data-privacy-dialog]");
+    if (!dlg) {
+      dlg = document.createElement("dialog");
+      dlg.className = "privacy-dlg";
+      dlg.dataset.privacyDialog = "";
+      dlg.setAttribute("aria-label", "Privacy and ad measurement");
+      document.body.appendChild(dlg);
+      dlg.addEventListener("click", (e) => { if (e.target === dlg || e.target.closest("[data-privacy-close]")) dlg.close(); });
+    }
+    fillPrivacy(dlg);
+    dlg.showModal();
+  }
+  function fillPrivacy(dlg) {
+    const phone = (siteCfg.contact && siteCfg.contact.phoneDisplay) || "+20 122 727 5122";
+    const who = (siteCfg.advisor && siteCfg.advisor.name) || "Mahmoud Elhemaly";
+    const copyKept = Boolean(siteCfg.leadCapture && siteCfg.leadCapture.webhookUrl);
+    dlg.innerHTML = `<div class="privacy-dlg__body">
+      <button class="privacy-dlg__close" type="button" data-privacy-close>Close</button>
+      <h2>Privacy and ad measurement</h2>
+      <p><strong>Who.</strong> ${esc(who)}, an independent advisor for G Developments projects. Questions: WhatsApp or call <span class="nowrap">${esc(phone)}</span>.</p>
+      <p><strong>What is measured.</strong> The pages you open and the buttons you tap: WhatsApp, call, payment plans, floor plans, the film and the brief. With each: your browser type, your IP address, and a random number kept in your browser to recognise a return visit.</p>
+      <p><strong>Who receives it.</strong> Meta, to measure and improve this site's ads on Facebook and Instagram, under <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's privacy policy</a>. It passes through the advisor's own ads dashboard on the way.</p>
+      <p><strong>Cookies and storage.</strong> Meta's <code>_fbp</code> and <code>_fbc</code> cookies (90 days), and the ad that brought you here (30 days), kept in your browser. Messages you start on WhatsApp from this site end with a short code, such as <code>(Ref WEB)</code>, that says which ad you came from. You can delete it before sending.</p>
+      <p><strong>Never sent to Meta.</strong> Your name, your phone number, or anything you write. The brief opens in your own WhatsApp${copyKept ? ", and its answers are also saved for the advisor when you tap Send brief." : ", and nothing reaches the advisor until you press send there."}</p>
+      <p class="privacy-dlg__state">Measuring is <strong>${measure ? "on" : "off"}</strong> in this browser.</p>
+      <div class="privacy-dlg__actions">${measure ? '<button type="button" class="btn btn--small btn--line" data-privacy-set="off">Turn it off</button>' : '<button type="button" class="btn btn--small btn--dark" data-privacy-set="ok">Turn it on</button>'}<button type="button" class="btn btn--small btn--line" data-privacy-close>Close</button></div>
+    </div>`;
+  }
+  document.addEventListener("click", (e) => {
+    const set = e.target.closest("[data-privacy-set]");
+    if (set) return setPrivacy(set.dataset.privacySet);
+    if (e.target.closest("[data-privacy-open]")) openPrivacy();
+  });
   // Where on the page a click happened, for WhatsApp and call events
   const placeOf = (el) => {
     if (el.dataset.wa) return el.dataset.wa;
@@ -186,7 +301,7 @@
     if (!a) return;
     const href = a.getAttribute("href");
     if (href.includes("wa.me/")) {
-      addRef(a);
+      fixRef(a);
       track("WhatsApp click", { place: placeOf(a) });
     } else if (href.startsWith("tel:")) track("Call click", { place: placeOf(a) });
     else if (a.hasAttribute("download")) track("Brochure download", { file: href.split("/").pop() });
@@ -671,6 +786,7 @@
       ctx.planById = {};
       terms.destinations.forEach((d) => d.phases.forEach((ph) => { ctx.planById[ph.id] = { ...ph, destination: d }; }));
       ctx.planForUnit = (x) => { const ph = ctx.planById[x.plan]; return ph ? ph.plans[0] : null; };
+      initPrivacy(config);
       renderStats(ctx);
       renderParcelPrices(ctx);
       if ($("[data-kr-tabs]")) renderKrypton(ctx);

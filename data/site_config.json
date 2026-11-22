@@ -41,5 +41,9 @@
   "metaPixelId": "",
   "collectUrl": "https://g-media-buying.onrender.com/collect",
   "note": "Umami: paste the src and data-website-id from Umami's tracking code. Meta: put the Pixel (dataset) ID from Events Manager in metaPixelId, and the same ID in META_DATASET_ID on the dashboard's Render settings; collectUrl is the dashboard address that passes events to Meta's Conversions API. Nothing is sent from any host except the ones in domains, unless a page is opened with ?track=test."
+ },
+ "privacy": {
+  "mode": "notice",
+  "note": "notice: measure unless the visitor turns it off (a short notice shows once, with Details and Turn off). ask: measure only after the visitor taps Allow. Ask a lawyer which one G Developments needs."
  }
 }

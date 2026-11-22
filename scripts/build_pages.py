@@ -400,7 +400,7 @@ def tail(film=None):
     <div class="wrap footer__grid">
       <p class="footer__mark">Mahmoud Elhemaly <span>Private real estate advisory</span></p>
       <p class="footer__legal" data-disclaimer>Independent advisory for G Developments projects in Egypt. This is not the official G Developments website. Prices, payment plans and availability come from developer releases and are confirmed at reservation.</p>
-      <p class="footer__legal">NEWKAIRO, Krypton, Golf Views and Neon Views images and films are from the developer. Images for other destinations are illustrative. © 2026</p>
+      <p class="footer__legal">NEWKAIRO, Krypton, Golf Views and Neon Views images and films are from the developer. Images for other destinations are illustrative. © 2026 · <button type="button" class="footer__link" data-privacy-open>Privacy and ad measurement</button></p>
     </div>
   </footer>
 

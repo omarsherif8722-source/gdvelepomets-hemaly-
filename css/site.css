@@ -978,3 +978,26 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
   .parcels { grid-template-columns: minmax(0, 1fr); }
   .hero__tag { top: calc(var(--mast) + 10px); }
 }
+
+/* ------------------------------------------------------------------ */
+/* Privacy notice and details (js/site.js, Privacy)                    */
+/* ------------------------------------------------------------------ */
+.privacy-bar { position: fixed; z-index: 60; left: clamp(12px, 2vw, 28px); bottom: clamp(12px, 2.4vw, 28px); width: min(440px, calc(100vw - 24px)); display: grid; gap: 12px; padding: 16px 18px; background: var(--paper); color: var(--ink); border-top: 4px solid var(--vermilion); box-shadow: 0 18px 48px rgba(20, 8, 8, 0.28); font-size: 14px; line-height: 1.5; }
+.privacy-bar p { margin: 0; }
+.privacy-bar__more { padding: 0; border: 0; background: none; font: inherit; color: var(--oxblood); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.privacy-bar__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.privacy-dlg { margin: auto; width: min(600px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; background: var(--paper); color: var(--ink); border-top: 5px solid var(--vermilion); }
+.privacy-dlg__body { position: relative; padding: clamp(20px, 4vw, 32px); font-size: 15px; line-height: 1.6; }
+.privacy-dlg h2 { margin: 0 0 14px; padding-right: 72px; font-family: var(--display); font-weight: 400; font-size: clamp(26px, 4vw, 34px); line-height: 1.15; }
+.privacy-dlg p { margin: 0 0 12px; }
+.privacy-dlg a { color: var(--oxblood); }
+.privacy-dlg code { padding: 1px 5px; background: var(--sand); font-size: 0.88em; }
+.privacy-dlg__close { position: absolute; top: 16px; right: 16px; padding: 6px 12px; border: 1px solid var(--mist); background: none; font: inherit; font-size: 13px; color: var(--ink); cursor: pointer; }
+.privacy-dlg .nowrap { white-space: nowrap; }
+.privacy-dlg__state { padding-top: 12px; border-top: 1px solid var(--mist); }
+.privacy-dlg__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.footer__link { padding: 0; border: 0; background: none; font: inherit; color: #fff; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+@media (max-width: 760px) {
+  .privacy-bar { left: 12px; right: 12px; bottom: 12px; width: auto; }
+  .wa-float { bottom: calc(clamp(14px, 2.4vw, 28px) + var(--privacy-h, 0px)); }
+}

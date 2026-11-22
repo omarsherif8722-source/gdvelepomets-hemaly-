@@ -40,6 +40,8 @@ then run `python3 scripts/build_pages.py` and push. The page switches from the s
 
 **Meta Pixel and Conversions API.** The same actions go to Meta as `PageView`, `ViewContent` (project pages, layouts, the film), `CustomizeProduct` (payment plans), `Contact` (WhatsApp and call), `Lead` (brief sent) and `BrochureDownload`, each twice under one event id: from the browser (the Pixel, once `analytics.metaPixelId` is filled in) and from the media-buying dashboard's server (`analytics.collectUrl`), so Meta counts it once and still gets it when the Pixel is blocked. Put the same Pixel ID in the dashboard's `META_DATASET_ID` on Render. No names or phone numbers are sent. To test, open any page with `?track=test` (with `META_TEST_EVENT_CODE` set on the dashboard, the events show in Events Manager → Test events).
 
+**Privacy notice.** On the first visit a short notice says what is measured and that it goes to Meta, with Details (the full explanation, also linked in every footer) and Turn off. Turning it off stops the Pixel and everything sent to the dashboard and Meta, deletes Meta's cookies, and drops the ref code from WhatsApp messages. `privacy.mode` in `data/site_config.json`: `notice` (measure unless turned off, the default) or `ask` (measure only after Allow).
+
 **Ref codes.** A visit's source (`utm_*`, `ad_id`, `ref`, `fbclid` from the ad's link) is kept for 30 days, and every WhatsApp message the site opens ends with `(Ref W-…)` (the ad), a Tracked link's code, or `(Ref WEB)`. The dashboard turns the code back into the campaign, ad set and ad.
 
 The WhatsApp button with the number under it stays on screen everywhere.
