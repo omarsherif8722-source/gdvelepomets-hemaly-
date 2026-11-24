@@ -57,6 +57,10 @@ PHASES = {
     "SEASHELL RAS EL HEKMA 02/B": ("seashell-rah", "Phase 02/B", "sr-p12"),
     "SEASHELL RAS EL HEKMA 02/X": ("seashell-rah", "Phase 02/X", "sr-p12"),
     "SEASHELL RAS EL HEKMA CABIN": ("seashell-rah", "G Cabanas", "sr-cabins"),
+    "PLAYA RAS EL HEKMA CABINS": ("playa-rah", "Playa Cabins", "pr-all"),
+    "PLAYA RAS EL HEKMA PHASE 1": ("playa-rah", "Phase 1", "pr-all"),
+    "PLAYA RAS EL HEKMA PHASE 2": ("playa-rah", "Phase 2", "pr-all"),
+    "PLAYA RAS EL HEKMA PHASE 3": ("playa-rah", "Phase 3", "pr-all"),
 }
 
 PROJECTS = {
@@ -64,6 +68,7 @@ PROJECTS = {
     "ivy": "IVY",
     "newgiza": "NEWGIZA",
     "playa": "Playa",
+    "playa-rah": "Playa Ras El Hekma",
     "seashell-rah": "Seashell Ras El Hekma",
 }
 

@@ -1501,15 +1501,45 @@
   /* Library                                                             */
   /* ------------------------------------------------------------------ */
   const LIBRARY = [
-    { id: "krypton-block-1", title: "Krypton, Block 1", meta: "77 pages, 25 MB. Story, renders, floor plates and all 25 layouts.", file: "assets/brochures/krypton-block-1.pdf", cover: "assets/img/krypton/kr-portrait" },
-    { id: "krypton-block-2", title: "Krypton, Block 2", meta: "77 pages, 31 MB. Block 2 floor plates with released units.", file: "assets/brochures/krypton-block-2.pdf", cover: "assets/img/krypton/kr-lighter" },
-    { id: "golf-views", title: "NEWKAIRO Golf, Argon Views", meta: "71 pages, 17 MB. Golf estates, Fairscapes, Tee View and twin villas.", file: "assets/brochures/newkairo-golf-views-argon.pdf", cover: "assets/img/golf/golf-clubhouse" },
-    { id: "neon-views", title: "Neon Views", meta: "83 pages, 34 MB. Landscape, typologies and floor plans.", file: "assets/brochures/newkairo-neon-views.pdf", cover: "assets/img/neon/neon-cover" },
+    { id: "krypton-block-1", region: "east", title: "Krypton, Block 1", meta: "77 pages · NEWKAIRO. Story, Boulevard renders, floor plates and all 25 serviced residence layouts.", cover: "assets/img/krypton/kr-portrait" },
+    { id: "krypton-block-2", region: "east", title: "Krypton, Block 2", meta: "77 pages · NEWKAIRO. Block 2 floor plates, park & Boulevard orientations and released units.", cover: "assets/img/krypton/kr-lighter" },
+    { id: "golf-views", region: "east", title: "NEWKAIRO Golf, Argon Views", meta: "71 pages · NEWKAIRO. Golf estates, Fairscapes, Tee View and twin villas overlooking the 18-hole course.", cover: "assets/img/golf/golf-clubhouse" },
+    { id: "neon-views", region: "east", title: "Neon Views", meta: "83 pages · NEWKAIRO. Swimmable lakes, standalone villas, townhouses and floor plans.", cover: "assets/img/neon/neon-cover" },
+    { id: "newgiza-hog", region: "west", title: "House of Giza, NEWGIZA", meta: "Conceptual e-brochure · NEWGIZA. Championship golf frontage, clubhouse pavilions and plateau views.", cover: "assets/img/newgiza/ng-hog" },
+    { id: "newgiza-kingsrange", region: "west", title: "Kingsrange — Kings Collection RB21", meta: "50 pages · NEWGIZA. Lakefront and golf-side apartment layouts, elevations and floor plates.", cover: "assets/img/newgiza/ng-kingsrange" },
+    { id: "artlife-master", region: "west", title: "Artlife, NEWGIZA", meta: "Updated master brochure · NEWGIZA. Open-air dining promenade, branded residences, Twilight and commercial blocks.", cover: "assets/img/artlife/al-promenade" },
+    { id: "artlife-cypher", region: "west", title: "Cypher Building C2, Artlife", meta: "E-brochure R2 · NEWGIZA. Residences operated by Autograph Collection Hotels, lagoon court and floor plans.", cover: "assets/img/artlife/al-cypher" },
+    { id: "artlife-pixellabs", region: "west", title: "Pixel Labs, Artlife", meta: "Technical brochure · NEWGIZA. Grade-A office floors in Block 13, core specs and floor plates.", cover: "assets/img/artlife/al-pixellabs" },
+    { id: "meditown-clinics", region: "west", title: "Meditown Medical District", meta: "E-brochure · NEWGIZA. Fully finished medical clinics beside New Giza Health Park, Blocks B1–B4.", cover: "assets/img/meditown/md-pavilion" },
+    { id: "ivy-conceptual", region: "west", title: "IVY New Zayed — Master Brochure", meta: "Conceptual e-brochure · New Zayed. 17-acre lake, IVYPARK sports club and Alchemy Architecture masterplan.", cover: "assets/img/ivy/ivy-hero" },
+    { id: "ivy-onestorey", region: "west", title: "IVY One-Storey & Standalone Villas", meta: "Villa e-brochure · New Zayed. Single-storey pool villas, twin & town villas and plot dimensions.", cover: "assets/img/ivy/ivy-pool-villa" },
+    { id: "ivy-apartments", region: "west", title: "IVY Garden Apartments", meta: "Apartments e-brochure · New Zayed. Low-rise G+2 finished residences with private gardens and terraces.", cover: "assets/img/ivy/ivy-apartments" },
+    { id: "seashell-rah-launch", region: "coast", title: "Seashell Ras El Hekma — New Launch", meta: "August 2025 e-brochure · KM 194. Lagoon View chalets, G Residence lofts & duplexes and masterplan.", cover: "assets/img/seashell-rah/sr-chalets" },
+    { id: "seashell-rah-waterfront", region: "coast", title: "Seashell Ras El Hekma — Waterfront Villas", meta: "Phase 2 Villas e-brochure · KM 194. Grand Villas, beachfront standalone homes and private pools.", cover: "assets/img/seashell-rah/sr-grand-villa" },
+    { id: "seashell-rah-beach", region: "coast", title: "Seashell Ras El Hekma — Beach Living", meta: "Beach Living presentation · KM 194. Swimmable Crystal Lagoons, sandy islands and G Cabanas.", cover: "assets/img/seashell-rah/sr-hero" },
+    { id: "playa-rah-brochure", region: "coast", title: "Playa Ras El Hekma — Updated Brochure", meta: "129 pages · KM 204. 25+ swimmable lagoons, Horizon & Grand Beach Houses and G Hotel serviced chalets.", cover: "assets/img/playa-rah/pr-onestorey" },
+    { id: "playa-rah-twinhouse", region: "coast", title: "Playa Ras El Hekma — Deluxe Twinhouses", meta: "Twinhouse release · KM 204. Private pool twin villas, plot orientations and floor layouts.", cover: "assets/img/playa-rah/pr-twinhouse" },
+    { id: "playa-presentation", region: "coast", title: "Playa Ghazala — Client Presentation", meta: "Ghazala Bay · KM 141. 1.5 km Mediterranean beachfront, Crystal Lagoons, Sports Club and masterplan.", cover: "assets/img/playa/pl-hero" },
+    { id: "playa-gvillage", region: "coast", title: "G Village, Playa Ghazala", meta: "E-brochure · Ghazala Bay. Terracotta chalets, garden duplexes and twin villas with 10% down.", cover: "assets/img/playa/pl-gvillage" },
+    { id: "playa-cabins", region: "coast", title: "Playa Cabins, Ghazala Bay", meta: "Cabins e-brochure · Ghazala Bay. Beachside archway cabins delivering in 6 months.", cover: "assets/img/playa/pl-cabins" },
+    { id: "seashell-gvillas", region: "coast", title: "Seashell & G Villas, Ghazala Bay", meta: "Flagship e-brochure · Sidi Abdelrahman. Delivered beachfront villas, lagoon residences and Seashell Walk.", cover: "assets/img/seashell/ss-hero" },
   ];
 
   function renderBooks() {
     const lib = $("[data-library]");
-    if (lib) lib.innerHTML = LIBRARY.map(bookCard).join("");
+    const libTabs = $("[data-library-tabs]");
+    if (lib) {
+      const drawLib = (reg) => {
+        const items = (!reg || reg === "all") ? LIBRARY : LIBRARY.filter((b) => b.region === reg);
+        lib.innerHTML = items.map(bookCard).join("");
+      };
+      if (libTabs) {
+        initTabs(libTabs, (tab) => drawLib(tab.dataset.libRegion));
+        drawLib("east");
+      } else {
+        drawLib("all");
+      }
+    }
     $$("[data-p-books]").forEach((el) => {
       const ids = el.dataset.pBooks.split(",");
       el.innerHTML = LIBRARY.filter((b) => ids.includes(b.id)).map(bookCard).join("");

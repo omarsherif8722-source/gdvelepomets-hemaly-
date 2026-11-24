@@ -399,9 +399,16 @@
    "name": "NEWGIZA",
    "place": "KM 22, Cairo–Alexandria Desert Road",
    "status": "Ready and near-ready",
-   "illustrative": true,
-   "image": "assets/images/newgiza-flagship",
-   "gallery": [],
+   "illustrative": false,
+   "image": "assets/img/newgiza/ng-hero",
+   "gallery": [
+    "assets/img/newgiza/ng-pyramids",
+    "assets/img/newgiza/ng-kingsrange",
+    "assets/img/newgiza/ng-kingsrange-night",
+    "assets/img/newgiza/ng-hog",
+    "assets/img/newgiza/ng-hog-lounge",
+    "assets/img/newgiza/ng-aerial"
+   ],
    "intro": "The founding city of G Developments: 1,550 acres on the Giza plateau with an 18-hole golf course, New Giza University, the sporting club and Health Park. Today's releases are cash sales close to handover.",
    "facts": [
     [
@@ -442,7 +449,10 @@
      "Westridge"
     ]
    },
-   "brochures": [],
+   "brochures": [
+    "newgiza-hog",
+    "newgiza-kingsrange"
+   ],
    "slug": "newgiza",
    "wordmark": "NEWGIZA",
    "heroTitle": "The original G Developments city, ready now.",
@@ -452,8 +462,12 @@
     "dark3": "#12211a",
     "accent": "#c9a45c"
    },
-   "heroImage": "assets/images/newgiza-flagship",
-   "video": null,
+   "heroImage": "assets/img/newgiza/ng-hero",
+   "video": {
+    "loop": "assets/video/newgiza-loop.mp4",
+    "film": "assets/video/newgiza-film.mp4",
+    "poster": "assets/video/newgiza-poster.jpg"
+   },
    "amenities": [
     [
      "golf",
@@ -484,9 +498,15 @@
    "parent": "NEWGIZA",
    "place": "Cypher, Twilight and Pixel Labs, NEWGIZA",
    "status": "Selling",
-   "illustrative": true,
-   "image": "assets/images/hero-krypton-newkairo",
-   "gallery": [],
+   "illustrative": false,
+   "image": "assets/img/artlife/al-hero",
+   "gallery": [
+    "assets/img/artlife/al-cypher",
+    "assets/img/artlife/al-promenade",
+    "assets/img/artlife/al-plaza",
+    "assets/img/artlife/al-pavilion",
+    "assets/img/artlife/al-pixellabs"
+   ],
    "intro": "NEWGIZA's branded quarter: Cypher residences operated by Autograph Collection, the Twilight and Spectre hotel-serviced series, The Collection, and Pixel Labs and Sudoku offices.",
    "facts": [
     [
@@ -557,7 +577,11 @@
      "Artlife · Sudoku"
     ]
    },
-   "brochures": [],
+   "brochures": [
+    "artlife-master",
+    "artlife-cypher",
+    "artlife-pixellabs"
+   ],
    "slug": "artlife",
    "wordmark": "artlife",
    "heroTitle": "Branded homes and offices in NEWGIZA's art quarter.",
@@ -567,7 +591,7 @@
     "dark3": "#121019",
     "accent": "#d9a441"
    },
-   "heroImage": "assets/images/hero-krypton-newkairo",
+   "heroImage": "assets/img/artlife/al-hero",
    "video": null,
    "amenities": [
     [
@@ -591,9 +615,14 @@
    "parent": "NEWGIZA",
    "place": "Health district, NEWGIZA",
    "status": "Selling",
-   "illustrative": true,
-   "image": null,
-   "gallery": [],
+   "illustrative": false,
+   "image": "assets/img/meditown/md-hero",
+   "gallery": [
+    "assets/img/meditown/md-pavilion",
+    "assets/img/meditown/md-clinic",
+    "assets/img/meditown/md-courtyard",
+    "assets/img/meditown/md-aerial"
+   ],
    "intro": "Fully finished clinics beside New Giza Health Park, for practitioners who want to own their practice in West Cairo's medical district.",
    "facts": [
     [
@@ -633,7 +662,9 @@
      "md-b34"
     ]
    },
-   "brochures": [],
+   "brochures": [
+    "meditown-clinics"
+   ],
    "slug": "meditown",
    "wordmark": "meditown",
    "heroTitle": "Own your clinic in West Cairo's medical district.",
@@ -643,7 +674,7 @@
     "dark3": "#0b2627",
     "accent": "#7cc1a8"
    },
-   "heroImage": "assets/images/newgiza-flagship",
+   "heroImage": "assets/img/meditown/md-hero",
    "video": null,
    "amenities": [
     [
@@ -662,9 +693,16 @@
    "name": "IVY",
    "place": "New Zayed, Cairo–Alexandria Desert Road",
    "status": "Selling",
-   "illustrative": true,
-   "image": "assets/images/ivy-new-zayed",
-   "gallery": [],
+   "illustrative": false,
+   "image": "assets/img/ivy/ivy-hero",
+   "gallery": [
+    "assets/img/ivy/ivy-pool-villa",
+    "assets/img/ivy/ivy-onestorey",
+    "assets/img/ivy/ivy-apartments",
+    "assets/img/ivy/ivy-park",
+    "assets/img/ivy/ivy-walkway",
+    "assets/img/ivy/ivy-masterplan"
+   ],
    "intro": "A low-rise town by Alchemy Architecture around a 17-acre lake, with the IVYPARK sports club and The King's School Canterbury Cairo inside the gates.",
    "facts": [
     [
@@ -700,7 +738,11 @@
    "inventory": {
     "project": "ivy"
    },
-   "brochures": [],
+   "brochures": [
+    "ivy-conceptual",
+    "ivy-onestorey",
+    "ivy-apartments"
+   ],
    "slug": "ivy",
    "wordmark": "IVY",
    "heroTitle": "A low-rise town around a 17-acre lake.",
@@ -710,7 +752,7 @@
     "dark3": "#15261b",
     "accent": "#a3c26a"
    },
-   "heroImage": "assets/images/ivy-new-zayed",
+   "heroImage": "assets/img/ivy/ivy-hero",
    "video": null,
    "amenities": [
     [
@@ -737,9 +779,16 @@
    "name": "Seashell Ras El Hekma",
    "place": "KM 194, Ras El Hekma",
    "status": "Selling",
-   "illustrative": true,
-   "image": "assets/images/seashell-ras-el-hekma",
-   "gallery": [],
+   "illustrative": false,
+   "image": "assets/img/seashell-rah/sr-hero",
+   "gallery": [
+    "assets/img/seashell-rah/sr-lagoon",
+    "assets/img/seashell-rah/sr-chalets",
+    "assets/img/seashell-rah/sr-beachfront",
+    "assets/img/seashell-rah/sr-grand-villa",
+    "assets/img/seashell-rah/sr-pool-villa",
+    "assets/img/seashell-rah/sr-beach-villa"
+   ],
    "intro": "1.6 km of private beach with swimmable lagoons: lagoon chalets, floating chalets, Grand Beach Houses, G Residence lofts and duplexes, and beach villas.",
    "facts": [
     [
@@ -779,7 +828,11 @@
    "inventory": {
     "project": "seashell-rah"
    },
-   "brochures": [],
+   "brochures": [
+    "seashell-rah-launch",
+    "seashell-rah-waterfront",
+    "seashell-rah-beach"
+   ],
    "slug": "seashell-ras-el-hekma",
    "wordmark": "seashell",
    "heroTitle": "1.6 km of private beach and swimmable lagoons.",
@@ -789,7 +842,7 @@
     "dark3": "#09212c",
     "accent": "#e4b98a"
    },
-   "heroImage": "assets/images/seashell-ras-el-hekma",
+   "heroImage": "assets/img/seashell-rah/sr-hero",
    "video": null,
    "amenities": [
     [
@@ -808,9 +861,15 @@
    "name": "Playa Ras El Hekma",
    "place": "KM 204, Ras El Hekma",
    "status": "Selling",
-   "illustrative": true,
-   "image": "assets/images/playa-ras-el-hekma",
-   "gallery": [],
+   "illustrative": false,
+   "image": "assets/img/playa-rah/pr-hero",
+   "gallery": [
+    "assets/img/playa-rah/pr-onestorey",
+    "assets/img/playa-rah/pr-villa",
+    "assets/img/playa-rah/pr-twinhouse",
+    "assets/img/playa-rah/pr-courtyard",
+    "assets/img/playa-rah/pr-entrance"
+   ],
    "intro": "240 acres around more than 25 swimmable lagoons. Phase 3 brings the G Serviced Chalets, managed by G Hotel.",
    "facts": [
     [
@@ -864,7 +923,10 @@
      "pr-all"
     ]
    },
-   "brochures": [],
+   "brochures": [
+    "playa-rah-brochure",
+    "playa-rah-twinhouse"
+   ],
    "slug": "playa-ras-el-hekma",
    "wordmark": "playa",
    "heroTitle": "Hotel-managed chalets on twenty-five lagoons.",
@@ -874,7 +936,7 @@
     "dark3": "#082a33",
     "accent": "#f08a5d"
    },
-   "heroImage": "assets/images/playa-ras-el-hekma",
+   "heroImage": "assets/img/playa-rah/pr-hero",
    "video": null,
    "amenities": [
     [
@@ -885,7 +947,10 @@
      "hotel",
      "Managed by G Hotel"
     ]
-   ]
+   ],
+   "inventory": {
+    "project": "playa-rah"
+   }
   },
   {
    "id": "playa",
@@ -893,9 +958,16 @@
    "name": "Playa Ghazala",
    "place": "KM 141, Ghazala Bay",
    "status": "Selling and ready",
-   "illustrative": true,
-   "image": "assets/images/playa-ghazala",
-   "gallery": [],
+   "illustrative": false,
+   "image": "assets/img/playa/pl-hero",
+   "gallery": [
+    "assets/img/playa/pl-lagoons",
+    "assets/img/playa/pl-gvillas-lagoon",
+    "assets/img/playa/pl-promenade",
+    "assets/img/playa/pl-gvillage",
+    "assets/img/playa/pl-club",
+    "assets/img/playa/pl-cabins"
+   ],
    "intro": "An operating resort on 1.5 km of Ghazala Bay. G Village adds chalets, duplexes and twin villas; Phase 1 and 2 offer standalone villas and townhomes.",
    "facts": [
     [
@@ -936,7 +1008,11 @@
    "inventory": {
     "project": "playa"
    },
-   "brochures": [],
+   "brochures": [
+    "playa-presentation",
+    "playa-gvillage",
+    "playa-cabins"
+   ],
    "slug": "playa-ghazala",
    "wordmark": "playa",
    "heroTitle": "An operating resort on Ghazala Bay.",
@@ -946,8 +1022,12 @@
     "dark3": "#0b2a2f",
     "accent": "#e8c08a"
    },
-   "heroImage": "assets/images/playa-ghazala",
-   "video": null,
+   "heroImage": "assets/img/playa/pl-hero",
+   "video": {
+    "loop": "assets/video/playa-loop.mp4",
+    "film": "assets/video/playa-film.mp4",
+    "poster": "assets/video/playa-poster.jpg"
+   },
    "amenities": [
     [
      "beach",
@@ -970,9 +1050,13 @@
    "name": "Seashell",
    "place": "KM 135, Sidi Abdelrahman",
    "status": "Delivered",
-   "illustrative": true,
-   "image": null,
-   "gallery": [],
+   "illustrative": false,
+   "image": "assets/img/seashell/ss-hero",
+   "gallery": [
+    "assets/img/seashell/ss-coast",
+    "assets/img/seashell/ss-terrace",
+    "assets/img/seashell/ss-beach"
+   ],
    "intro": "The original Seashell on Sidi Abdelrahman bay. Remaining developer units sell for cash with handover in three months, alongside a resale desk.",
    "facts": [
     [
@@ -1004,7 +1088,9 @@
      "ss-cash"
     ]
    },
-   "brochures": [],
+   "brochures": [
+    "seashell-gvillas"
+   ],
    "slug": "seashell",
    "wordmark": "seashell",
    "heroTitle": "The original Seashell, delivered and lived in.",
@@ -1014,7 +1100,7 @@
     "dark3": "#0b1e2f",
     "accent": "#e7c9a6"
    },
-   "heroImage": "assets/images/seashell-ras-el-hekma",
+   "heroImage": "assets/img/seashell/ss-hero",
    "video": null,
    "amenities": [
     [

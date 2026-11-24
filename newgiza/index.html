@@ -9,7 +9,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="NEWGIZA | G Developments">
   <meta property="og:description" content="NEWGIZA: The original G Developments city, ready now. The founding city of G Developments: 1,550 acres on the Giza plateau with an 18-hole golf course, New Giza University, the sporting club and Health Park. Today&#x27;s releases are cash sales close to handover.">
-  <meta property="og:image" content="/assets/images/newgiza-flagship.jpg">
+  <meta property="og:image" content="/assets/img/newgiza/ng-hero.jpg">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="G Developments">
@@ -19,7 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/site.css?v=6c2940e489">
+  <link rel="preload" as="image" href="/assets/video/newgiza-poster.jpg">
+  <link rel="stylesheet" href="/css/site.css?v=d9fb73fe5c">
 </head>
 <body data-page="project" data-project="newgiza">
   <a class="skip" href="#main">Skip to content</a>
@@ -100,10 +101,12 @@
   <main id="main">
     <section class="hero" id="top" data-hero>
       <div class="hero__stage">
-        <div class="hero__video hero__img" aria-hidden="true"><img src="/assets/images/newgiza-flagship.jpg" srcset="/assets/images/newgiza-flagship-sm.jpg 800w, /assets/images/newgiza-flagship.jpg 1800w" sizes="100vw" alt="" decoding="async"></div>
+        <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="/assets/video/newgiza-poster.jpg" aria-hidden="true" data-hero-video>
+          <source src="/assets/video/newgiza-loop.mp4" type="video/mp4">
+        </video>
         <div class="hero__shade" aria-hidden="true"></div>
         <div class="hero__mask" aria-hidden="true"><span>NEWGIZA</span></div>
-        <p class="hero__tag">Illustrative image</p>
+        
         <div class="hero__copy">
           <p class="brandline brandline--light">West Cairo<span>/</span>NEWGIZA</p>
           <h1 class="hero__title">The original G Developments city, ready now.</h1>
@@ -111,6 +114,7 @@
           <a class="btn btn--light hero__explore" href="#project">Explore NEWGIZA <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4h2v12.2l4.6-4.6 1.4 1.4-7 7-7-7 1.4-1.4 4.6 4.6z"/></svg></a>
           <div class="hero__actions">
             <a class="btn btn--red" href="tel:+201227275122" data-wa="NEWGIZA hero call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.58 3.6a1 1 0 0 1-.25 1z"/></svg> Contact a salesperson</a>
+            <button class="btn btn--light" type="button" data-film-open><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg> Play the film</button>
             <a class="btn btn--ghost-light" href="https://wa.me/201227275122?text=Hello%2C%20I%27d%20like%20to%20hear%20about%20NEWGIZA." target="_blank" rel="noopener" data-wa="NEWGIZA hero"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg> Message a salesperson</a>
           </div>
         </div>
@@ -130,12 +134,14 @@
           <button role="tab" id="pt-place" aria-controls="pp-place" aria-selected="true">The place</button>
           <button role="tab" id="pt-homes" aria-controls="pp-homes" aria-selected="false" tabindex="-1">Residences</button>
           <button role="tab" id="pt-pay" aria-controls="pp-pay" aria-selected="false" tabindex="-1">Payment</button>
+          <button role="tab" id="pt-gallery" aria-controls="pp-gallery" aria-selected="false" tabindex="-1">Gallery</button>
+          <button role="tab" id="pt-books" aria-controls="pp-books" aria-selected="false" tabindex="-1">Brochures</button>
         </div>
 
         <div class="panels">
           <div class="panel" role="tabpanel" id="pp-place" aria-labelledby="pt-place">
             <div class="place">
-              <figure class="place__hero"><img src="/assets/images/newgiza-flagship.jpg" srcset="/assets/images/newgiza-flagship-sm.jpg 800w, /assets/images/newgiza-flagship.jpg 1800w" sizes="(min-width: 900px) 60vw, 100vw" alt="NEWGIZA, KM 22, Cairo–Alexandria Desert Road" loading="lazy" decoding="async"><figcaption class="place__tag">Illustrative image</figcaption></figure>
+              <figure class="place__hero"><img src="/assets/img/newgiza/ng-hero.jpg" srcset="/assets/img/newgiza/ng-hero-sm.jpg 800w, /assets/img/newgiza/ng-hero.jpg 1800w" sizes="(min-width: 900px) 60vw, 100vw" alt="NEWGIZA, KM 22, Cairo–Alexandria Desert Road" loading="lazy" decoding="async"></figure>
               <div class="place__text">
                 <h3>NEWGIZA</h3>
                 <p>The founding city of G Developments: 1,550 acres on the Giza plateau with an 18-hole golf course, New Giza University, the sporting club and Health Park. Today&#x27;s releases are cash sales close to handover.</p>
@@ -174,6 +180,12 @@
               <div class="atelier__result" data-pay-result aria-live="polite"></div>
             </div>
           </div>
+          <div class="panel" role="tabpanel" id="pp-gallery" aria-labelledby="pt-gallery" hidden>
+            <div class="gallery" data-p-gallery></div>
+          </div>
+          <div class="panel" role="tabpanel" id="pp-books" aria-labelledby="pt-books" hidden>
+            <div class="library__grid" data-p-books="newgiza-hog,newgiza-kingsrange"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -186,7 +198,7 @@
         </div>
         <div class="parcels" data-parcels>
           <a class="parcel" href="/artlife/" style="--c:#1d1b2b;--a:#d9a441" data-parcel="artlife">
-            <span class="parcel__img"><img src="/assets/images/hero-krypton-newkairo.jpg" srcset="/assets/images/hero-krypton-newkairo-sm.jpg 800w, /assets/images/hero-krypton-newkairo.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="Artlife, Cypher, Twilight and Pixel Labs, NEWGIZA" loading="lazy" decoding="async"></span>
+            <span class="parcel__img"><img src="/assets/img/artlife/al-hero.jpg" srcset="/assets/img/artlife/al-hero-sm.jpg 800w, /assets/img/artlife/al-hero.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="Artlife, Cypher, Twilight and Pixel Labs, NEWGIZA" loading="lazy" decoding="async"></span>
             <span class="parcel__body">
               <span class="parcel__parent">NEWGIZA</span>
               <span class="parcel__name">Artlife</span>
@@ -196,7 +208,7 @@
             </span>
           </a>
           <a class="parcel" href="/meditown/" style="--c:#123c3d;--a:#7cc1a8" data-parcel="meditown">
-            <span class="parcel__img"><img src="/assets/images/newgiza-flagship.jpg" srcset="/assets/images/newgiza-flagship-sm.jpg 800w, /assets/images/newgiza-flagship.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="Meditown, Health district, NEWGIZA" loading="lazy" decoding="async"></span>
+            <span class="parcel__img"><img src="/assets/img/meditown/md-hero.jpg" srcset="/assets/img/meditown/md-hero-sm.jpg 800w, /assets/img/meditown/md-hero.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="Meditown, Health district, NEWGIZA" loading="lazy" decoding="async"></span>
             <span class="parcel__body">
               <span class="parcel__parent">NEWGIZA</span>
               <span class="parcel__name">Meditown</span>
@@ -206,7 +218,7 @@
             </span>
           </a>
           <a class="parcel" href="/ivy/" style="--c:#233d2b;--a:#a3c26a" data-parcel="ivy">
-            <span class="parcel__img"><img src="/assets/images/ivy-new-zayed.jpg" srcset="/assets/images/ivy-new-zayed-sm.jpg 800w, /assets/images/ivy-new-zayed.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="IVY, New Zayed, Cairo–Alexandria Desert Road" loading="lazy" decoding="async"></span>
+            <span class="parcel__img"><img src="/assets/img/ivy/ivy-hero.jpg" srcset="/assets/img/ivy/ivy-hero-sm.jpg 800w, /assets/img/ivy/ivy-hero.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="IVY, New Zayed, Cairo–Alexandria Desert Road" loading="lazy" decoding="async"></span>
             <span class="parcel__body">
               <span class="parcel__parent">West Cairo</span>
               <span class="parcel__name">IVY</span>
@@ -282,7 +294,7 @@
     <div class="wrap footer__grid">
       <p class="footer__mark">Mahmoud Elhemaly <span>Private real estate advisory</span></p>
       <p class="footer__legal" data-disclaimer>Independent advisory for G Developments projects in Egypt. This is not the official G Developments website. Prices, payment plans and availability come from developer releases and are confirmed at reservation.</p>
-      <p class="footer__legal">NEWKAIRO, Krypton, Golf Views and Neon Views images and films are from the developer. Images for other destinations are illustrative. © 2026 · <button type="button" class="footer__link" data-privacy-open>Privacy and ad measurement</button></p>
+      <p class="footer__legal">Images, masterplans and films across NEWKAIRO, NEWGIZA, Artlife, Meditown, IVY, Seashell and Playa are from official G Developments releases. Ein Bay imagery is illustrative. © 2026 · <button type="button" class="footer__link" data-privacy-open>Privacy and ad measurement</button></p>
     </div>
   </footer>
 
@@ -291,6 +303,13 @@
     <span class="wa-float__num">Contact a salesperson</span>
   </a>
 
+  <dialog class="film" data-film aria-label="Film">
+    <button class="film__close" type="button" data-film-close>Close</button>
+    <video controls playsinline preload="none" poster="/assets/video/newgiza-poster.jpg" data-film-video>
+      <source src="/assets/video/newgiza-film.mp4" type="video/mp4">
+    </video>
+  </dialog>
+
   <dialog class="lightbox" data-lightbox-dialog aria-label="Image viewer">
     <button class="lightbox__close" type="button" data-lightbox-close>Close</button>
     <button class="lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev aria-label="Previous image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
@@ -298,6 +317,6 @@
     <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   </dialog>
 
-  <script src="/js/site.js?v=907040ae07" defer></script>
+  <script src="/js/site.js?v=c12928decb" defer></script>
 </body>
 </html>

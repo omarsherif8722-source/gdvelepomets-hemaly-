@@ -9,7 +9,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="NEWGIZA Meditown | G Developments">
   <meta property="og:description" content="NEWGIZA Meditown: Own your clinic in West Cairo&#x27;s medical district. Fully finished clinics beside New Giza Health Park, for practitioners who want to own their practice in West Cairo&#x27;s medical district.">
-  <meta property="og:image" content="/assets/images/newgiza-flagship.jpg">
+  <meta property="og:image" content="/assets/img/meditown/md-hero.jpg">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="G Developments">
@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/site.css?v=6c2940e489">
+  <link rel="stylesheet" href="/css/site.css?v=d9fb73fe5c">
 </head>
 <body data-page="project" data-project="meditown">
   <a class="skip" href="#main">Skip to content</a>
@@ -100,10 +100,10 @@
   <main id="main">
     <section class="hero" id="top" data-hero>
       <div class="hero__stage">
-        <div class="hero__video hero__img" aria-hidden="true"><img src="/assets/images/newgiza-flagship.jpg" srcset="/assets/images/newgiza-flagship-sm.jpg 800w, /assets/images/newgiza-flagship.jpg 1800w" sizes="100vw" alt="" decoding="async"></div>
+        <div class="hero__video hero__img" aria-hidden="true"><img src="/assets/img/meditown/md-hero.jpg" srcset="/assets/img/meditown/md-hero-sm.jpg 800w, /assets/img/meditown/md-hero.jpg 1800w" sizes="100vw" alt="" decoding="async"></div>
         <div class="hero__shade" aria-hidden="true"></div>
         <div class="hero__mask" aria-hidden="true"><span>meditown</span></div>
-        <p class="hero__tag">Illustrative image</p>
+        
         <div class="hero__copy">
           <p class="brandline brandline--light">NEWGIZA<span>/</span>Meditown</p>
           <h1 class="hero__title">Own your clinic in West Cairo&#x27;s medical district.</h1>
@@ -130,12 +130,14 @@
           <button role="tab" id="pt-place" aria-controls="pp-place" aria-selected="true">The place</button>
           <button role="tab" id="pt-homes" aria-controls="pp-homes" aria-selected="false" tabindex="-1">Residences &amp; 10% Entry</button>
           <button role="tab" id="pt-pay" aria-controls="pp-pay" aria-selected="false" tabindex="-1">Payment</button>
+          <button role="tab" id="pt-gallery" aria-controls="pp-gallery" aria-selected="false" tabindex="-1">Gallery</button>
+          <button role="tab" id="pt-books" aria-controls="pp-books" aria-selected="false" tabindex="-1">Brochures</button>
         </div>
 
         <div class="panels">
           <div class="panel" role="tabpanel" id="pp-place" aria-labelledby="pt-place">
             <div class="place">
-              <figure class="place__hero"><img src="/assets/images/newgiza-flagship.jpg" srcset="/assets/images/newgiza-flagship-sm.jpg 800w, /assets/images/newgiza-flagship.jpg 1800w" sizes="(min-width: 900px) 60vw, 100vw" alt="Meditown, Health district, NEWGIZA" loading="lazy" decoding="async"><figcaption class="place__tag">Illustrative image</figcaption></figure>
+              <figure class="place__hero"><img src="/assets/img/meditown/md-hero.jpg" srcset="/assets/img/meditown/md-hero-sm.jpg 800w, /assets/img/meditown/md-hero.jpg 1800w" sizes="(min-width: 900px) 60vw, 100vw" alt="Meditown, Health district, NEWGIZA" loading="lazy" decoding="async"></figure>
               <div class="place__text">
                 <h3>Meditown</h3>
                 <p>Fully finished clinics beside New Giza Health Park, for practitioners who want to own their practice in West Cairo&#x27;s medical district.</p>
@@ -178,6 +180,12 @@
               <div class="atelier__result" data-pay-result aria-live="polite"></div>
             </div>
           </div>
+          <div class="panel" role="tabpanel" id="pp-gallery" aria-labelledby="pt-gallery" hidden>
+            <div class="gallery" data-p-gallery></div>
+          </div>
+          <div class="panel" role="tabpanel" id="pp-books" aria-labelledby="pt-books" hidden>
+            <div class="library__grid" data-p-books="meditown-clinics"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -190,7 +198,7 @@
         </div>
         <div class="parcels" data-parcels>
           <a class="parcel" href="/newgiza/" style="--c:#1e3328;--a:#c9a45c" data-parcel="newgiza">
-            <span class="parcel__img"><img src="/assets/images/newgiza-flagship.jpg" srcset="/assets/images/newgiza-flagship-sm.jpg 800w, /assets/images/newgiza-flagship.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="NEWGIZA, KM 22, Cairo–Alexandria Desert Road" loading="lazy" decoding="async"></span>
+            <span class="parcel__img"><img src="/assets/img/newgiza/ng-hero.jpg" srcset="/assets/img/newgiza/ng-hero-sm.jpg 800w, /assets/img/newgiza/ng-hero.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="NEWGIZA, KM 22, Cairo–Alexandria Desert Road" loading="lazy" decoding="async"></span>
             <span class="parcel__body">
               <span class="parcel__parent">West Cairo</span>
               <span class="parcel__name">NEWGIZA</span>
@@ -200,7 +208,7 @@
             </span>
           </a>
           <a class="parcel" href="/artlife/" style="--c:#1d1b2b;--a:#d9a441" data-parcel="artlife">
-            <span class="parcel__img"><img src="/assets/images/hero-krypton-newkairo.jpg" srcset="/assets/images/hero-krypton-newkairo-sm.jpg 800w, /assets/images/hero-krypton-newkairo.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="Artlife, Cypher, Twilight and Pixel Labs, NEWGIZA" loading="lazy" decoding="async"></span>
+            <span class="parcel__img"><img src="/assets/img/artlife/al-hero.jpg" srcset="/assets/img/artlife/al-hero-sm.jpg 800w, /assets/img/artlife/al-hero.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="Artlife, Cypher, Twilight and Pixel Labs, NEWGIZA" loading="lazy" decoding="async"></span>
             <span class="parcel__body">
               <span class="parcel__parent">NEWGIZA</span>
               <span class="parcel__name">Artlife</span>
@@ -210,7 +218,7 @@
             </span>
           </a>
           <a class="parcel" href="/ivy/" style="--c:#233d2b;--a:#a3c26a" data-parcel="ivy">
-            <span class="parcel__img"><img src="/assets/images/ivy-new-zayed.jpg" srcset="/assets/images/ivy-new-zayed-sm.jpg 800w, /assets/images/ivy-new-zayed.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="IVY, New Zayed, Cairo–Alexandria Desert Road" loading="lazy" decoding="async"></span>
+            <span class="parcel__img"><img src="/assets/img/ivy/ivy-hero.jpg" srcset="/assets/img/ivy/ivy-hero-sm.jpg 800w, /assets/img/ivy/ivy-hero.jpg 1800w" sizes="(min-width: 900px) 45vw, 100vw" alt="IVY, New Zayed, Cairo–Alexandria Desert Road" loading="lazy" decoding="async"></span>
             <span class="parcel__body">
               <span class="parcel__parent">West Cairo</span>
               <span class="parcel__name">IVY</span>
@@ -286,7 +294,7 @@
     <div class="wrap footer__grid">
       <p class="footer__mark">Mahmoud Elhemaly <span>Private real estate advisory</span></p>
       <p class="footer__legal" data-disclaimer>Independent advisory for G Developments projects in Egypt. This is not the official G Developments website. Prices, payment plans and availability come from developer releases and are confirmed at reservation.</p>
-      <p class="footer__legal">NEWKAIRO, Krypton, Golf Views and Neon Views images and films are from the developer. Images for other destinations are illustrative. © 2026 · <button type="button" class="footer__link" data-privacy-open>Privacy and ad measurement</button></p>
+      <p class="footer__legal">Images, masterplans and films across NEWKAIRO, NEWGIZA, Artlife, Meditown, IVY, Seashell and Playa are from official G Developments releases. Ein Bay imagery is illustrative. © 2026 · <button type="button" class="footer__link" data-privacy-open>Privacy and ad measurement</button></p>
     </div>
   </footer>
 
@@ -302,6 +310,6 @@
     <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   </dialog>
 
-  <script src="/js/site.js?v=907040ae07" defer></script>
+  <script src="/js/site.js?v=c12928decb" defer></script>
 </body>
 </html>

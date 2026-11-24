@@ -676,6 +676,7 @@ dialog::backdrop { background: rgba(34, 11, 14, 0.72); backdrop-filter: blur(3px
 /* ---------- Library ---------- */
 .library { background: var(--oxblood); color: #fff; padding-block: var(--section); }
 .library .sec-lede { color: var(--on-dark-2); }
+.library .tabs { margin-bottom: 32px; }
 .library__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; }
 .book__cover { aspect-ratio: 16 / 9; overflow: hidden; background: var(--oxblood-3); margin: 0 0 14px; }
 .book__cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
